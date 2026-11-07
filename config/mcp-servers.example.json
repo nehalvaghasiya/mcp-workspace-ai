@@ -1,0 +1,65 @@
+{
+  "purpose": "Built-in endpoint examples; not a remote-registration configuration",
+  "servers": [
+    {
+      "id": "gmail",
+      "transport": "streamable_http",
+      "url": "http://127.0.0.1:8000/mcp/gmail/",
+      "stdio": [
+        "workspace-ai",
+        "mcp",
+        "gmail",
+        "--transport",
+        "stdio"
+      ]
+    },
+    {
+      "id": "calendar",
+      "transport": "streamable_http",
+      "url": "http://127.0.0.1:8000/mcp/calendar/",
+      "stdio": [
+        "workspace-ai",
+        "mcp",
+        "calendar",
+        "--transport",
+        "stdio"
+      ]
+    },
+    {
+      "id": "drive",
+      "transport": "streamable_http",
+      "url": "http://127.0.0.1:8000/mcp/drive/",
+      "stdio": [
+        "workspace-ai",
+        "mcp",
+        "drive",
+        "--transport",
+        "stdio"
+      ]
+    },
+    {
+      "id": "artifact",
+      "transport": "streamable_http",
+      "url": "http://127.0.0.1:8000/mcp/artifact/",
+      "stdio": [
+        "workspace-ai",
+        "mcp",
+        "artifact",
+        "--transport",
+        "stdio"
+      ]
+    },
+    {
+      "id": "demo",
+      "transport": "streamable_http",
+      "url": "http://127.0.0.1:8000/mcp/demo/",
+      "stdio": [
+        "workspace-ai",
+        "mcp",
+        "demo",
+        "--transport",
+        "stdio"
+      ]
+    }
+  ]
+}
