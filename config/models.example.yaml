@@ -1,0 +1,17 @@
+{
+  "purpose": "Example only; environment variables remain authoritative",
+  "default": "fake",
+  "providers": {
+    "fake": {
+      "mode": "mock",
+      "paid_requests": false
+    },
+    "openai_compatible": {
+      "mode": "live",
+      "base_url": "https://api.openai.com/v1",
+      "model": "set LLM_MODEL",
+      "api_key": "set LLM_API_KEY privately",
+      "requires_user_content_consent": true
+    }
+  }
+}

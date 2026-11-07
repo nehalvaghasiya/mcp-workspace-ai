@@ -1,0 +1,24 @@
+[project]
+name = "mcp-workspace-api"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = ["mcp-workspace-common", "mcp-workspace-gmail", "mcp-workspace-calendar", "mcp-workspace-drive", "mcp-workspace-documents", "mcp-workspace-demo", "mcp-workspace-evaluations", "fastapi>=0.115", "uvicorn>=0.34", "pydantic-settings>=2.7", "sqlalchemy>=2.0", "alembic>=1.14", "httpx>=0.28", "httpx2>=2.16", "authlib>=1.6,<2", "cryptography>=44", "python-multipart>=0.0.20"]
+
+[project.scripts]
+workspace-ai = "mcp_workspace_api.cli.commands:main"
+
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mcp_workspace_api"]
+
+[tool.uv.sources]
+mcp-workspace-common = { workspace = true }
+mcp-workspace-gmail = { workspace = true }
+mcp-workspace-calendar = { workspace = true }
+mcp-workspace-drive = { workspace = true }
+mcp-workspace-documents = { workspace = true }
+mcp-workspace-demo = { workspace = true }
+mcp-workspace-evaluations = { workspace = true }

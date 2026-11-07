@@ -1,0 +1,12 @@
+[project]
+name = "mcp-workspace-common"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = ['pydantic>=2', 'mcp[cli]>=2,<3', 'httpx>=0.28', 'cryptography>=44', 'defusedxml>=0.7', 'pypdf>=5']
+
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mcp_workspace_common"]

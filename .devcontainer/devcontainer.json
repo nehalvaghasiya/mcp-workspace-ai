@@ -1,0 +1,22 @@
+{
+  "name": "MCP Workspace AI",
+  "build": { "dockerfile": "Dockerfile" },
+  "features": {
+    "ghcr.io/devcontainers/features/node:2.1.1": {
+      "version": "24.22.1",
+      "nvmVersion": "0.40.3",
+      "pnpmVersion": "none",
+      "npmVersion": "none",
+      "nodeGypDependencies": false
+    }
+  },
+  "remoteUser": "vscode",
+  "forwardPorts": [8000, 5173],
+  "remoteEnv": { "UV_CACHE_DIR": "/tmp/workspace-ai-uv-cache" },
+  "postCreateCommand": "make setup",
+  "customizations": {
+    "vscode": {
+      "extensions": ["ms-python.python", "charliermarsh.ruff", "dbaeumer.vscode-eslint"]
+    }
+  }
+}

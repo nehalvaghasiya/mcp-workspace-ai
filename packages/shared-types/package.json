@@ -1,0 +1,21 @@
+{
+  "name": "@mcp-workspace/shared-types",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "types": "src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "generate": "openapi-typescript openapi.json --alphabetize -o src/generated-api.d.ts",
+    "check": "openapi-typescript openapi.json --alphabetize -o src/generated-api.d.ts --check",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "devDependencies": {
+    "openapi-typescript": "^7.13.0",
+    "typescript": "~5.9.3"
+  }
+}

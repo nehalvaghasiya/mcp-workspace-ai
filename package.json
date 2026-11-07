@@ -1,0 +1,19 @@
+{
+  "name": "mcp-workspace-ai",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@12.18.0",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @mcp-workspace/web dev",
+    "build": "pnpm --filter @mcp-workspace/web build",
+    "lint": "pnpm --filter @mcp-workspace/web lint",
+    "format-check": "pnpm --filter @mcp-workspace/web format-check",
+    "typecheck": "pnpm --filter @mcp-workspace/shared-types typecheck && pnpm --filter @mcp-workspace/web typecheck",
+    "test": "pnpm --filter @mcp-workspace/web test",
+    "test:e2e": "pnpm --filter @mcp-workspace/web test:e2e",
+    "check:api": "pnpm --filter @mcp-workspace/shared-types check"
+  }
+}
