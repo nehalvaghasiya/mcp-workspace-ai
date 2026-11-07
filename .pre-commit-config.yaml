@@ -1,0 +1,30 @@
+repos:
+  - repo: local
+    hooks:
+      - id: python-lint
+        name: Locked Python lint
+        language: system
+        entry: uv run --locked ruff check
+        types: [python]
+      - id: python-format
+        name: Locked Python format check
+        language: system
+        entry: uv run --locked ruff format --check
+        types: [python]
+      - id: architecture
+        name: Class ownership and dependency boundaries
+        language: system
+        entry: uv run --locked python scripts/check_architecture.py
+        pass_filenames: false
+        always_run: true
+      - id: frontend-format
+        name: Locked frontend format check
+        language: system
+        entry: >-
+          uv run --locked python -c
+          "import subprocess, sys; from pathlib import Path;
+          from scripts.bootstrap_pnpm import pnpm_executable;
+          subprocess.run([str(pnpm_executable()), '--filter', '@mcp-workspace/web', 'exec',
+          'prettier', '--check', *[str(Path(p).resolve()) for p in sys.argv[1:]]], check=True)"
+        files: ^(apps/web|packages/shared-types)/.*\.(ts|tsx|js|json|css)$
+        exclude: ^packages/shared-types/(src/generated-api\.d\.ts|openapi\.json)$
