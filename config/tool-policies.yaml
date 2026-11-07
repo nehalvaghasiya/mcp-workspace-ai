@@ -1,0 +1,200 @@
+{
+  "generated_from": "mcp_workspace_api.mcp.registry.tool_definitions",
+  "tools": {
+    "gmail.search_messages": {
+      "risk": "READ",
+      "scopes": [
+        "https://www.googleapis.com/auth/gmail.readonly"
+      ],
+      "digest": "8a1d3c8e6c0e208bfb5f51a075cf55e8426bf4985ca007025d84c66cc8402d02"
+    },
+    "gmail.get_message": {
+      "risk": "READ",
+      "scopes": [
+        "https://www.googleapis.com/auth/gmail.readonly"
+      ],
+      "digest": "4a6efedd7711c9d318f133ec0812d214d3980d2f8023206bf6c44e7c81fc183f"
+    },
+    "gmail.get_thread": {
+      "risk": "READ",
+      "scopes": [
+        "https://www.googleapis.com/auth/gmail.readonly"
+      ],
+      "digest": "4cafa973022e854034cfb9123b94d0d7551dc4b00235b7368254c9679f83b249"
+    },
+    "gmail.list_labels": {
+      "risk": "READ",
+      "scopes": [
+        "https://www.googleapis.com/auth/gmail.readonly"
+      ],
+      "digest": "d3ac91faac5e1f5800e695cd0cc0426e67208f7ce173f91efcb2027ee9287084"
+    },
+    "gmail.create_draft": {
+      "risk": "ACCOUNT_WRITE",
+      "scopes": [
+        "https://www.googleapis.com/auth/gmail.compose"
+      ],
+      "digest": "205625113b8e58dd3f321c842997527a20633030489a34342bc8003297b83ee0"
+    },
+    "gmail.send_draft": {
+      "risk": "EXTERNAL_EFFECT",
+      "scopes": [
+        "https://www.googleapis.com/auth/gmail.compose"
+      ],
+      "digest": "24200cbbe2af1a74187c738a8a8b05ce7460f7b1b51893e1453cbcd30007b2f7"
+    },
+    "gmail.apply_labels": {
+      "risk": "ACCOUNT_WRITE",
+      "scopes": [
+        "https://www.googleapis.com/auth/gmail.modify"
+      ],
+      "digest": "7a8124422c365276b7b02ab1b3757080c31c6faef82019d10f864006f0cf2416"
+    },
+    "calendar.list_calendars": {
+      "risk": "READ",
+      "scopes": [
+        "https://www.googleapis.com/auth/calendar.calendarlist.readonly"
+      ],
+      "digest": "81f4e7c716942595d8f395ae023bd9f448e659d58e792ed27ca0e143929daf69"
+    },
+    "calendar.list_events": {
+      "risk": "READ",
+      "scopes": [
+        "https://www.googleapis.com/auth/calendar.events.readonly"
+      ],
+      "digest": "2847ee9ff8408c7cac3d0b43b591512d705eabdb0cab25b6186a5d6866ac959d"
+    },
+    "calendar.get_event": {
+      "risk": "READ",
+      "scopes": [
+        "https://www.googleapis.com/auth/calendar.events.readonly"
+      ],
+      "digest": "418a4d40c507d8851b169e1acaf95410bb412adbab5c6e39993c369f83da844b"
+    },
+    "calendar.query_freebusy": {
+      "risk": "READ",
+      "scopes": [
+        "https://www.googleapis.com/auth/calendar.freebusy"
+      ],
+      "digest": "1d059ec69a15f3299afcdeda26bc4ddd9c0b937962c242fa9a4ab67141552539"
+    },
+    "calendar.create_event": {
+      "risk": "EXTERNAL_EFFECT",
+      "scopes": [
+        "https://www.googleapis.com/auth/calendar.events"
+      ],
+      "digest": "8df0e2301f5768ff80c83b91f1fba2c4d0ae4ee753e287b60c3425b9ff088097"
+    },
+    "calendar.update_event": {
+      "risk": "EXTERNAL_EFFECT",
+      "scopes": [
+        "https://www.googleapis.com/auth/calendar.events"
+      ],
+      "digest": "ecb8dcbb17f9d93d5a942620175c442406278295f1b18ad0707ea1be75dbd9b2"
+    },
+    "calendar.cancel_event": {
+      "risk": "DESTRUCTIVE",
+      "scopes": [
+        "https://www.googleapis.com/auth/calendar.events"
+      ],
+      "digest": "86cbc10307f8b9610f051e6207da146fd5b8d24ce12cb74d9975d8a7a255e0e0"
+    },
+    "drive.search_files": {
+      "risk": "READ",
+      "scopes": [
+        "https://www.googleapis.com/auth/drive.file"
+      ],
+      "digest": "9d960a9c2840c53226c6e41558cef4d0342290072e5d4c38629904de7fe2b1a3"
+    },
+    "drive.get_file_metadata": {
+      "risk": "READ",
+      "scopes": [
+        "https://www.googleapis.com/auth/drive.file"
+      ],
+      "digest": "1d9ab1cbaa424412203f9d4fb9b2ff73706cc6ec9d2f8db949f047de4b357fd1"
+    },
+    "drive.read_file": {
+      "risk": "READ",
+      "scopes": [
+        "https://www.googleapis.com/auth/drive.file"
+      ],
+      "digest": "f6ab294312716bb8defd2c22f7bf265110a1d3acb6d31b36fa17c4bb770f3bc7"
+    },
+    "drive.list_folder": {
+      "risk": "READ",
+      "scopes": [
+        "https://www.googleapis.com/auth/drive.file"
+      ],
+      "digest": "7a09dfbc272627d69fa16df3cb1cb5afa3e21deba60aaf3fb120fb3ddbab52fe"
+    },
+    "drive.upload_artifact": {
+      "risk": "ACCOUNT_WRITE",
+      "scopes": [
+        "https://www.googleapis.com/auth/drive.file"
+      ],
+      "digest": "1467743f0471c6e4afa460ba20ae0173606fb85c3c46b81447dcb3cee413f287"
+    },
+    "drive.create_folder": {
+      "risk": "ACCOUNT_WRITE",
+      "scopes": [
+        "https://www.googleapis.com/auth/drive.file"
+      ],
+      "digest": "9fadf70a22aed3f6d156ee795bdd4b6cf5bf496b76d4b2c47bfb87683572b4fe"
+    },
+    "artifact.create_docx": {
+      "risk": "LOCAL_WRITE",
+      "scopes": [],
+      "digest": "d75ca33a1fd6ffb1b013071452e5840cf2d5aaf900e008ab20845576fae6bc68"
+    },
+    "artifact.create_pdf": {
+      "risk": "LOCAL_WRITE",
+      "scopes": [],
+      "digest": "be09aa549cb39eac91dfc5cc7082464a1bb422652d914a626b409a90db3f5265"
+    },
+    "artifact.create_xlsx": {
+      "risk": "LOCAL_WRITE",
+      "scopes": [],
+      "digest": "cdcd7528234073311b28d917b315fd0f27e3c349878e4ae543421b7910d4182d"
+    },
+    "artifact.create_pptx": {
+      "risk": "LOCAL_WRITE",
+      "scopes": [],
+      "digest": "57eee02fafcf4f40d1cc13c02bf921c41927c312cfa9a7c648a5afbe5dd41143"
+    },
+    "artifact.create_csv": {
+      "risk": "LOCAL_WRITE",
+      "scopes": [],
+      "digest": "82e0a67f27b279f867c17b05b5637eeb3c5dab72ce97ed8fe28e9e6e0ec5062b"
+    },
+    "artifact.create_markdown": {
+      "risk": "LOCAL_WRITE",
+      "scopes": [],
+      "digest": "79aa10a79a6be9dfea240e09d56fed1ad0d6e7d9d5079a30ac0db4ec496c23ce"
+    },
+    "artifact.create_html": {
+      "risk": "LOCAL_WRITE",
+      "scopes": [],
+      "digest": "054b99e9b33e7eee43ecbf0a562c295bc262972337b943178b45580bc4e9710c"
+    },
+    "artifact.get_artifact_metadata": {
+      "risk": "READ",
+      "scopes": [],
+      "digest": "b2cd29830544a7daabd08afdf680d2c739ff850235971a8a959aac350edd31bf"
+    },
+    "artifact.validate_artifact": {
+      "risk": "READ",
+      "scopes": [],
+      "digest": "c64e3990436f8d3a50b50dd65a258afb4ff9364654942750fdff6ddf56386370"
+    },
+    "artifact.list_artifacts": {
+      "risk": "READ",
+      "scopes": [],
+      "digest": "127426f157f976e82b3ca11a806373bd85458c7bc6f84d3f28faa81f9429b12f"
+    },
+    "demo.ping": {
+      "risk": "READ",
+      "scopes": [],
+      "digest": "7bcd05224082031becf8557f727d686a6b7cbc48d948faf7dd2bbfd13d9c70db"
+    }
+  }
+}
