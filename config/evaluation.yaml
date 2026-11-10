@@ -1,0 +1,17 @@
+{
+  "purpose": "Snapshot of deterministic evaluation defaults",
+  "fixture": "northstar-1",
+  "provider": "FakeLLM",
+  "cases": 52,
+  "categories": {
+    "gmail": 10,
+    "calendar": 8,
+    "drive": 8,
+    "artifacts": 8,
+    "cross_app": 8,
+    "approvals": 5,
+    "impossible": 5
+  },
+  "real_model": "NOT_RUN",
+  "live_google": "NOT_RUN"
+}

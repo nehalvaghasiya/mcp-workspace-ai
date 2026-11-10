@@ -1,0 +1,30 @@
+services:
+  workspace:
+    build:
+      context: .
+      dockerfile: infra/docker/base.Dockerfile
+      target: api
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      MODE: mock
+      LLM_PROVIDER: fake
+      DATA_DIR: /app/.local
+      API_URL: http://127.0.0.1:8000
+      WEB_ORIGIN: http://localhost:8000
+      WEB_DIST_DIR: /app/apps/web/dist
+    volumes:
+      - workspace-data:/app/.local
+    read_only: true
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,size=64m
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 128
+    init: true
+    restart: unless-stopped
+
+volumes:
+  workspace-data:
