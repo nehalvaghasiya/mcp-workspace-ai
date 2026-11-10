@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "command": "make ci -> make test-e2e",
+  "browser": "Chromium",
+  "unit_integration_cases": 12,
+  "browser_cases": 10,
+  "fixture_browser_cases": 7,
+  "actual_backend_browser_cases": 3,
+  "viewports": [
+    "390x844",
+    "1440x900"
+  ],
+  "actual_captures": "../../../demo/screenshots/reorganization",
+  "identity_mapping": "../../../docs/verification/reorganization/frontend-test-moves.json",
+  "limits": [
+    "Scoped axe and keyboard checks, not an accessibility certification.",
+    "Synthetic mock backend; no live Google or model-provider calls."
+  ],
+  "historical_qa": "evidence.json"
+}
