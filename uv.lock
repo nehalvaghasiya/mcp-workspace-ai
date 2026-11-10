@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 5
 requires-python = ">=3.12"
 resolution-markers = [
     "python_full_version >= '3.15'",
@@ -1316,7 +1316,7 @@ requires-dist = [
     { name = "cryptography", specifier = ">=44" },
     { name = "defusedxml", specifier = ">=0.7" },
     { name = "httpx", specifier = ">=0.28" },
-    { name = "mcp", extras = ["cli"], specifier = ">=2,<3" },
+    { name = "mcp", extras = ["cli"], specifier = ">=2.3.0,<3" },
     { name = "pydantic", specifier = ">=2" },
     { name = "pypdf", specifier = ">=5" },
 ]
@@ -1351,7 +1351,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "defusedxml", specifier = ">=0.7" },
-    { name = "mcp", extras = ["cli"], specifier = ">=2,<3" },
+    { name = "mcp", extras = ["cli"], specifier = ">=2.3.0,<3" },
     { name = "mcp-workspace-common", editable = "packages/mcp-common" },
     { name = "openpyxl", specifier = ">=3.1" },
     { name = "pydantic", specifier = ">=2" },
