@@ -1,0 +1,83 @@
+{
+  "contract": "design-contract.md; product requirements FR-09 and demonstration specification section 8. Screenshots in this directory render controlled synthetic browser API fixtures, not actual MCP execution evidence.",
+  "targetViewports": [
+    "390x844",
+    "1440x900"
+  ],
+  "accessibility": {
+    "status": "pass",
+    "evidence": "Chromium UI fixture suite passed axe WCAG 2 A/AA and 2.1 A/AA scans on empty chat at both target widths. Keyboard tests verified the skip link, page focus, mobile drawer initial focus and Escape restoration. Reduced-motion loading spinner was verified to have animation-name none. Source inspection confirms mobile 44px controls and visible focus. This is a scoped automated check, not a complete accessibility certification."
+  },
+  "responsive": {
+    "status": "pass",
+    "evidence": "Browser assertions found no document-level horizontal overflow at 390x844 and 1440x900 for empty and long-response states. Both widths were captured and inspected with view_image. Mobile navigation uses an inert background and focus trap; activity becomes a separate panel. Conversation scrolling preserves the composer."
+  },
+  "contentStates": {
+    "loading": {
+      "status": "pass",
+      "evidence": "A delayed synthetic session response visibly showed Opening your workspace; reduced-motion styling was checked in the browser."
+    },
+    "empty": {
+      "status": "pass",
+      "evidence": "Empty chat shows concrete prompt actions and connector status. An empty approvals page visibly explains that no action is awaiting review."
+    },
+    "error": {
+      "status": "pass",
+      "evidence": "A failed synthetic POST shows the backend error without retrying a write automatically. Actual mock backend PDF validation failure also appeared as failed with prior completed tool calls preserved."
+    },
+    "partial": {
+      "status": "pass",
+      "evidence": "Persisted partial-response fixture retained available Gmail content and explicitly disclosed unavailable Calendar/Drive data and stopped execution."
+    },
+    "success": {
+      "status": "pass",
+      "evidence": "Controlled synthetic response fixtures and the actual mock backend both rendered sourced report output and validated artifact cards. The real browser flow downloaded a generated artifact, asserted all three Google source providers plus four MCP server namespaces, and restored saved conversation history."
+    },
+    "permission": {
+      "status": "pass",
+      "evidence": "Fixtures verified exact recipients/body, one approval decision, expired action disablement, and Google-only sign-in in live mode. Actual mock backend browser tests passed both rejection and separate create-draft/send approvals with exactly two approval IDs and one send trace."
+    }
+  },
+  "renderedEvidence": [
+    {
+      "viewport": "390x844",
+      "artifact": "workspace-empty-390.png",
+      "observation": "Rendered mobile empty workspace: visible synthetic label, concrete prompt controls, fixed composer, responsive navigation."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "workspace-empty-1440.png",
+      "observation": "Rendered desktop workspace: sidebar history, calm chat canvas and first-class activity panel."
+    },
+    {
+      "viewport": "390x844",
+      "artifact": "workspace-response-390.png",
+      "observation": "Rendered persisted long synthetic response scrolled to its generated-file cards; file titles and MIME details wrap within the viewport."
+    },
+    {
+      "viewport": "1440x900",
+      "artifact": "workspace-response-1440.png",
+      "observation": "Rendered persisted synthetic response with inspectable MCP activity, measured fixture timings explicitly confined to test data, and four file cards."
+    }
+  ],
+  "actualBackendVerification": {
+    "status": "pass",
+    "command": "LD_LIBRARY_PATH=/tmp/workspace-browser-libs/extracted/usr/lib/x86_64-linux-gnu E2E_BACKEND=1 npm run test:e2e",
+    "exit_code": 0,
+    "browser_tests_passed": 10,
+    "fixture_tests": 7,
+    "real_backend_tests": 3,
+    "unit_tests_passed": 12,
+    "observations": [
+      "The actual mock backend generated four artifact cards with Gmail, Calendar and Drive sources and all four server namespaces.",
+      "A real browser artifact download completed and saved history restored after reload.",
+      "Rejecting the actual gated action created no send trace.",
+      "Creating a synthetic draft and sending that exact draft required two different approvals; the visible trace contained one send call.",
+      "Desktop, mobile, artifact library and approval captures in docs/demo/screenshots were inspected with view_image."
+    ],
+    "limits": [
+      "No live Google or real LLM calls were performed.",
+      "Browser host required three missing Chromium libraries extracted into /tmp; this is documented in web/README.md."
+    ]
+  }
+}
