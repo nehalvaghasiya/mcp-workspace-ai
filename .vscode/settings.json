@@ -1,0 +1,5 @@
+{
+    "powerquery.client.additionalSymbolsDirectories": [
+        "/home/nehal/Personal/mcp-workspace-ai/.vscode/excel-pq-symbols"
+    ]
+}

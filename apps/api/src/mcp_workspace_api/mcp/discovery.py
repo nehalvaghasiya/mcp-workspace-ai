@@ -18,7 +18,7 @@ class Discovery:
     async def catalog(self, user_id: str) -> list[dict[str, Any]]:
         context = self.context
         catalog: list[dict[str, Any]] = []
-        for server in ("gmail", "calendar", "drive", "artifact", "demo"):
+        for server in dict.fromkeys(tool.server for tool in context.tools.values()):
             async with context.client(user_id, server) as client:
                 discovered = await client.list_tools()
             for tool in discovered.tools:

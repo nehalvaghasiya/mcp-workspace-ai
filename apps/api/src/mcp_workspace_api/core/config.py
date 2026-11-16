@@ -2,19 +2,21 @@ from __future__ import annotations
 
 import base64
 import hashlib
+import logging
 import os
 import secrets
 from pathlib import Path
 from typing import Literal
 from urllib.parse import urlsplit
 
+from cryptography.fernet import Fernet
 from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore", hide_input_in_errors=True)
-    mode: Literal["mock", "live"] = "mock"
+    mode: Literal["mock", "live"] = "live"
     data_dir: Path = Path(".local")
     web_dist_dir: Path = Path("apps/web/dist")
     api_url: str = "http://127.0.0.1:8000"
@@ -27,12 +29,15 @@ class Settings(BaseSettings):
     google_client_id: str = ""
     google_client_secret: str = ""
     google_redirect_uri: str = "http://localhost:8000/api/auth/google/callback"
-    llm_provider: Literal["fake", "openai_compatible"] = "fake"
+    llm_provider: Literal["fake", "openai_compatible"] = "openai_compatible"
     llm_model: str = ""
     llm_api_key: str = ""
     llm_base_url: str = "https://api.openai.com/v1"
     max_tool_calls: int = Field(default=24, ge=1, le=100)
-    run_timeout: int = Field(default=180, ge=1, le=600)
+    run_timeout: int = Field(default=300, ge=1, le=600)
+    model_connect_timeout: float = Field(default=10, gt=0, le=60)
+    model_read_timeout: float = Field(default=60, gt=0, le=300)
+    model_request_timeout: float = Field(default=90, gt=0, le=600)
     tool_timeout: int = Field(default=30, ge=1, le=120)
     approval_ttl: int = Field(default=300, ge=15, le=900)
     retention_days: int = Field(default=30, ge=1, le=3650)
@@ -64,9 +69,23 @@ class Settings(BaseSettings):
     def prepare(self) -> None:
         if self.mode == "mock" and self.llm_provider != "fake":
             raise ValueError("Mock mode requires FakeLLM and never contacts a model provider")
-        self.storage.mkdir(parents=True, exist_ok=True, mode=0o700)
         if self.mode == "live" and (not self.session_secret or not self.token_encryption_key):
             raise ValueError("Live mode requires SESSION_SECRET and TOKEN_ENCRYPTION_KEY")
+        if self.token_encryption_key:
+            try:
+                Fernet(self.token_encryption_key.encode())
+            except ValueError:
+                if self.mode == "live":
+                    raise ValueError(
+                        "TOKEN_ENCRYPTION_KEY must be a valid Fernet key "
+                        "(32 URL-safe base64-encoded bytes)"
+                    ) from None
+                logging.getLogger(__name__).warning(
+                    "Invalid TOKEN_ENCRYPTION_KEY in mock mode; using the local demo key. "
+                    "Live mode requires a valid Fernet key."
+                )
+                self.token_encryption_key = ""  # nosec B105: unset mock-only value; live mode rejects invalid keys
+        self.storage.mkdir(parents=True, exist_ok=True, mode=0o700)
         if not self.session_secret:
             path = self.storage / "secret"
             if not path.exists():

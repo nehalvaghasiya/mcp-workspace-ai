@@ -10,7 +10,8 @@ class Draft(StrictModel):
     bcc: list[str] = Field(default_factory=list, max_length=20)
     subject: str = Field(max_length=500)
     body_text: str = Field(max_length=20000)
-    reply_to_message_id: str | None = None
+    reply_to_message_id: str | None = Field(default=None, min_length=1, max_length=256)
+    attachment_ids: list[str] = Field(default_factory=list, max_length=10)
 
     @model_validator(mode="after")
     def addresses(self) -> Draft:
@@ -21,4 +22,6 @@ class Draft(StrictModel):
                 raise ValueError("Provide explicit valid recipient addresses")
         if "\n" in self.subject or "\r" in self.subject:
             raise ValueError("Subject cannot contain header separators")
+        if any(not value or len(value) > 256 for value in self.attachment_ids):
+            raise ValueError("Use bounded owned artifact IDs for attachments")
         return self

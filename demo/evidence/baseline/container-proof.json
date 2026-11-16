@@ -1,0 +1,21 @@
+{
+  "measured_at": "2026-11-06T19:39:50.827665+00:00",
+  "image": "sha256:a35d03ef79e6c64ee2efbcbe4a54cabfba7ddaa2ab54e39822ba30cd2486488c",
+  "container_user": "10001:10001",
+  "network_mode": "none",
+  "memory_limit_bytes": 8589934592,
+  "read_only_rootfs": true,
+  "smoke": {
+    "status": "PASS",
+    "mode": "mock",
+    "tools": 31,
+    "files": 4,
+    "trace_events": 18
+  },
+  "frontend_html": "PASS",
+  "cgroup_memory_bytes": {
+    "memory.current": 179576832,
+    "memory.peak": 237375488
+  },
+  "note": "Synthetic mock run under an 8 GiB container limit with no external network; not a physical 8 GB machine benchmark."
+}

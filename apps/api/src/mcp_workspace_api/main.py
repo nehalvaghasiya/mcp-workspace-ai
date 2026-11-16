@@ -17,12 +17,14 @@ from mcp_workspace_api.api.v1 import (
     conversations,
     health,
     tools,
+    workspace_files,
 )
 from mcp_workspace_api.api.v1 import settings as settings_routes
 from mcp_workspace_api.core.application_context import ApplicationContext
 from mcp_workspace_api.core.config import Settings
 from mcp_workspace_api.core.execution_context import Runtime
 from mcp_workspace_api.core.lifecycle import application_lifespan
+from mcp_workspace_api.core.runtime_settings import load_settings, validate_live_configuration
 from mcp_workspace_api.db import Database
 from mcp_workspace_api.mcp.servers import Guard, ProtectedHTTP, build_servers
 
@@ -30,7 +32,9 @@ from mcp_workspace_api.mcp.servers import Guard, ProtectedHTTP, build_servers
 def create_app(settings: Settings | None = None) -> FastAPI:
     for name in ("httpx", "httpx2"):
         logging.getLogger(name).setLevel(logging.WARNING)
-    settings = settings or Settings()
+    if settings is None:
+        settings = load_settings()
+        validate_live_configuration(settings)
     settings.prepare()
     db = Database(f"sqlite:///{settings.storage / 'workspace.db'}")
     runtime = Runtime(settings, db)
@@ -59,6 +63,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     artifacts.register(app, context)
     tools.register(app, context)
     settings_routes.register(app, context)
+    workspace_files.register(app, context)
     account.register(app, context)
     for name, server in servers.items():
         app.mount(

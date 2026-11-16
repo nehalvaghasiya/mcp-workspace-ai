@@ -1,0 +1,887 @@
+{
+  "alembic_version": {
+    "columns": [
+      {
+        "name": "version_num",
+        "type": "VARCHAR(32)",
+        "nullable": false,
+        "default": null,
+        "primary_key": 1
+      }
+    ],
+    "foreign_keys": []
+  },
+  "approvals": {
+    "columns": [
+      {
+        "name": "run_id",
+        "type": "VARCHAR(64)",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "tool",
+        "type": "VARCHAR",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "arguments",
+        "type": "JSON",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "snapshot",
+        "type": "JSON",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "action_digest",
+        "type": "VARCHAR",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "account_id",
+        "type": "VARCHAR",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "expires_at",
+        "type": "DOUBLE",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "status",
+        "type": "VARCHAR",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "capability_hash",
+        "type": "VARCHAR",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "id",
+        "type": "VARCHAR(64)",
+        "nullable": false,
+        "default": null,
+        "primary_key": 1
+      },
+      {
+        "name": "user_id",
+        "type": "VARCHAR(64)",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "created_at",
+        "type": "DOUBLE",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      }
+    ],
+    "foreign_keys": [
+      {
+        "name": null,
+        "constrained_columns": [
+          "run_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "runs",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {}
+      },
+      {
+        "name": null,
+        "constrained_columns": [
+          "user_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "users",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {}
+      }
+    ]
+  },
+  "artifacts": {
+    "columns": [
+      {
+        "name": "run_id",
+        "type": "VARCHAR(64)",
+        "nullable": true,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "title",
+        "type": "VARCHAR",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "format",
+        "type": "VARCHAR",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "mime_type",
+        "type": "VARCHAR",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "storage_key",
+        "type": "VARCHAR",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "size",
+        "type": "INTEGER",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "sha256",
+        "type": "VARCHAR",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "validated",
+        "type": "BOOLEAN",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "sources",
+        "type": "JSON",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "id",
+        "type": "VARCHAR(64)",
+        "nullable": false,
+        "default": null,
+        "primary_key": 1
+      },
+      {
+        "name": "user_id",
+        "type": "VARCHAR(64)",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "created_at",
+        "type": "DOUBLE",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      }
+    ],
+    "foreign_keys": [
+      {
+        "name": null,
+        "constrained_columns": [
+          "run_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "runs",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {}
+      },
+      {
+        "name": null,
+        "constrained_columns": [
+          "user_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "users",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {}
+      }
+    ]
+  },
+  "conversations": {
+    "columns": [
+      {
+        "name": "title",
+        "type": "VARCHAR",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "updated_at",
+        "type": "DOUBLE",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "id",
+        "type": "VARCHAR(64)",
+        "nullable": false,
+        "default": null,
+        "primary_key": 1
+      },
+      {
+        "name": "user_id",
+        "type": "VARCHAR(64)",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "created_at",
+        "type": "DOUBLE",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      }
+    ],
+    "foreign_keys": [
+      {
+        "name": null,
+        "constrained_columns": [
+          "user_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "users",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {}
+      }
+    ]
+  },
+  "google_accounts": {
+    "columns": [
+      {
+        "name": "subject",
+        "type": "VARCHAR",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "credentials",
+        "type": "VARCHAR",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "scopes",
+        "type": "JSON",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "enabled",
+        "type": "JSON",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "id",
+        "type": "VARCHAR(64)",
+        "nullable": false,
+        "default": null,
+        "primary_key": 1
+      },
+      {
+        "name": "user_id",
+        "type": "VARCHAR(64)",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "created_at",
+        "type": "DOUBLE",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "key_version",
+        "type": "VARCHAR(64)",
+        "nullable": false,
+        "default": "'v1'",
+        "primary_key": 0
+      }
+    ],
+    "foreign_keys": [
+      {
+        "name": null,
+        "constrained_columns": [
+          "user_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "users",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {}
+      }
+    ]
+  },
+  "messages": {
+    "columns": [
+      {
+        "name": "conversation_id",
+        "type": "VARCHAR(64)",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "role",
+        "type": "VARCHAR",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "content",
+        "type": "VARCHAR",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "sources",
+        "type": "JSON",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "artifacts",
+        "type": "JSON",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "id",
+        "type": "VARCHAR(64)",
+        "nullable": false,
+        "default": null,
+        "primary_key": 1
+      },
+      {
+        "name": "user_id",
+        "type": "VARCHAR(64)",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "created_at",
+        "type": "DOUBLE",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      }
+    ],
+    "foreign_keys": [
+      {
+        "name": null,
+        "constrained_columns": [
+          "conversation_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "conversations",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {}
+      },
+      {
+        "name": null,
+        "constrained_columns": [
+          "user_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "users",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {}
+      }
+    ]
+  },
+  "oauth_states": {
+    "columns": [
+      {
+        "name": "id",
+        "type": "VARCHAR(128)",
+        "nullable": false,
+        "default": null,
+        "primary_key": 1
+      },
+      {
+        "name": "browser_hash",
+        "type": "VARCHAR",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "user_id",
+        "type": "VARCHAR(64)",
+        "nullable": true,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "nonce",
+        "type": "VARCHAR",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "verifier",
+        "type": "VARCHAR",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "connector",
+        "type": "VARCHAR",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "expires_at",
+        "type": "DOUBLE",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      }
+    ],
+    "foreign_keys": [
+      {
+        "name": null,
+        "constrained_columns": [
+          "user_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "users",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {}
+      }
+    ]
+  },
+  "operations": {
+    "columns": [
+      {
+        "name": "approval_id",
+        "type": "VARCHAR(64)",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "status",
+        "type": "VARCHAR",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "result",
+        "type": "JSON",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "id",
+        "type": "VARCHAR(64)",
+        "nullable": false,
+        "default": null,
+        "primary_key": 1
+      },
+      {
+        "name": "user_id",
+        "type": "VARCHAR(64)",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "created_at",
+        "type": "DOUBLE",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      }
+    ],
+    "foreign_keys": [
+      {
+        "name": null,
+        "constrained_columns": [
+          "approval_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "approvals",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {}
+      },
+      {
+        "name": null,
+        "constrained_columns": [
+          "user_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "users",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {}
+      }
+    ]
+  },
+  "run_events": {
+    "columns": [
+      {
+        "name": "sequence",
+        "type": "INTEGER",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "run_id",
+        "type": "VARCHAR(64)",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "type",
+        "type": "VARCHAR",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "data",
+        "type": "JSON",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "id",
+        "type": "VARCHAR(64)",
+        "nullable": false,
+        "default": null,
+        "primary_key": 1
+      },
+      {
+        "name": "user_id",
+        "type": "VARCHAR(64)",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "created_at",
+        "type": "DOUBLE",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      }
+    ],
+    "foreign_keys": [
+      {
+        "name": null,
+        "constrained_columns": [
+          "run_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "runs",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {}
+      },
+      {
+        "name": null,
+        "constrained_columns": [
+          "user_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "users",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {}
+      }
+    ]
+  },
+  "runs": {
+    "columns": [
+      {
+        "name": "conversation_id",
+        "type": "VARCHAR(64)",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "request_id",
+        "type": "VARCHAR(200)",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "prompt",
+        "type": "VARCHAR",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "status",
+        "type": "VARCHAR",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "state",
+        "type": "JSON",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "error",
+        "type": "VARCHAR",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "id",
+        "type": "VARCHAR(64)",
+        "nullable": false,
+        "default": null,
+        "primary_key": 1
+      },
+      {
+        "name": "user_id",
+        "type": "VARCHAR(64)",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "created_at",
+        "type": "DOUBLE",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      }
+    ],
+    "foreign_keys": [
+      {
+        "name": null,
+        "constrained_columns": [
+          "conversation_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "conversations",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {}
+      },
+      {
+        "name": null,
+        "constrained_columns": [
+          "user_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "users",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {}
+      }
+    ]
+  },
+  "sessions": {
+    "columns": [
+      {
+        "name": "token_hash",
+        "type": "VARCHAR(64)",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "csrf",
+        "type": "VARCHAR",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "expires_at",
+        "type": "DOUBLE",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "id",
+        "type": "VARCHAR(64)",
+        "nullable": false,
+        "default": null,
+        "primary_key": 1
+      },
+      {
+        "name": "user_id",
+        "type": "VARCHAR(64)",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "created_at",
+        "type": "DOUBLE",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      }
+    ],
+    "foreign_keys": [
+      {
+        "name": null,
+        "constrained_columns": [
+          "user_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "users",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {}
+      }
+    ]
+  },
+  "users": {
+    "columns": [
+      {
+        "name": "id",
+        "type": "VARCHAR(64)",
+        "nullable": false,
+        "default": null,
+        "primary_key": 1
+      },
+      {
+        "name": "subject",
+        "type": "VARCHAR(256)",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "display_name",
+        "type": "VARCHAR",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "email",
+        "type": "VARCHAR",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "timezone",
+        "type": "VARCHAR",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "llm_consent",
+        "type": "BOOLEAN",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "consent_provider",
+        "type": "VARCHAR",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      },
+      {
+        "name": "deleted",
+        "type": "BOOLEAN",
+        "nullable": false,
+        "default": null,
+        "primary_key": 0
+      }
+    ],
+    "foreign_keys": []
+  }
+}

@@ -13,9 +13,12 @@ class TimeRange(StrictModel):
 
     @model_validator(mode="after")
     def times(self) -> TimeRange:
-        from zoneinfo import ZoneInfo
+        from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
-        ZoneInfo(self.timezone)
+        try:
+            ZoneInfo(self.timezone)
+        except ZoneInfoNotFoundError:
+            raise ValueError("Use a valid IANA timezone") from None
         left, right = datetime.fromisoformat(self.time_min), datetime.fromisoformat(self.time_max)
         if not left.tzinfo or not right.tzinfo or left >= right or (right - left).days > 366:
             raise ValueError(

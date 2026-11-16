@@ -19,6 +19,7 @@ class UpdateEvent(EventId):
             "attendees",
             "description",
             "location",
+            "recurrence",
         }:
             raise ValueError("Unsupported event changes")
         return self

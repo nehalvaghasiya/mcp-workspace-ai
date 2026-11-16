@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "rollback_source_files": 149,
+  "preserved_hashes": 41,
+  "baseline_backend_identity_mappings": 213,
+  "exact_case_definitions": 52
+}

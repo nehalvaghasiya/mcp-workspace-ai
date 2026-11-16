@@ -6,6 +6,7 @@
       "scopes": [
         "https://www.googleapis.com/auth/gmail.readonly"
       ],
+      "scope_alternatives": [],
       "digest": "8a1d3c8e6c0e208bfb5f51a075cf55e8426bf4985ca007025d84c66cc8402d02"
     },
     "gmail.get_message": {
@@ -13,6 +14,7 @@
       "scopes": [
         "https://www.googleapis.com/auth/gmail.readonly"
       ],
+      "scope_alternatives": [],
       "digest": "4a6efedd7711c9d318f133ec0812d214d3980d2f8023206bf6c44e7c81fc183f"
     },
     "gmail.get_thread": {
@@ -20,6 +22,7 @@
       "scopes": [
         "https://www.googleapis.com/auth/gmail.readonly"
       ],
+      "scope_alternatives": [],
       "digest": "4cafa973022e854034cfb9123b94d0d7551dc4b00235b7368254c9679f83b249"
     },
     "gmail.list_labels": {
@@ -27,6 +30,7 @@
       "scopes": [
         "https://www.googleapis.com/auth/gmail.readonly"
       ],
+      "scope_alternatives": [],
       "digest": "d3ac91faac5e1f5800e695cd0cc0426e67208f7ce173f91efcb2027ee9287084"
     },
     "gmail.create_draft": {
@@ -34,13 +38,15 @@
       "scopes": [
         "https://www.googleapis.com/auth/gmail.compose"
       ],
-      "digest": "205625113b8e58dd3f321c842997527a20633030489a34342bc8003297b83ee0"
+      "scope_alternatives": [],
+      "digest": "28a867bbab87d22f9cb725bd4ddfa47e4746f61d2934881b48e2b9d43e71983f"
     },
     "gmail.send_draft": {
       "risk": "EXTERNAL_EFFECT",
       "scopes": [
         "https://www.googleapis.com/auth/gmail.compose"
       ],
+      "scope_alternatives": [],
       "digest": "24200cbbe2af1a74187c738a8a8b05ce7460f7b1b51893e1453cbcd30007b2f7"
     },
     "gmail.apply_labels": {
@@ -48,6 +54,7 @@
       "scopes": [
         "https://www.googleapis.com/auth/gmail.modify"
       ],
+      "scope_alternatives": [],
       "digest": "7a8124422c365276b7b02ab1b3757080c31c6faef82019d10f864006f0cf2416"
     },
     "calendar.list_calendars": {
@@ -55,20 +62,23 @@
       "scopes": [
         "https://www.googleapis.com/auth/calendar.calendarlist.readonly"
       ],
-      "digest": "81f4e7c716942595d8f395ae023bd9f448e659d58e792ed27ca0e143929daf69"
+      "scope_alternatives": [],
+      "digest": "cb5d42aadd153c40287f7b8d3147b90a41ffe275ce295dcc275a4784ca2183a8"
     },
     "calendar.list_events": {
       "risk": "READ",
       "scopes": [
         "https://www.googleapis.com/auth/calendar.events.readonly"
       ],
-      "digest": "2847ee9ff8408c7cac3d0b43b591512d705eabdb0cab25b6186a5d6866ac959d"
+      "scope_alternatives": [],
+      "digest": "a0d3d3032f0f006f8a3341a8cbec60c3c19764e0a28c007e1145486c46cd499e"
     },
     "calendar.get_event": {
       "risk": "READ",
       "scopes": [
         "https://www.googleapis.com/auth/calendar.events.readonly"
       ],
+      "scope_alternatives": [],
       "digest": "418a4d40c507d8851b169e1acaf95410bb412adbab5c6e39993c369f83da844b"
     },
     "calendar.query_freebusy": {
@@ -76,6 +86,7 @@
       "scopes": [
         "https://www.googleapis.com/auth/calendar.freebusy"
       ],
+      "scope_alternatives": [],
       "digest": "1d059ec69a15f3299afcdeda26bc4ddd9c0b937962c242fa9a4ab67141552539"
     },
     "calendar.create_event": {
@@ -83,13 +94,15 @@
       "scopes": [
         "https://www.googleapis.com/auth/calendar.events"
       ],
-      "digest": "8df0e2301f5768ff80c83b91f1fba2c4d0ae4ee753e287b60c3425b9ff088097"
+      "scope_alternatives": [],
+      "digest": "fdd46d73c6b78f7a7eef0421013d24c01deaf019679fc7e5e91638765c75d054"
     },
     "calendar.update_event": {
       "risk": "EXTERNAL_EFFECT",
       "scopes": [
         "https://www.googleapis.com/auth/calendar.events"
       ],
+      "scope_alternatives": [],
       "digest": "ecb8dcbb17f9d93d5a942620175c442406278295f1b18ad0707ea1be75dbd9b2"
     },
     "calendar.cancel_event": {
@@ -97,6 +110,7 @@
       "scopes": [
         "https://www.googleapis.com/auth/calendar.events"
       ],
+      "scope_alternatives": [],
       "digest": "86cbc10307f8b9610f051e6207da146fd5b8d24ce12cb74d9975d8a7a255e0e0"
     },
     "drive.search_files": {
@@ -104,97 +118,571 @@
       "scopes": [
         "https://www.googleapis.com/auth/drive.file"
       ],
-      "digest": "9d960a9c2840c53226c6e41558cef4d0342290072e5d4c38629904de7fe2b1a3"
+      "scope_alternatives": [
+        [
+          "https://www.googleapis.com/auth/drive.file"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive.readonly"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive"
+        ]
+      ],
+      "digest": "ea89f5dc31400d5b50592c65f517836f54cba084eec71f947780a120038aab74"
     },
     "drive.get_file_metadata": {
       "risk": "READ",
       "scopes": [
         "https://www.googleapis.com/auth/drive.file"
       ],
-      "digest": "1d9ab1cbaa424412203f9d4fb9b2ff73706cc6ec9d2f8db949f047de4b357fd1"
+      "scope_alternatives": [
+        [
+          "https://www.googleapis.com/auth/drive.file"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive.readonly"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive"
+        ]
+      ],
+      "digest": "237c3a28c3c2aff40a4a8618d44e70352b749dd65370fc960399ebe6e840b0b6"
     },
     "drive.read_file": {
       "risk": "READ",
       "scopes": [
         "https://www.googleapis.com/auth/drive.file"
       ],
-      "digest": "f6ab294312716bb8defd2c22f7bf265110a1d3acb6d31b36fa17c4bb770f3bc7"
+      "scope_alternatives": [
+        [
+          "https://www.googleapis.com/auth/drive.file"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive.readonly"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive"
+        ]
+      ],
+      "digest": "9c3aed35c272df63e4fe12c81b1841552eb847a562ec3d518ea106fdd4ec8742"
     },
     "drive.list_folder": {
       "risk": "READ",
       "scopes": [
         "https://www.googleapis.com/auth/drive.file"
       ],
-      "digest": "7a09dfbc272627d69fa16df3cb1cb5afa3e21deba60aaf3fb120fb3ddbab52fe"
+      "scope_alternatives": [
+        [
+          "https://www.googleapis.com/auth/drive.file"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive.readonly"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive"
+        ]
+      ],
+      "digest": "b1cce4b441ad438934ab288fea1461a6a8d4ef06bd8bf64185db0860a1f97a93"
     },
     "drive.upload_artifact": {
       "risk": "ACCOUNT_WRITE",
       "scopes": [
         "https://www.googleapis.com/auth/drive.file"
       ],
-      "digest": "1467743f0471c6e4afa460ba20ae0173606fb85c3c46b81447dcb3cee413f287"
+      "scope_alternatives": [],
+      "digest": "b84b5154f1133cea0df276d379fadc374f45c251caf73191e794af1d975436a6"
     },
     "drive.create_folder": {
       "risk": "ACCOUNT_WRITE",
       "scopes": [
         "https://www.googleapis.com/auth/drive.file"
       ],
+      "scope_alternatives": [],
       "digest": "9fadf70a22aed3f6d156ee795bdd4b6cf5bf496b76d4b2c47bfb87683572b4fe"
     },
     "artifact.create_docx": {
       "risk": "LOCAL_WRITE",
       "scopes": [],
+      "scope_alternatives": [],
       "digest": "d75ca33a1fd6ffb1b013071452e5840cf2d5aaf900e008ab20845576fae6bc68"
     },
     "artifact.create_pdf": {
       "risk": "LOCAL_WRITE",
       "scopes": [],
+      "scope_alternatives": [],
       "digest": "be09aa549cb39eac91dfc5cc7082464a1bb422652d914a626b409a90db3f5265"
     },
     "artifact.create_xlsx": {
       "risk": "LOCAL_WRITE",
       "scopes": [],
+      "scope_alternatives": [],
       "digest": "cdcd7528234073311b28d917b315fd0f27e3c349878e4ae543421b7910d4182d"
     },
     "artifact.create_pptx": {
       "risk": "LOCAL_WRITE",
       "scopes": [],
+      "scope_alternatives": [],
       "digest": "57eee02fafcf4f40d1cc13c02bf921c41927c312cfa9a7c648a5afbe5dd41143"
     },
     "artifact.create_csv": {
       "risk": "LOCAL_WRITE",
       "scopes": [],
+      "scope_alternatives": [],
       "digest": "82e0a67f27b279f867c17b05b5637eeb3c5dab72ce97ed8fe28e9e6e0ec5062b"
     },
     "artifact.create_markdown": {
       "risk": "LOCAL_WRITE",
       "scopes": [],
+      "scope_alternatives": [],
       "digest": "79aa10a79a6be9dfea240e09d56fed1ad0d6e7d9d5079a30ac0db4ec496c23ce"
     },
     "artifact.create_html": {
       "risk": "LOCAL_WRITE",
       "scopes": [],
+      "scope_alternatives": [],
       "digest": "054b99e9b33e7eee43ecbf0a562c295bc262972337b943178b45580bc4e9710c"
     },
     "artifact.get_artifact_metadata": {
       "risk": "READ",
       "scopes": [],
+      "scope_alternatives": [],
       "digest": "b2cd29830544a7daabd08afdf680d2c739ff850235971a8a959aac350edd31bf"
     },
     "artifact.validate_artifact": {
       "risk": "READ",
       "scopes": [],
+      "scope_alternatives": [],
       "digest": "c64e3990436f8d3a50b50dd65a258afb4ff9364654942750fdff6ddf56386370"
     },
     "artifact.list_artifacts": {
       "risk": "READ",
       "scopes": [],
+      "scope_alternatives": [],
       "digest": "127426f157f976e82b3ca11a806373bd85458c7bc6f84d3f28faa81f9429b12f"
     },
     "demo.ping": {
       "risk": "READ",
       "scopes": [],
+      "scope_alternatives": [],
       "digest": "7bcd05224082031becf8557f727d686a6b7cbc48d948faf7dd2bbfd13d9c70db"
+    },
+    "gmail.get_messages": {
+      "risk": "READ",
+      "scopes": [
+        "https://www.googleapis.com/auth/gmail.readonly"
+      ],
+      "scope_alternatives": [],
+      "digest": "6878ce516b84fc6b7144117c3c1018650b9bdb3525de2325229b0a1274d5c8d3"
+    },
+    "gmail.get_draft": {
+      "risk": "READ",
+      "scopes": [
+        "https://www.googleapis.com/auth/gmail.compose"
+      ],
+      "scope_alternatives": [],
+      "digest": "16f64306c50a03c00f621d46653169d30dfed51a357d1c01e2519fb8f7bed06b"
+    },
+    "gmail.update_draft": {
+      "risk": "ACCOUNT_WRITE",
+      "scopes": [
+        "https://www.googleapis.com/auth/gmail.compose"
+      ],
+      "scope_alternatives": [],
+      "digest": "21566e69f693d1a098db61f6e66c78243daecc20856d107e30316fe7f38922d1"
+    },
+    "gmail.get_attachment": {
+      "risk": "READ",
+      "scopes": [
+        "https://www.googleapis.com/auth/gmail.readonly"
+      ],
+      "scope_alternatives": [],
+      "digest": "a509c6ec8818ef2be181511d11e68bbaf332d09c5a3b39366396b59f92a12aa5"
+    },
+    "gmail.archive_message": {
+      "risk": "ACCOUNT_WRITE",
+      "scopes": [
+        "https://www.googleapis.com/auth/gmail.modify"
+      ],
+      "scope_alternatives": [],
+      "digest": "5a2d6499a3d2ed704742646d9ce808eab102f844042cd5a78b6a1f6273da9627"
+    },
+    "gmail.trash_message": {
+      "risk": "DESTRUCTIVE",
+      "scopes": [
+        "https://www.googleapis.com/auth/gmail.modify"
+      ],
+      "scope_alternatives": [],
+      "digest": "986c9fd564772e0d4da6591fbeeceb47385ab8834e32c8478c46db659bdc7dab"
+    },
+    "gmail.untrash_message": {
+      "risk": "ACCOUNT_WRITE",
+      "scopes": [
+        "https://www.googleapis.com/auth/gmail.modify"
+      ],
+      "scope_alternatives": [],
+      "digest": "88dac655dc4c2730b3ab2064693ba4dc7d23159ec4d2d10851e704bdadcd3704"
+    },
+    "drive.list_drives": {
+      "risk": "READ",
+      "scopes": [
+        "https://www.googleapis.com/auth/drive.file"
+      ],
+      "scope_alternatives": [
+        [
+          "https://www.googleapis.com/auth/drive.file"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive.readonly"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive"
+        ]
+      ],
+      "digest": "8862a3da96e21a7f4fe3394b3de1f0fbd00e611b054e071d24a86b651e440220"
+    },
+    "drive.find_operation": {
+      "risk": "READ",
+      "scopes": [
+        "https://www.googleapis.com/auth/drive.file"
+      ],
+      "scope_alternatives": [
+        [
+          "https://www.googleapis.com/auth/drive.file"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive.readonly"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive"
+        ]
+      ],
+      "digest": "b34e8facfe6bf7322bbe113dadb320db8954e8ff965dfe3f02f4d72a8162fa5b"
+    },
+    "drive.export_file": {
+      "risk": "READ",
+      "scopes": [
+        "https://www.googleapis.com/auth/drive.file"
+      ],
+      "scope_alternatives": [
+        [
+          "https://www.googleapis.com/auth/drive.file"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive.readonly"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive"
+        ]
+      ],
+      "digest": "c2353cc19bc2e64560546260b344f578d5131b0da74e99f4b39b0f3df9dc66e2"
+    },
+    "drive.copy_file": {
+      "risk": "ACCOUNT_WRITE",
+      "scopes": [
+        "https://www.googleapis.com/auth/drive"
+      ],
+      "scope_alternatives": [],
+      "digest": "eac5aeb5dbf246a14b37abf9680dfd9b049b9b3328e334182ed00e97ec81cdad"
+    },
+    "drive.rename_file": {
+      "risk": "ACCOUNT_WRITE",
+      "scopes": [
+        "https://www.googleapis.com/auth/drive"
+      ],
+      "scope_alternatives": [],
+      "digest": "f16e59900d4e889c42f42f9f71588161689f63fb64226cd78b15e6d6fdb16193"
+    },
+    "drive.move_file": {
+      "risk": "ACCOUNT_WRITE",
+      "scopes": [
+        "https://www.googleapis.com/auth/drive"
+      ],
+      "scope_alternatives": [],
+      "digest": "3fa59085f9c8cf1943a61cd20457e0dc0c1a09761a16a174f9742cd7877f002e"
+    },
+    "drive.share_file": {
+      "risk": "EXTERNAL_EFFECT",
+      "scopes": [
+        "https://www.googleapis.com/auth/drive"
+      ],
+      "scope_alternatives": [],
+      "digest": "6b3bd45b41e816ede5b0b0342de39ac45fb61d659985aaba1a082498674052f8"
+    },
+    "drive.trash_file": {
+      "risk": "DESTRUCTIVE",
+      "scopes": [
+        "https://www.googleapis.com/auth/drive"
+      ],
+      "scope_alternatives": [],
+      "digest": "44101007f78abdda3026936a5337803aeb76a8ddf66ebf55b275878f0348eab9"
+    },
+    "docs.get_document": {
+      "risk": "READ",
+      "scopes": [
+        "https://www.googleapis.com/auth/documents.readonly"
+      ],
+      "scope_alternatives": [
+        [
+          "https://www.googleapis.com/auth/documents.readonly"
+        ],
+        [
+          "https://www.googleapis.com/auth/documents"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive.readonly"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive.file"
+        ]
+      ],
+      "digest": "a0a4fc2b417493c05fea8d8802b7834ea0f5d2dbdf2bb583ff8a4f612cabd1f6"
+    },
+    "docs.create_document": {
+      "risk": "ACCOUNT_WRITE",
+      "scopes": [
+        "https://www.googleapis.com/auth/documents"
+      ],
+      "scope_alternatives": [
+        [
+          "https://www.googleapis.com/auth/drive"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive.file"
+        ]
+      ],
+      "digest": "ba22556ab32157e0232e82c78970cfae70c10f0ff9147e1ec0cbda446049381f"
+    },
+    "docs.update_document": {
+      "risk": "ACCOUNT_WRITE",
+      "scopes": [
+        "https://www.googleapis.com/auth/documents"
+      ],
+      "scope_alternatives": [
+        [
+          "https://www.googleapis.com/auth/documents"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive.file"
+        ]
+      ],
+      "digest": "422377b678dfff1af5d97833827fd5e131ef54df54e07fc0913dfc8059b690df"
+    },
+    "sheets.get_spreadsheet": {
+      "risk": "READ",
+      "scopes": [
+        "https://www.googleapis.com/auth/spreadsheets.readonly"
+      ],
+      "scope_alternatives": [
+        [
+          "https://www.googleapis.com/auth/spreadsheets.readonly"
+        ],
+        [
+          "https://www.googleapis.com/auth/spreadsheets"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive.readonly"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive.file"
+        ]
+      ],
+      "digest": "89d61feacf9f649ae97671767e961127d13d246d803b56e37b0808f05429c493"
+    },
+    "sheets.read_range": {
+      "risk": "READ",
+      "scopes": [
+        "https://www.googleapis.com/auth/spreadsheets.readonly"
+      ],
+      "scope_alternatives": [
+        [
+          "https://www.googleapis.com/auth/spreadsheets.readonly"
+        ],
+        [
+          "https://www.googleapis.com/auth/spreadsheets"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive.readonly"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive.file"
+        ]
+      ],
+      "digest": "f8c6a4ba6a92729df8d2bab32657da09fb43d455058d63ad66cc24d84995b61f"
+    },
+    "sheets.create_spreadsheet": {
+      "risk": "ACCOUNT_WRITE",
+      "scopes": [
+        "https://www.googleapis.com/auth/spreadsheets"
+      ],
+      "scope_alternatives": [
+        [
+          "https://www.googleapis.com/auth/drive"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive.file"
+        ]
+      ],
+      "digest": "a33aa7a7fdc31616a438098cfed851ed4a6aaebe6c402da04bd52b17489df41d"
+    },
+    "sheets.write_range": {
+      "risk": "ACCOUNT_WRITE",
+      "scopes": [
+        "https://www.googleapis.com/auth/spreadsheets"
+      ],
+      "scope_alternatives": [
+        [
+          "https://www.googleapis.com/auth/spreadsheets"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive.file"
+        ]
+      ],
+      "digest": "963f1dac574b2ce9bf9ef4ccf67a18bd17230ff235d0f876216db07093b8f816"
+    },
+    "sheets.append_rows": {
+      "risk": "ACCOUNT_WRITE",
+      "scopes": [
+        "https://www.googleapis.com/auth/spreadsheets"
+      ],
+      "scope_alternatives": [
+        [
+          "https://www.googleapis.com/auth/spreadsheets"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive.file"
+        ]
+      ],
+      "digest": "4b7faa8f4e9efb1d3bb27ed1ea148c4886de28f93c37896b9513510844fde2f1"
+    },
+    "sheets.format_range": {
+      "risk": "ACCOUNT_WRITE",
+      "scopes": [
+        "https://www.googleapis.com/auth/spreadsheets"
+      ],
+      "scope_alternatives": [
+        [
+          "https://www.googleapis.com/auth/spreadsheets"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive.file"
+        ]
+      ],
+      "digest": "d7fd82750ac1761b145a74abe2e68d9455ed67a49fbd6e1c77697c7308ae73f3"
+    },
+    "sheets.add_chart": {
+      "risk": "ACCOUNT_WRITE",
+      "scopes": [
+        "https://www.googleapis.com/auth/spreadsheets"
+      ],
+      "scope_alternatives": [
+        [
+          "https://www.googleapis.com/auth/spreadsheets"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive.file"
+        ]
+      ],
+      "digest": "83576320422bff52d19be2e16f34a0bf45ff2af12b87957dada0d1bda93ac46d"
+    },
+    "sheets.add_sheet": {
+      "risk": "ACCOUNT_WRITE",
+      "scopes": [
+        "https://www.googleapis.com/auth/spreadsheets"
+      ],
+      "scope_alternatives": [
+        [
+          "https://www.googleapis.com/auth/spreadsheets"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive.file"
+        ]
+      ],
+      "digest": "5d39c6e559eee9448dff297d1c9e43043ac56f8281187722e1b70522dbce0fcf"
+    },
+    "slides.get_presentation": {
+      "risk": "READ",
+      "scopes": [
+        "https://www.googleapis.com/auth/presentations.readonly"
+      ],
+      "scope_alternatives": [
+        [
+          "https://www.googleapis.com/auth/presentations.readonly"
+        ],
+        [
+          "https://www.googleapis.com/auth/presentations"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive.readonly"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive.file"
+        ]
+      ],
+      "digest": "aca11e56f555708ebf532935885575ef78f8e8f22f10de56690f9c9b402a61b2"
+    },
+    "slides.create_presentation": {
+      "risk": "ACCOUNT_WRITE",
+      "scopes": [
+        "https://www.googleapis.com/auth/presentations"
+      ],
+      "scope_alternatives": [
+        [
+          "https://www.googleapis.com/auth/drive"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive.file"
+        ]
+      ],
+      "digest": "bbd7eb0a11ad4f3e0ec24980e266d50374fab9f2f353e6b0593b7707285542d2"
+    },
+    "slides.update_presentation": {
+      "risk": "DESTRUCTIVE",
+      "scopes": [
+        "https://www.googleapis.com/auth/presentations"
+      ],
+      "scope_alternatives": [
+        [
+          "https://www.googleapis.com/auth/presentations"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive"
+        ],
+        [
+          "https://www.googleapis.com/auth/drive.file"
+        ]
+      ],
+      "digest": "0638683ac890e8369e5828d49b1f5f81dd44e13ad24a1c820e9c5d4341e0ece6"
     }
   }
 }

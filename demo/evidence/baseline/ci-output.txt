@@ -1,0 +1,177 @@
+uv run --locked ruff check src tests scripts examples
+All checks passed!
+cd web && npm run lint
+
+> mcp-workspace-web@0.1.0 lint
+> eslint . --max-warnings 0
+
+uv run --locked ruff format --check src tests scripts examples
+39 files already formatted
+cd web && npm run format-check
+
+> mcp-workspace-web@0.1.0 format-check
+> prettier --check .
+
+Checking formatting...
+All matched files use Prettier code style!
+uv run --locked mypy src/workspace_ai scripts examples
+Success: no issues found in 26 source files
+cd web && npm run typecheck
+
+> mcp-workspace-web@0.1.0 typecheck
+> tsc -b --pretty false
+
+uv run --locked python scripts/check_schema.py
+Backend OpenAPI matches the browser contract.
+cd web && npm run check:api
+
+> mcp-workspace-web@0.1.0 check:api
+> openapi-typescript openapi.json --alphabetize -o src/generated-api.d.ts --check
+
+✨ openapi-typescript 7.13.0
+mkdir -p .local
+uv run --locked pytest --cov=workspace_ai --cov-report=term-missing --cov-report=json:.local/coverage.json
+============================= test session starts ==============================
+platform linux -- Python 3.12.12, pytest-9.2.0, pluggy-1.7.0
+rootdir: /home/nehal/Personal/mcp-workspace-ai
+configfile: pyproject.toml
+testpaths: tests
+plugins: platformdirs-4.14.5, respx-0.23.1, cov-7.1.0, anyio-4.16.0, asyncio-1.4.1.post1
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
+collected 213 items
+
+tests/test_api.py .........                                              [  4%]
+tests/test_artifacts.py ................................................ [ 26%]
+...........                                                              [ 31%]
+tests/test_connectors.py ..........................................      [ 51%]
+tests/test_extraction.py ........                                        [ 55%]
+tests/test_google_auth.py ...........                                    [ 60%]
+tests/test_model.py .....                                                [ 62%]
+tests/test_protocol.py .............................                     [ 76%]
+tests/test_recovery.py ....                                              [ 78%]
+tests/test_security.py .................                                 [ 86%]
+tests/test_vault.py .................                                    [ 94%]
+tests/test_workflows.py ............                                     [100%]
+
+=============================== warnings summary ===============================
+tests/test_google_auth.py:11
+  /home/nehal/Personal/mcp-workspace-ai/tests/test_google_auth.py:11: AuthlibDeprecationWarning: authlib.jose module is deprecated, please use joserfc instead.
+  It will be compatible before version 2.0.0.
+    from authlib.jose import JsonWebKey, JsonWebToken
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.12.12-final-0 _______________
+
+Name                              Stmts   Miss  Cover   Missing
+---------------------------------------------------------------
+src/workspace_ai/__init__.py          0      0   100%
+src/workspace_ai/agent.py           363     35    90%   37, 41, 51-52, 78, 91, 120, 122-125, 157, 169, 185, 196, 305, 314-322, 389, 459, 553, 569, 592, 596, 598-610, 617, 678, 700, 704
+src/workspace_ai/api.py             574     77    87%   126, 162, 266, 274-276, 282, 286-290, 299, 302, 339, 351, 354, 363, 368, 422, 429-430, 442, 491-492, 517, 519-520, 528-530, 557, 561, 656, 667, 681-682, 690, 716-719, 752, 761, 776-779, 799, 820, 829, 864, 877-881, 885-909, 917, 933-936, 946, 1005-1008, 1019-1021, 1056
+src/workspace_ai/artifacts.py       678     47    93%   82, 114, 150, 163, 170, 204-205, 231, 262, 264, 280, 285, 287, 289, 320, 325, 327, 329, 331, 333, 370, 396, 446, 455, 464, 508, 541, 544, 546, 560, 563, 590, 612, 614, 616, 645, 652, 658, 671, 697, 702, 713, 715, 740, 742, 813, 815
+src/workspace_ai/cli.py             227    101    56%   30-36, 40-57, 66, 88, 90, 112, 114, 135-136, 142-184, 231-233, 241-260, 262-291, 301, 303-308, 310-314, 320-321, 328-329, 342, 349-350, 359
+src/workspace_ai/connectors.py      754    103    86%   67, 89, 92, 127, 163, 165-166, 175, 212, 215, 227, 229-231, 233-234, 243, 249, 497-498, 500, 523, 525, 532, 538, 542-545, 557, 568, 586, 593-594, 598, 610, 619, 652, 697, 763, 783, 860, 884, 902, 955, 957, 969, 991, 1039, 1046, 1059, 1070, 1073, 1086-1090, 1092-1098, 1121-1123, 1132, 1137-1165, 1171-1178, 1180-1189, 1210, 1234, 1271, 1280-1283, 1295, 1300, 1309-1310, 1324, 1334, 1357, 1374, 1394-1395, 1409, 1413-1418, 1421-1423, 1439, 1442-1443
+src/workspace_ai/contracts.py       179      4    98%   81, 83, 109, 161
+src/workspace_ai/db.py              115      0   100%
+src/workspace_ai/evaluation.py       89     89     0%   3-299
+src/workspace_ai/extraction.py      141     17    88%   69-70, 86-87, 94, 98, 131-132, 151, 156, 159-160, 164, 184, 187-188, 215
+src/workspace_ai/google_auth.py     101     16    84%   85, 88, 95, 99, 134, 140, 146, 149, 152-153, 185, 193-195, 200-201
+src/workspace_ai/mcp_servers.py      76      1    99%   60
+src/workspace_ai/migrate.py          10      0   100%
+src/workspace_ai/runtime.py         304     28    91%   96, 110, 118-123, 150, 221, 261, 269, 285, 360, 369-372, 463, 466, 480, 516, 536-539, 553-554, 614
+src/workspace_ai/security.py         87      3    97%   86, 116, 118
+src/workspace_ai/settings.py         59      3    95%   56, 67, 70
+src/workspace_ai/views.py            91      0   100%
+---------------------------------------------------------------
+TOTAL                              3848    524    86%
+Coverage JSON written to file .local/coverage.json
+================== 213 passed, 1 warning in 98.31s (0:01:38) ===================
+cd web && npm test
+
+> mcp-workspace-web@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 /home/nehal/Personal/mcp-workspace-ai/web
+
+
+ Test Files  3 passed (3)
+      Tests  12 passed (12)
+   Start at  13:41:01
+   Duration  1.74s (transform 237ms, setup 566ms, import 675ms, tests 447ms, environment 2.51s)
+
+mkdir -p .local
+uv export --locked --format requirements-txt --no-emit-project --output-file .local/audit-requirements.txt >/dev/null
+Resolved 98 packages in 0.93ms
+uv run --locked pip-audit --strict --disable-pip --no-deps -r .local/audit-requirements.txt
+WARNING:pip_audit._cli:--no-deps is supported, but users are encouraged to fully hash their pinned dependencies
+WARNING:pip_audit._cli:Consider using a tool like `pip-compile`: https://pip-tools.readthedocs.io/en/latest/#using-hashes
+No known vulnerabilities found
+cd web && npm audit --audit-level=high
+found 0 vulnerabilities
+uv run --locked bandit -q -r src/workspace_ai -x src/workspace_ai/migrations
+uv run --locked pytest tests/test_security.py
+============================= test session starts ==============================
+platform linux -- Python 3.12.12, pytest-9.2.0, pluggy-1.7.0
+rootdir: /home/nehal/Personal/mcp-workspace-ai
+configfile: pyproject.toml
+plugins: platformdirs-4.14.5, respx-0.23.1, cov-7.1.0, anyio-4.16.0, asyncio-1.4.1.post1
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
+collected 17 items
+
+tests/test_security.py .................                                 [100%]
+
+=============================== warnings summary ===============================
+tests/test_security.py::test_oauth_state_browser_binding_expiry_decline_and_replay
+  /home/nehal/Personal/mcp-workspace-ai/src/workspace_ai/google_auth.py:15: AuthlibDeprecationWarning: authlib.jose module is deprecated, please use joserfc instead.
+  It will be compatible before version 2.0.0.
+    from authlib.jose import JsonWebToken
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 17 passed, 1 warning in 12.75s ========================
+uv run --locked python scripts/secret_scan.py
+Source secret-pattern scan passed (heuristic; not a credential audit).
+uv build
+Building source distribution...
+Building wheel from source distribution...
+Successfully built dist/mcp_workspace_ai-0.1.0.tar.gz
+Successfully built dist/mcp_workspace_ai-0.1.0-py3-none-any.whl
+cd web && npm run build
+
+> mcp-workspace-web@0.1.0 build
+> tsc -b && vite build
+
+vite v7.3.7 building client environment for production...
+transforming...
+✓ 1950 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.60 kB │ gzip:   0.36 kB
+dist/assets/index-BH_DcsxH.css   42.61 kB │ gzip:   9.94 kB
+dist/assets/index-Bp_r-GZp.js   433.51 kB │ gzip: 133.01 kB
+✓ built in 1.90s
+uv run --locked python scripts/run_e2e.py
+Isolated mock backend ready; running real browser workflows.
+
+> mcp-workspace-web@0.1.0 test:e2e
+> playwright test
+
+
+Running 10 tests using 2 workers
+
+(node:91910) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:91909) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   2 [chromium] › e2e/ui-states.spec.ts:5:1 › demo entry is explicit, synthetic labeling persists, connector controls use CSRF (864ms)
+  ✓   3 [chromium] › e2e/ui-states.spec.ts:23:1 › approval exposes exact action, allows one decision, and prevents expired actions (502ms)
+  ✓   4 [chromium] › e2e/ui-states.spec.ts:50:1 › MCP schemas and source metadata expand, artifacts link to authenticated downloads (743ms)
+  ✓   5 [chromium] › e2e/ui-states.spec.ts:77:1 › loading, offline, failed requests, and partial responses disclose actual state (1.6s)
+  ✓   6 [chromium] › e2e/ui-states.spec.ts:104:1 › live mode only offers Google sign-in (326ms)
+  ✓   1 [chromium] › e2e/workspace.spec.ts:5:3 › real mock backend workflows › creates a sourced cross-app report, downloads artifacts, and restores history (5.7s)
+  ✓   7 [chromium] › e2e/ui-states.spec.ts:118:3 › renders and supports keyboard navigation at 390x844 (2.0s)
+  ✓   8 [chromium] › e2e/workspace.spec.ts:77:3 › real mock backend workflows › rejects a proposed external action without approving it (1.7s)
+  ✓   9 [chromium] › e2e/ui-states.spec.ts:118:3 › renders and supports keyboard navigation at 1440x900 (1.4s)
+  ✓  10 [chromium] › e2e/workspace.spec.ts:96:3 › real mock backend workflows › approves a synthetic draft and its separate send action once each (3.2s)
+
+  10 passed (11.3s)

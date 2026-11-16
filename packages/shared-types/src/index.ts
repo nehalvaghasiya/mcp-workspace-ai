@@ -6,6 +6,7 @@ export type User = components['schemas']['UserView'];
 export type Session = components['schemas']['SessionView'];
 export type SourceRef = components['schemas']['SourceRef'];
 export type Artifact = components['schemas']['ArtifactView'];
+export type WorkspaceFile = components['schemas']['WorkspaceFileView'];
 export type Message = components['schemas']['MessageView'];
 export type Run = components['schemas']['RunView'];
 export type RunStatus = Run['status'];
@@ -41,6 +42,10 @@ interface EventBase {
 export type StreamEvent = EventBase &
   (
     | { type: 'run.started'; data: Record<string, Json> }
+    | {
+        type: 'model.started' | 'model.completed' | 'model.failed' | 'model.usage';
+        data: Record<string, Json>;
+      }
     | { type: 'tool.started'; data: { tool: string; server: string; arguments: Json } }
     | {
         type: 'tool.completed';
@@ -58,7 +63,12 @@ export type StreamEvent = EventBase &
     | { type: 'message.delta'; data: { text: string } }
     | {
         type: 'run.completed';
-        data: { content: string; sources: SourceRef[]; artifacts: Artifact[] };
+        data: {
+          content: string;
+          sources: SourceRef[];
+          artifacts: Artifact[];
+          workspace_files?: WorkspaceFile[];
+        };
       }
     | { type: 'run.failed'; data: { message: string; code: string } }
     | { type: 'run.cancelled'; data: Record<string, Json> }

@@ -1,0 +1,398 @@
+[
+  {
+    "id": "M0-01",
+    "title": "Locked package, setup and app factory",
+    "owner": "root",
+    "state": "done",
+    "depends_on": "\u2014",
+    "complexity": "M",
+    "files": "pyproject.toml, Makefile, api.py",
+    "acceptance": [
+      "Locked install, health and typed error boundaries"
+    ],
+    "tests": "test_api.py",
+    "security_impact": "local configuration",
+    "documentation": "docs/OPERATIONS.md",
+    "merge_gate": "focused tests, lint/types/security, milestone combined verification",
+    "evidence": "docs/progress.md#m0-01",
+    "updated_at": "2026-11-06T19:43:14.667731+00:00"
+  },
+  {
+    "id": "M0-02",
+    "title": "Owned persistence, migrations and sessions",
+    "owner": "root",
+    "state": "done",
+    "depends_on": "\u2014",
+    "complexity": "M",
+    "files": "db.py, migrations, api.py",
+    "acceptance": [
+      "Fresh schema, authenticated sessions, owner isolation and local deletion"
+    ],
+    "tests": "test_api.py, test_security.py, test_vault.py",
+    "security_impact": "identity and private rows",
+    "documentation": "docs/SECURITY.md",
+    "merge_gate": "focused tests, lint/types/security, milestone combined verification",
+    "evidence": "docs/progress.md#m0-02",
+    "updated_at": "2026-11-06T19:43:14.667731+00:00"
+  },
+  {
+    "id": "M0-03",
+    "title": "Frozen synthetic fixture manifest",
+    "owner": "google_connectors",
+    "state": "done",
+    "depends_on": "\u2014",
+    "complexity": "M",
+    "files": "connectors.py, fixtures/synthetic",
+    "acceptance": [
+      "Repeatable isolated messages/events/files, error and hostile fixtures"
+    ],
+    "tests": "test_connectors.py",
+    "security_impact": "synthetic data only",
+    "documentation": "docs/USER_GUIDE.md",
+    "merge_gate": "focused tests, lint/types/security, milestone combined verification",
+    "evidence": "docs/progress.md#m0-03",
+    "updated_at": "2026-11-06T19:43:14.667731+00:00"
+  },
+  {
+    "id": "M1-01",
+    "title": "Real HTTP and stdio MCP servers",
+    "owner": "root",
+    "state": "done",
+    "depends_on": "M0",
+    "complexity": "M",
+    "files": "mcp_servers.py, runtime.py",
+    "acceptance": [
+      "All five namespaces independently callable; auth and Origin negatives"
+    ],
+    "tests": "test_protocol.py",
+    "security_impact": "internal assertions",
+    "documentation": "docs/MCP_PROTOCOL.md",
+    "merge_gate": "focused tests, lint/types/security, milestone combined verification",
+    "evidence": "docs/progress.md#m1-01",
+    "updated_at": "2026-11-06T19:43:14.667731+00:00"
+  },
+  {
+    "id": "M1-02",
+    "title": "Discovery, resources, prompts and schema registry",
+    "owner": "root",
+    "state": "done",
+    "depends_on": "M0",
+    "complexity": "M",
+    "files": "contracts.py, runtime.py",
+    "acceptance": [
+      "31 typed tools, safe resources/prompts, digest and unknown-tool checks"
+    ],
+    "tests": "test_protocol.py",
+    "security_impact": "schema trust",
+    "documentation": "docs/mcp/TOOL_CATALOG.md",
+    "merge_gate": "focused tests, lint/types/security, milestone combined verification",
+    "evidence": "docs/progress.md#m1-02",
+    "updated_at": "2026-11-06T19:43:14.667731+00:00"
+  },
+  {
+    "id": "M2-01",
+    "title": "Gmail reads and MIME handling",
+    "owner": "google_connectors",
+    "state": "done",
+    "depends_on": "M1",
+    "complexity": "M",
+    "files": "connectors.py",
+    "acceptance": [
+      "Query/pagination, bounded decoding, thread order and citations"
+    ],
+    "tests": "test_connectors.py, test_protocol.py",
+    "security_impact": "untrusted mail",
+    "documentation": "docs/USER_GUIDE.md",
+    "merge_gate": "focused tests, lint/types/security, milestone combined verification",
+    "evidence": "docs/progress.md#m2-01",
+    "updated_at": "2026-11-06T19:43:14.667731+00:00"
+  },
+  {
+    "id": "M2-02",
+    "title": "Calendar read and availability semantics",
+    "owner": "google_connectors",
+    "state": "done",
+    "depends_on": "M1",
+    "complexity": "M",
+    "files": "connectors.py, contracts.py",
+    "acceptance": [
+      "Time ranges, DST, recurring/all-day events and inaccessible-calendar behavior"
+    ],
+    "tests": "test_connectors.py, test_workflows.py",
+    "security_impact": "time and permissions",
+    "documentation": "docs/USER_GUIDE.md",
+    "merge_gate": "focused tests, lint/types/security, milestone combined verification",
+    "evidence": "docs/progress.md#m2-02",
+    "updated_at": "2026-11-06T19:43:14.667731+00:00"
+  },
+  {
+    "id": "M2-03",
+    "title": "Drive reads and bounded extraction",
+    "owner": "google_connectors",
+    "state": "done",
+    "depends_on": "M1",
+    "complexity": "M",
+    "files": "connectors.py, extraction.py",
+    "acceptance": [
+      "Per-file permissions, native export, text/PDF/Office extraction and hostile limits"
+    ],
+    "tests": "test_extraction.py, test_connectors.py",
+    "security_impact": "untrusted files and resource keys",
+    "documentation": "docs/OAUTH_SETUP.md",
+    "merge_gate": "focused tests, lint/types/security, milestone combined verification",
+    "evidence": "docs/progress.md#m2-03",
+    "updated_at": "2026-11-06T19:43:14.667731+00:00"
+  },
+  {
+    "id": "M3-01",
+    "title": "Artifact IR and seven renderers",
+    "owner": "artifact_engine",
+    "state": "done",
+    "depends_on": "M1",
+    "complexity": "M",
+    "files": "artifacts.py, assets/fonts",
+    "acceptance": [
+      "Real files pass semantic/structural readback, formula and archive safety"
+    ],
+    "tests": "test_artifacts.py",
+    "security_impact": "local files",
+    "documentation": "docs/SECURITY.md",
+    "merge_gate": "focused tests, lint/types/security, milestone combined verification",
+    "evidence": "docs/progress.md#m3-01",
+    "updated_at": "2026-11-06T19:43:14.667731+00:00"
+  },
+  {
+    "id": "M3-02",
+    "title": "Owned library, provenance and downloads",
+    "owner": "root",
+    "state": "done",
+    "depends_on": "M1",
+    "complexity": "M",
+    "files": "runtime.py, api.py",
+    "acceptance": [
+      "Opaque files, atomic publication, quotas and authenticated downloads"
+    ],
+    "tests": "test_api.py, test_workflows.py",
+    "security_impact": "filesystem ownership",
+    "documentation": "docs/USER_GUIDE.md",
+    "merge_gate": "focused tests, lint/types/security, milestone combined verification",
+    "evidence": "docs/progress.md#m3-02",
+    "updated_at": "2026-11-06T19:43:14.667731+00:00"
+  },
+  {
+    "id": "M4-01",
+    "title": "Exact-action policy and one-use approval",
+    "owner": "root",
+    "state": "done",
+    "depends_on": "M2,M3",
+    "complexity": "M",
+    "files": "security.py, runtime.py",
+    "acceptance": [
+      "Changed/replayed/cross-user/expired approval cannot dispatch; races consume once"
+    ],
+    "tests": "test_security.py",
+    "security_impact": "Google writes",
+    "documentation": "docs/SECURITY.md",
+    "merge_gate": "focused tests, lint/types/security, milestone combined verification",
+    "evidence": "docs/progress.md#m4-01",
+    "updated_at": "2026-11-06T19:43:14.667731+00:00"
+  },
+  {
+    "id": "M4-02",
+    "title": "Eight gated Google writes",
+    "owner": "root",
+    "state": "done",
+    "depends_on": "M2,M3",
+    "complexity": "M",
+    "files": "connectors.py, agent.py",
+    "acceptance": [
+      "Draft/send/labels, event create/update/cancel, upload/folder all tested through MCP"
+    ],
+    "tests": "test_api.py, test_protocol.py",
+    "security_impact": "external effects and uncertain outcomes",
+    "documentation": "docs/USER_GUIDE.md",
+    "merge_gate": "focused tests, lint/types/security, milestone combined verification",
+    "evidence": "docs/progress.md#m4-02",
+    "updated_at": "2026-11-06T19:43:14.667731+00:00"
+  },
+  {
+    "id": "M5-01",
+    "title": "OIDC, incremental OAuth and vault lifecycle",
+    "owner": "google_connectors",
+    "state": "done",
+    "depends_on": "M4",
+    "complexity": "M",
+    "files": "google_auth.py, api.py, security.py",
+    "acceptance": [
+      "State/PKCE/nonce, subject binding, refresh/revoke/rotation and restore verified with stubs"
+    ],
+    "tests": "test_google_auth.py, test_security.py, test_vault.py",
+    "security_impact": "credentials",
+    "documentation": "docs/OAUTH_SETUP.md",
+    "merge_gate": "focused tests, lint/types/security, milestone combined verification",
+    "evidence": "docs/progress.md#m5-01",
+    "updated_at": "2026-11-06T19:43:14.667731+00:00"
+  },
+  {
+    "id": "M5-02",
+    "title": "Live adapter contracts and narrow Drive selection",
+    "owner": "google_connectors",
+    "state": "done",
+    "depends_on": "M4",
+    "complexity": "M",
+    "files": "connectors.py, api.py",
+    "acceptance": [
+      "HTTP-stub methods, exact MIME, ETags and scoped exports; domain requirement explicit"
+    ],
+    "tests": "test_connectors.py, test_security.py",
+    "security_impact": "live provider grants",
+    "documentation": "docs/OAUTH_SETUP.md",
+    "merge_gate": "focused tests, lint/types/security, milestone combined verification",
+    "evidence": "docs/progress.md#m5-02",
+    "updated_at": "2026-11-06T19:43:14.667731+00:00"
+  },
+  {
+    "id": "M6-01",
+    "title": "Bounded agent, SSE and resumable state",
+    "owner": "root",
+    "state": "done",
+    "depends_on": "M2,M3,M4",
+    "complexity": "M",
+    "files": "agent.py, api.py",
+    "acceptance": [
+      "Multi-app flows, persistent history, cancellation, sources and no write replay"
+    ],
+    "tests": "test_api.py, test_workflows.py",
+    "security_impact": "model context and run state",
+    "documentation": "docs/ARCHITECTURE.md",
+    "merge_gate": "focused tests, lint/types/security, milestone combined verification",
+    "evidence": "docs/progress.md#m6-01",
+    "updated_at": "2026-11-06T19:43:14.667731+00:00"
+  },
+  {
+    "id": "M6-02",
+    "title": "Accessible browser workflows and generated API types",
+    "owner": "web_app",
+    "state": "done",
+    "depends_on": "M2,M3,M4",
+    "complexity": "M",
+    "files": "web",
+    "acceptance": [
+      "Chat, history, artifacts, approvals, connectors/settings and Explorer; actual backend browser flows"
+    ],
+    "tests": "web unit and Playwright suites",
+    "security_impact": "browser data and action review",
+    "documentation": "docs/USER_GUIDE.md",
+    "merge_gate": "focused tests, lint/types/security, milestone combined verification",
+    "evidence": "docs/progress.md#m6-02",
+    "updated_at": "2026-11-06T19:43:14.667731+00:00"
+  },
+  {
+    "id": "M7-01",
+    "title": "Adversarial boundaries and recovery",
+    "owner": "root",
+    "state": "done",
+    "depends_on": "M6",
+    "complexity": "M",
+    "files": "security.py, runtime.py, extraction.py",
+    "acceptance": [
+      "At least 12 security scenarios, tenant isolation, limits, deletion and unknown outcomes"
+    ],
+    "tests": "test_security.py, test_extraction.py",
+    "security_impact": "security boundary",
+    "documentation": "docs/SECURITY.md",
+    "merge_gate": "focused tests, lint/types/security, milestone combined verification",
+    "evidence": "docs/progress.md#m7-01",
+    "updated_at": "2026-11-06T19:43:14.667731+00:00"
+  },
+  {
+    "id": "M7-02",
+    "title": "Measured synthetic evaluation",
+    "owner": "root",
+    "state": "done",
+    "depends_on": "M6",
+    "complexity": "M",
+    "files": "evaluation.py, eval",
+    "acceptance": [
+      "52 cases with state/tool/source/file assertions and honest model/live status"
+    ],
+    "tests": "make eval",
+    "security_impact": "synthetic reports only",
+    "documentation": "docs/EVALUATION.md",
+    "merge_gate": "focused tests, lint/types/security, milestone combined verification",
+    "evidence": "docs/progress.md#m7-02",
+    "updated_at": "2026-11-06T19:43:14.667731+00:00"
+  },
+  {
+    "id": "M7-03",
+    "title": "CI, dependency scans and containers",
+    "owner": "artifact_engine",
+    "state": "done",
+    "depends_on": "M6",
+    "complexity": "M",
+    "files": "Dockerfile, compose.yaml, CI, scripts",
+    "acceptance": [
+      "Quality and vulnerability checks, clean build, mock container smoke, isolated browser supervisor"
+    ],
+    "tests": "make ci and container smoke",
+    "security_impact": "build and runtime isolation",
+    "documentation": "docs/OPERATIONS.md",
+    "merge_gate": "focused tests, lint/types/security, milestone combined verification",
+    "evidence": "docs/progress.md#m7-03",
+    "updated_at": "2026-11-06T19:43:14.667731+00:00"
+  },
+  {
+    "id": "M8-01",
+    "title": "Architecture, setup and operations documentation",
+    "owner": "root",
+    "state": "done",
+    "depends_on": "M7",
+    "complexity": "M",
+    "files": "README.md, docs",
+    "acceptance": [
+      "Reproducible commands, ADRs, threat boundaries and exact limitations"
+    ],
+    "tests": "schema/docs review",
+    "security_impact": "truthful claims",
+    "documentation": "docs/FINAL_HANDOFF.md",
+    "merge_gate": "focused tests, lint/types/security, milestone combined verification",
+    "evidence": "docs/progress.md#m8-01",
+    "updated_at": "2026-11-06T19:43:14.667731+00:00"
+  },
+  {
+    "id": "M8-02",
+    "title": "Independent protocol and artifact examples",
+    "owner": "root",
+    "state": "done",
+    "depends_on": "M7",
+    "complexity": "M",
+    "files": "examples, docs/demo",
+    "acceptance": [
+      "Runnable client, actual synthetic files/screenshots and protocol evidence"
+    ],
+    "tests": "independent client and readback",
+    "security_impact": "synthetic public examples",
+    "documentation": "docs/MCP_PROTOCOL.md",
+    "merge_gate": "focused tests, lint/types/security, milestone combined verification",
+    "evidence": "docs/progress.md#m8-02",
+    "updated_at": "2026-11-06T19:43:14.667731+00:00"
+  },
+  {
+    "id": "M8-03",
+    "title": "Final acceptance and handoff",
+    "owner": "root",
+    "state": "done",
+    "depends_on": "M7",
+    "complexity": "M",
+    "files": "docs/progress.md, FINAL_HANDOFF.md",
+    "acceptance": [
+      "Actual check exits/counts, remaining NOT_RUN checks and clean launch instructions"
+    ],
+    "tests": "full verification",
+    "security_impact": "release claims",
+    "documentation": "docs/FINAL_HANDOFF.md",
+    "merge_gate": "focused tests, lint/types/security, milestone combined verification",
+    "evidence": "docs/progress.md#m8-03",
+    "updated_at": "2026-11-06T19:43:14.667731+00:00"
+  }
+]

@@ -9,7 +9,7 @@ from mcp_workspace_api.core.presenters import timestamp
 
 
 def resolve_sources(server: str, data: dict[str, Any]) -> list[SourceRef]:
-    if server not in {"gmail", "calendar", "drive"}:
+    if server not in {"gmail", "calendar", "drive", "docs", "sheets", "slides"}:
         return []
     supplied = data.get("sources", [])
     if supplied:

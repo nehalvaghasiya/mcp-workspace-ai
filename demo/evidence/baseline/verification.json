@@ -1,0 +1,104 @@
+{
+  "measured_at": "2026-11-06T19:42:18.552078+00:00",
+  "source": "uncommitted local working tree",
+  "source_files_sha256": "eb3a713fae143f90c6122a7d7daf9a200a58ef6293658eefc9109743f889f970",
+  "source_files_count": 55,
+  "environment": {
+    "python": "3.12.12",
+    "mcp": "2.3.0",
+    "uv": "0.12.1",
+    "node": "24.22.1",
+    "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+    "protocol": "2026-07-28"
+  },
+  "ci": {
+    "command": "LD_LIBRARY_PATH=/tmp/workspace-browser-libs/extracted/usr/lib/x86_64-linux-gnu make ci",
+    "exit_code": 0,
+    "checks": {
+      "lint": "PASS",
+      "format_check": "PASS",
+      "typecheck": "PASS",
+      "schema_drift": "PASS",
+      "python_build": "PASS",
+      "web_build": "PASS",
+      "bandit": "PASS",
+      "heuristic_secret_scan": "PASS"
+    },
+    "backend": {
+      "passed": 213,
+      "failed": 0,
+      "duration_seconds": 98.31,
+      "coverage_percent": 86.38253638253639,
+      "covered_lines": 3324,
+      "statements": 3848,
+      "warning": "Authlib JOSE deprecation; pinned below 2"
+    },
+    "frontend_unit": {
+      "passed": 12,
+      "failed": 0
+    },
+    "browser": {
+      "passed": 10,
+      "failed": 0,
+      "fixture_cases": 7,
+      "actual_backend_cases": 3,
+      "duration_seconds": 11.3
+    },
+    "security_rerun": {
+      "passed": 17,
+      "note": "Subset of the 213 backend tests; not additional unique cases"
+    },
+    "dependency_audits": {
+      "python": "No known vulnerabilities found",
+      "npm_known_vulnerabilities": 0
+    }
+  },
+  "evaluation": {
+    "passed": 52,
+    "cases": 52,
+    "file": "eval/reports/latest.json",
+    "kind": "FakeLLM pipeline assertions, not real-model accuracy"
+  },
+  "inspector": {
+    "version": "2.5.0",
+    "passed": 10,
+    "commands": 10,
+    "file": "docs/demo/inspector-proof.json"
+  },
+  "container": {
+    "status": "PASS",
+    "file": "docs/demo/container-proof.json",
+    "network": "none",
+    "image": "sha256:a35d03ef79e6c64ee2efbcbe4a54cabfba7ddaa2ab54e39822ba30cd2486488c",
+    "peak_memory_bytes": 237375488
+  },
+  "compose": {
+    "status": "PASS",
+    "file": "docs/demo/compose-proof.json",
+    "measured_at": "2026-11-06T19:44:11.699607+00:00",
+    "cleanup_exit_code": 0
+  },
+  "external": {
+    "live_google": "NOT_RUN",
+    "live_google_writes": "NOT_RUN",
+    "real_model_quality": "NOT_RUN",
+    "drive_open_with_domain": "NOT_RUN",
+    "native_office_visual_review": "NOT_RUN",
+    "remote_ci": "NOT_RUN",
+    "deployment": "NOT_REQUESTED"
+  },
+  "notes": [
+    "Advisory scans use network; mock runtime tests use no Google or model-provider requests.",
+    "Chromium host libraries were supplied through LD_LIBRARY_PATH; CI installs system dependencies.",
+    "No commit, remote publishing, deployment or real external write performed."
+  ],
+  "source_fingerprint_scope": "Sorted path and byte content of Python source/tests/scripts, frontend TS/TSX, uv.lock, pyproject.toml, npm lockfile, Dockerfile, compose.yaml and Makefile; excludes documentation, binary fixtures and generated artifacts.",
+  "handoff_checks": {
+    "implemented_doc_links": "PASS",
+    "four_example_checksums": "PASS",
+    "issue_board": "22/22 done",
+    "dataset_rows": 52,
+    "git_diff_check_exit_code": 0,
+    "heuristic_secret_scan": "PASS"
+  }
+}

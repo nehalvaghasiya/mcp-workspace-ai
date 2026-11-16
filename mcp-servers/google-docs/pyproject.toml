@@ -1,0 +1,17 @@
+[project]
+name = "mcp-workspace-google-docs"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = ["mcp-workspace-common", "mcp-workspace-documents"]
+
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mcp_google_docs"]
+
+[tool.uv.sources]
+mcp-workspace-common = { workspace = true }
+mcp-workspace-documents = { workspace = true }
+

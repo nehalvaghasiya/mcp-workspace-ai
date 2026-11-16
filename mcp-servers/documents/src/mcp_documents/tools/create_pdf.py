@@ -8,7 +8,7 @@ from mcp_documents.schemas.artifact_spec import ArtifactSpec
 def definition() -> ToolDefinition:
     return ToolDefinition(
         name="artifact.create_pdf",
-        description="artifact: create pdf. Access is limited to the signed-in user's authorized data.",
+        description="Create a validated downloadable local PDF. Supply format='pdf', a title, and report blocks such as headings, paragraphs, or bullet lists. Include source titles and links in a Sources section when available. Returns the actual owned download URL. Does not modify Google files.",
         input_model=ArtifactSpec,
         risk=Risk.LOCAL_WRITE,
     )

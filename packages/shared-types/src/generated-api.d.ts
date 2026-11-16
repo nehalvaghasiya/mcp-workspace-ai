@@ -398,6 +398,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/runs/{run_id}/retry": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Retry Run */
+        post: operations["retry_run_api_runs__run_id__retry_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/runs/{run_id}/trace": {
         parameters: {
             query?: never;
@@ -448,6 +465,40 @@ export interface paths {
         head?: never;
         /** Patch Settings */
         patch: operations["patch_settings_api_settings_patch"];
+        trace?: never;
+    };
+    "/api/workspace-files": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Workspace Files */
+        get: operations["workspace_files_api_workspace_files_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/workspace-files/{file_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Workspace File */
+        get: operations["workspace_file_api_workspace_files__file_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
 }
@@ -510,10 +561,18 @@ export interface components {
         };
         /** ConnectorView */
         ConnectorView: {
+            /** Available Capabilities */
+            available_capabilities?: string[];
             /** Enabled */
             enabled: boolean;
             /** Id */
             id: string;
+            /** Last Checked At */
+            last_checked_at?: string | null;
+            /** Last Error */
+            last_error?: string | null;
+            /** Missing Scopes */
+            missing_scopes?: string[];
             /**
              * Mode
              * @enum {string}
@@ -575,6 +634,8 @@ export interface components {
             role: "user" | "assistant";
             /** Sources */
             sources: components["schemas"]["SourceRef"][];
+            /** Workspace Files */
+            workspace_files?: components["schemas"]["WorkspaceFileView"][];
         };
         /** ModelView */
         ModelView: {
@@ -600,14 +661,37 @@ export interface components {
             /** Request Id */
             request_id?: string;
         };
+        /** RetryRun */
+        RetryRun: {
+            /** Request Id */
+            request_id: string;
+        };
         /** RunView */
         RunView: {
             /** Conversation Id */
             conversation_id: string;
             /** Error */
             error: string | null;
+            /** Error Code */
+            error_code?: string | null;
             /** Id */
             id: string;
+            /**
+             * Read Count
+             * @default 0
+             */
+            read_count: number;
+            /** Retry Of */
+            retry_of?: string | null;
+            /**
+             * Retryable
+             * @default false
+             */
+            retryable: boolean;
+            /** Selected Count */
+            selected_count?: number | null;
+            /** Sources */
+            sources?: components["schemas"]["SourceRef"][];
             /**
              * Status
              * @enum {string}
@@ -728,6 +812,39 @@ export interface components {
             msg: string;
             /** Error Type */
             type: string;
+        };
+        /** WorkspaceFileView */
+        WorkspaceFileView: {
+            /** Artifact Id */
+            artifact_id?: string | null;
+            /** Created At */
+            created_at: string;
+            /** Google File Id */
+            google_file_id: string;
+            /** Id */
+            id: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "docs" | "sheets" | "slides";
+            /** Mime Type */
+            mime_type: string;
+            /** Revision */
+            revision: string;
+            /** Run Id */
+            run_id?: string | null;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "ready" | "partial" | "unverified";
+            /** Title */
+            title: string;
+            /** Updated At */
+            updated_at: string;
+            /** Web Url */
+            web_url: string;
         };
     };
     responses: never;
@@ -1447,6 +1564,41 @@ export interface operations {
             };
         };
     };
+    retry_run_api_runs__run_id__retry_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                run_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RetryRun"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RunView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     trace_api_runs__run_id__trace_get: {
         parameters: {
             query?: never;
@@ -1542,6 +1694,70 @@ export interface operations {
                     "application/json": {
                         [key: string]: unknown;
                     };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    workspace_files_api_workspace_files_get: {
+        parameters: {
+            query?: {
+                kind?: ("docs" | "sheets" | "slides") | null;
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WorkspaceFileView"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    workspace_file_api_workspace_files__file_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                file_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WorkspaceFileView"];
                 };
             };
             /** @description Validation Error */

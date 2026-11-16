@@ -38,7 +38,7 @@ def build_server(
     def templates() -> str:
         if template_catalog is not None:
             return template_catalog()
-        return '{"templates":["business_report","meeting_summary","analysis_sheet","presentation","simple"],"synthetic_demo":"Northstar Labs"}'
+        return '{"templates":["business_report","meeting_summary","analysis_sheet","presentation","simple"]}'
 
     server.resource(f"workspace://{namespace}/templates")(templates)
 

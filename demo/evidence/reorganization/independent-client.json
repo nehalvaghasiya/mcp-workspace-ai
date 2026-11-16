@@ -1,0 +1,203 @@
+{
+  "status": "PASS",
+  "observations": [
+    {
+      "transport": "http",
+      "protocol_version": "2026-07-28",
+      "namespace": "demo",
+      "tools": [
+        "demo.ping"
+      ],
+      "read": {
+        "tool": "demo.ping",
+        "status": "success",
+        "counts": {}
+      }
+    },
+    {
+      "transport": "http",
+      "protocol_version": "2026-07-28",
+      "namespace": "gmail",
+      "tools": [
+        "gmail.apply_labels",
+        "gmail.create_draft",
+        "gmail.get_message",
+        "gmail.get_thread",
+        "gmail.list_labels",
+        "gmail.search_messages",
+        "gmail.send_draft"
+      ],
+      "read": {
+        "tool": "gmail.list_labels",
+        "status": "success",
+        "counts": {
+          "labels": 5
+        }
+      }
+    },
+    {
+      "transport": "http",
+      "protocol_version": "2026-07-28",
+      "namespace": "calendar",
+      "tools": [
+        "calendar.cancel_event",
+        "calendar.create_event",
+        "calendar.get_event",
+        "calendar.list_calendars",
+        "calendar.list_events",
+        "calendar.query_freebusy",
+        "calendar.update_event"
+      ],
+      "read": {
+        "tool": "calendar.list_calendars",
+        "status": "success",
+        "counts": {
+          "calendars": 3
+        }
+      }
+    },
+    {
+      "transport": "http",
+      "protocol_version": "2026-07-28",
+      "namespace": "drive",
+      "tools": [
+        "drive.create_folder",
+        "drive.get_file_metadata",
+        "drive.list_folder",
+        "drive.read_file",
+        "drive.search_files",
+        "drive.upload_artifact"
+      ],
+      "read": {
+        "tool": "drive.list_folder",
+        "status": "success",
+        "counts": {
+          "files": 1
+        }
+      }
+    },
+    {
+      "transport": "http",
+      "protocol_version": "2026-07-28",
+      "namespace": "artifact",
+      "tools": [
+        "artifact.create_csv",
+        "artifact.create_docx",
+        "artifact.create_html",
+        "artifact.create_markdown",
+        "artifact.create_pdf",
+        "artifact.create_pptx",
+        "artifact.create_xlsx",
+        "artifact.get_artifact_metadata",
+        "artifact.list_artifacts",
+        "artifact.validate_artifact"
+      ],
+      "read": {
+        "tool": "artifact.list_artifacts",
+        "status": "success",
+        "counts": {
+          "artifacts": 0
+        }
+      }
+    },
+    {
+      "transport": "stdio",
+      "protocol_version": "2026-07-28",
+      "namespace": "demo",
+      "tools": [
+        "demo.ping"
+      ],
+      "read": {
+        "tool": "demo.ping",
+        "status": "success",
+        "counts": {}
+      }
+    },
+    {
+      "transport": "stdio",
+      "protocol_version": "2026-07-28",
+      "namespace": "gmail",
+      "tools": [
+        "gmail.apply_labels",
+        "gmail.create_draft",
+        "gmail.get_message",
+        "gmail.get_thread",
+        "gmail.list_labels",
+        "gmail.search_messages",
+        "gmail.send_draft"
+      ],
+      "read": {
+        "tool": "gmail.list_labels",
+        "status": "success",
+        "counts": {
+          "labels": 5
+        }
+      }
+    },
+    {
+      "transport": "stdio",
+      "protocol_version": "2026-07-28",
+      "namespace": "calendar",
+      "tools": [
+        "calendar.cancel_event",
+        "calendar.create_event",
+        "calendar.get_event",
+        "calendar.list_calendars",
+        "calendar.list_events",
+        "calendar.query_freebusy",
+        "calendar.update_event"
+      ],
+      "read": {
+        "tool": "calendar.list_calendars",
+        "status": "success",
+        "counts": {
+          "calendars": 3
+        }
+      }
+    },
+    {
+      "transport": "stdio",
+      "protocol_version": "2026-07-28",
+      "namespace": "drive",
+      "tools": [
+        "drive.create_folder",
+        "drive.get_file_metadata",
+        "drive.list_folder",
+        "drive.read_file",
+        "drive.search_files",
+        "drive.upload_artifact"
+      ],
+      "read": {
+        "tool": "drive.list_folder",
+        "status": "success",
+        "counts": {
+          "files": 1
+        }
+      }
+    },
+    {
+      "transport": "stdio",
+      "protocol_version": "2026-07-28",
+      "namespace": "artifact",
+      "tools": [
+        "artifact.create_csv",
+        "artifact.create_docx",
+        "artifact.create_html",
+        "artifact.create_markdown",
+        "artifact.create_pdf",
+        "artifact.create_pptx",
+        "artifact.create_xlsx",
+        "artifact.get_artifact_metadata",
+        "artifact.list_artifacts",
+        "artifact.validate_artifact"
+      ],
+      "read": {
+        "tool": "artifact.list_artifacts",
+        "status": "success",
+        "counts": {
+          "artifacts": 0
+        }
+      }
+    }
+  ]
+}

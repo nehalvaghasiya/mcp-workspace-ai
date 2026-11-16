@@ -11,10 +11,20 @@ from mcp_workspace_common.mcp.protected_http import ProtectedHTTP as ProtectedHT
 
 
 def build_servers(runtime: Any) -> dict[str, MCPServer[Any]]:
-    return {
+    servers = {
         "gmail": gmail_server(runtime),
         "calendar": calendar_server(runtime),
         "drive": drive_server(runtime),
         "artifact": document_server(runtime),
-        "demo": demo_server(runtime),
     }
+    if runtime.settings.mode == "live":
+        from mcp_google_docs.server import create_server as docs_server
+        from mcp_sheets.server import create_server as sheets_server
+        from mcp_slides.server import create_server as slides_server
+
+        servers.update(
+            docs=docs_server(runtime), sheets=sheets_server(runtime), slides=slides_server(runtime)
+        )
+    else:
+        servers["demo"] = demo_server(runtime)
+    return servers

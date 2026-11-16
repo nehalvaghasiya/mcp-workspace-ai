@@ -1,0 +1,120 @@
+{
+  "status": "PASS",
+  "measured_at": "2026-11-07T06:00:58.758736+00:00",
+  "wheels": {
+    "mcp-workspace-api": {
+      "file": "mcp_workspace_api-0.1.0-py3-none-any.whl",
+      "version": "0.1.0",
+      "sha256": "ad3a795d26371b82e33ec19eee1b31362ae78358848556380dd53bedb6973cbd"
+    },
+    "mcp-workspace-calendar": {
+      "file": "mcp_workspace_calendar-0.1.0-py3-none-any.whl",
+      "version": "0.1.0",
+      "sha256": "2e5570ed10835913cfbeddef9fd4b4c44b83f9c117b35e3f15a1dbd38961c8c7"
+    },
+    "mcp-workspace-common": {
+      "file": "mcp_workspace_common-0.1.0-py3-none-any.whl",
+      "version": "0.1.0",
+      "sha256": "d4d5dcd9f8547cd2202bc74ac65a2e42f141eb33209b02c87aa984b47d856d74"
+    },
+    "mcp-workspace-demo": {
+      "file": "mcp_workspace_demo-0.1.0-py3-none-any.whl",
+      "version": "0.1.0",
+      "sha256": "1eebb2186b93177ae6b81c46b8f2aa2b366ebeb81436a7cec22350b2b2135f9c"
+    },
+    "mcp-workspace-documents": {
+      "file": "mcp_workspace_documents-0.1.0-py3-none-any.whl",
+      "version": "0.1.0",
+      "sha256": "70a32ea5e5720b888761d2e92b88b894c316741c0ae0a6f9c9b07021cc58bd8a"
+    },
+    "mcp-workspace-drive": {
+      "file": "mcp_workspace_drive-0.1.0-py3-none-any.whl",
+      "version": "0.1.0",
+      "sha256": "88cc133a799d34dedd82f31daba83323fc2201dcb8c4825300a3906e192fbc0f"
+    },
+    "mcp-workspace-evaluations": {
+      "file": "mcp_workspace_evaluations-0.1.0-py3-none-any.whl",
+      "version": "0.1.0",
+      "sha256": "47fc59e542732245010b61d297c48c584a4dc8b5d0a75383ac056e1ce49ba1ce"
+    },
+    "mcp-workspace-gmail": {
+      "file": "mcp_workspace_gmail-0.1.0-py3-none-any.whl",
+      "version": "0.1.0",
+      "sha256": "0b776ca98f0528b60d58752b85fb8785d742b60ff9fd62ff9ca07ed4f7245292"
+    }
+  },
+  "probe": {
+    "status": "PASS",
+    "python": "3.12.12",
+    "mcp": "2.3.0",
+    "import_locations": {
+      "mcp_workspace_api": "lib/python3.12/site-packages/mcp_workspace_api/__init__.py",
+      "mcp_calendar": "lib/python3.12/site-packages/mcp_calendar/__init__.py",
+      "mcp_workspace_common": "lib/python3.12/site-packages/mcp_workspace_common/__init__.py",
+      "mcp_demo": "lib/python3.12/site-packages/mcp_demo/__init__.py",
+      "mcp_documents": "lib/python3.12/site-packages/mcp_documents/__init__.py",
+      "mcp_drive": "lib/python3.12/site-packages/mcp_drive/__init__.py",
+      "mcp_workspace_evaluations": "lib/python3.12/site-packages/mcp_workspace_evaluations/__init__.py",
+      "mcp_gmail": "lib/python3.12/site-packages/mcp_gmail/__init__.py"
+    },
+    "editable_imports": false,
+    "pythonpath": "UNSET",
+    "foreign_working_directory": true,
+    "tool_count": 31,
+    "policy_schema_digests": "EXACT",
+    "openapi": "EXACT",
+    "database_schema": "EXACT",
+    "registered_model_tables": 11,
+    "alembic_revision": "0002",
+    "migration_files": [
+      "0001_initial_owned_workspace_schema.py",
+      "0002_credential_key_version.py"
+    ],
+    "mock_fixture": "EXACT",
+    "fixture_manifest": "EXACT",
+    "evaluation_case_count": 52,
+    "evaluation_cases_and_assertions": "EXACT",
+    "artifact_formats": {
+      "docx": {
+        "status": "PASS",
+        "size": 37318
+      },
+      "pdf": {
+        "status": "PASS",
+        "size": 43462
+      },
+      "xlsx": {
+        "status": "PASS",
+        "size": 5203
+      },
+      "pptx": {
+        "status": "PASS",
+        "size": 29611
+      },
+      "csv": {
+        "status": "PASS",
+        "size": 68
+      },
+      "markdown": {
+        "status": "PASS",
+        "size": 64
+      },
+      "html": {
+        "status": "PASS",
+        "size": 351
+      }
+    },
+    "fonts_license_templates": "PASS",
+    "stdio": {
+      "status": "PASS",
+      "protocol": "2026-07-28",
+      "tools": [
+        "demo.ping"
+      ]
+    },
+    "google_requests": 0,
+    "model_requests": 0
+  },
+  "elapsed_seconds": 8.6,
+  "installation": "Fresh venv; locked third-party hashes; eight local wheels --no-deps"
+}

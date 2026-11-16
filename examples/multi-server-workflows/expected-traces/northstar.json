@@ -1,0 +1,604 @@
+{
+  "synthetic": true,
+  "trace": [
+    {
+      "id": "775acb9274c240498b34efa6995e5adf",
+      "type": "tool.started",
+      "created_at": "2026-11-06T19:26:41.881998+00:00",
+      "tool": "gmail.search_messages",
+      "server": "gmail",
+      "arguments": {
+        "summary": "Validated arguments",
+        "schema_digest": "8a1d3c8e6c0e208bfb5f51a075cf55e8426bf4985ca007025d84c66cc8402d02"
+      }
+    },
+    {
+      "id": "fca6f0b74f144c94b5821618412272f0",
+      "type": "tool.completed",
+      "created_at": "2026-11-06T19:26:41.938068+00:00",
+      "tool": "gmail.search_messages",
+      "server": "gmail",
+      "status": "success",
+      "code": null,
+      "elapsed_ms": 2.45,
+      "sources": [
+        {
+          "provider": "gmail",
+          "resource_id": "msg-001",
+          "title": "Launch decisions",
+          "url": "/api/sources/gmail/msg-001",
+          "retrieved_at": "2026-11-06T19:26:41.936170+00:00",
+          "snippet": "",
+          "pointer": ""
+        },
+        {
+          "provider": "gmail",
+          "resource_id": "msg-010",
+          "title": "Quarterly planning",
+          "url": "/api/sources/gmail/msg-010",
+          "retrieved_at": "2026-11-06T19:26:41.936216+00:00",
+          "snippet": "",
+          "pointer": ""
+        },
+        {
+          "provider": "gmail",
+          "resource_id": "msg-019",
+          "title": "Launch invitation",
+          "url": "/api/sources/gmail/msg-019",
+          "retrieved_at": "2026-11-06T19:26:41.936222+00:00",
+          "snippet": "",
+          "pointer": ""
+        },
+        {
+          "provider": "gmail",
+          "resource_id": "msg-028",
+          "title": "Action tracker",
+          "url": "/api/sources/gmail/msg-028",
+          "retrieved_at": "2026-11-06T19:26:41.936228+00:00",
+          "snippet": "",
+          "pointer": ""
+        },
+        {
+          "provider": "gmail",
+          "resource_id": "msg-002",
+          "title": "Launch timeline",
+          "url": "/api/sources/gmail/msg-002",
+          "retrieved_at": "2026-11-06T19:26:41.936233+00:00",
+          "snippet": "",
+          "pointer": ""
+        },
+        {
+          "provider": "gmail",
+          "resource_id": "msg-011",
+          "title": "Launch decisions",
+          "url": "/api/sources/gmail/msg-011",
+          "retrieved_at": "2026-11-06T19:26:41.936238+00:00",
+          "snippet": "",
+          "pointer": ""
+        },
+        {
+          "provider": "gmail",
+          "resource_id": "msg-020",
+          "title": "Quarterly planning",
+          "url": "/api/sources/gmail/msg-020",
+          "retrieved_at": "2026-11-06T19:26:41.936243+00:00",
+          "snippet": "",
+          "pointer": ""
+        },
+        {
+          "provider": "gmail",
+          "resource_id": "msg-029",
+          "title": "Launch invitation",
+          "url": "/api/sources/gmail/msg-029",
+          "retrieved_at": "2026-11-06T19:26:41.936247+00:00",
+          "snippet": "",
+          "pointer": ""
+        },
+        {
+          "provider": "gmail",
+          "resource_id": "msg-003",
+          "title": "Budget review",
+          "url": "/api/sources/gmail/msg-003",
+          "retrieved_at": "2026-11-06T19:26:41.936252+00:00",
+          "snippet": "",
+          "pointer": ""
+        },
+        {
+          "provider": "gmail",
+          "resource_id": "msg-012",
+          "title": "Launch timeline",
+          "url": "/api/sources/gmail/msg-012",
+          "retrieved_at": "2026-11-06T19:26:41.936257+00:00",
+          "snippet": "",
+          "pointer": ""
+        }
+      ],
+      "operation_id": "5c58ffd0bc8b48fe86d35073553dd7f0",
+      "data": {
+        "summary": "Retrieved authorized records"
+      }
+    },
+    {
+      "id": "331dc1fd33de4fd0b2d4eb40269eeabd",
+      "type": "tool.started",
+      "created_at": "2026-11-06T19:26:42.036893+00:00",
+      "tool": "gmail.get_thread",
+      "server": "gmail",
+      "arguments": {
+        "summary": "Validated arguments",
+        "schema_digest": "4cafa973022e854034cfb9123b94d0d7551dc4b00235b7368254c9679f83b249"
+      }
+    },
+    {
+      "id": "4ab307fee7a54752a151623db95e6426",
+      "type": "tool.completed",
+      "created_at": "2026-11-06T19:26:42.094319+00:00",
+      "tool": "gmail.get_thread",
+      "server": "gmail",
+      "status": "success",
+      "code": null,
+      "elapsed_ms": 1.02,
+      "sources": [
+        {
+          "provider": "gmail",
+          "resource_id": "msg-031",
+          "title": "Launch decisions",
+          "url": "/api/sources/gmail/msg-031",
+          "retrieved_at": "2026-11-06T19:26:42.092464+00:00",
+          "snippet": "",
+          "pointer": ""
+        },
+        {
+          "provider": "gmail",
+          "resource_id": "msg-021",
+          "title": "Launch decisions",
+          "url": "/api/sources/gmail/msg-021",
+          "retrieved_at": "2026-11-06T19:26:42.092505+00:00",
+          "snippet": "",
+          "pointer": ""
+        },
+        {
+          "provider": "gmail",
+          "resource_id": "msg-011",
+          "title": "Launch decisions",
+          "url": "/api/sources/gmail/msg-011",
+          "retrieved_at": "2026-11-06T19:26:42.092512+00:00",
+          "snippet": "",
+          "pointer": ""
+        },
+        {
+          "provider": "gmail",
+          "resource_id": "msg-001",
+          "title": "Launch decisions",
+          "url": "/api/sources/gmail/msg-001",
+          "retrieved_at": "2026-11-06T19:26:42.092517+00:00",
+          "snippet": "",
+          "pointer": ""
+        }
+      ],
+      "operation_id": "6655fbcf928b4e7696b3b6d7051354aa",
+      "data": {
+        "summary": "Retrieved authorized records"
+      }
+    },
+    {
+      "id": "b190c156c710409bbd682a2c07fd0d85",
+      "type": "tool.started",
+      "created_at": "2026-11-06T19:26:42.260548+00:00",
+      "tool": "calendar.list_events",
+      "server": "calendar",
+      "arguments": {
+        "summary": "Validated arguments",
+        "schema_digest": "2847ee9ff8408c7cac3d0b43b591512d705eabdb0cab25b6186a5d6866ac959d"
+      }
+    },
+    {
+      "id": "8333aadd32d945e6a7c1ae3b0fc63f16",
+      "type": "tool.completed",
+      "created_at": "2026-11-06T19:26:42.319722+00:00",
+      "tool": "calendar.list_events",
+      "server": "calendar",
+      "status": "success",
+      "code": null,
+      "elapsed_ms": 2.36,
+      "sources": [
+        {
+          "provider": "calendar",
+          "resource_id": "event-001",
+          "title": "Launch review",
+          "url": "/api/sources/calendar/event-001",
+          "retrieved_at": "2026-11-06T19:26:42.316596+00:00",
+          "snippet": "",
+          "pointer": ""
+        },
+        {
+          "provider": "calendar",
+          "resource_id": "event-002",
+          "title": "Project planning",
+          "url": "/api/sources/calendar/event-002",
+          "retrieved_at": "2026-11-06T19:26:42.316629+00:00",
+          "snippet": "",
+          "pointer": ""
+        },
+        {
+          "provider": "calendar",
+          "resource_id": "event-003",
+          "title": "Launch review",
+          "url": "/api/sources/calendar/event-003",
+          "retrieved_at": "2026-11-06T19:26:42.316634+00:00",
+          "snippet": "",
+          "pointer": ""
+        },
+        {
+          "provider": "calendar",
+          "resource_id": "event-004_0",
+          "title": "Weekly launch sync",
+          "url": "/api/sources/calendar/event-004_0",
+          "retrieved_at": "2026-11-06T19:26:42.316637+00:00",
+          "snippet": "",
+          "pointer": ""
+        },
+        {
+          "provider": "calendar",
+          "resource_id": "event-006",
+          "title": "Project planning",
+          "url": "/api/sources/calendar/event-006",
+          "retrieved_at": "2026-11-06T19:26:42.316641+00:00",
+          "snippet": "",
+          "pointer": ""
+        },
+        {
+          "provider": "calendar",
+          "resource_id": "event-005",
+          "title": "Launch review",
+          "url": "/api/sources/calendar/event-005",
+          "retrieved_at": "2026-11-06T19:26:42.316644+00:00",
+          "snippet": "",
+          "pointer": ""
+        },
+        {
+          "provider": "calendar",
+          "resource_id": "event-007",
+          "title": "Launch review",
+          "url": "/api/sources/calendar/event-007",
+          "retrieved_at": "2026-11-06T19:26:42.316647+00:00",
+          "snippet": "",
+          "pointer": ""
+        },
+        {
+          "provider": "calendar",
+          "resource_id": "event-008",
+          "title": "Project planning",
+          "url": "/api/sources/calendar/event-008",
+          "retrieved_at": "2026-11-06T19:26:42.316650+00:00",
+          "snippet": "",
+          "pointer": ""
+        },
+        {
+          "provider": "calendar",
+          "resource_id": "event-010",
+          "title": "Project planning",
+          "url": "/api/sources/calendar/event-010",
+          "retrieved_at": "2026-11-06T19:26:42.316653+00:00",
+          "snippet": "",
+          "pointer": ""
+        },
+        {
+          "provider": "calendar",
+          "resource_id": "event-012",
+          "title": "Project planning",
+          "url": "/api/sources/calendar/event-012",
+          "retrieved_at": "2026-11-06T19:26:42.316656+00:00",
+          "snippet": "",
+          "pointer": ""
+        },
+        {
+          "provider": "calendar",
+          "resource_id": "event-011",
+          "title": "Launch review",
+          "url": "/api/sources/calendar/event-011",
+          "retrieved_at": "2026-11-06T19:26:42.316659+00:00",
+          "snippet": "",
+          "pointer": ""
+        },
+        {
+          "provider": "calendar",
+          "resource_id": "event-013",
+          "title": "Launch review",
+          "url": "/api/sources/calendar/event-013",
+          "retrieved_at": "2026-11-06T19:26:42.316662+00:00",
+          "snippet": "",
+          "pointer": ""
+        },
+        {
+          "provider": "calendar",
+          "resource_id": "event-014",
+          "title": "Project planning",
+          "url": "/api/sources/calendar/event-014",
+          "retrieved_at": "2026-11-06T19:26:42.316665+00:00",
+          "snippet": "",
+          "pointer": ""
+        },
+        {
+          "provider": "calendar",
+          "resource_id": "event-015",
+          "title": "Launch review",
+          "url": "/api/sources/calendar/event-015",
+          "retrieved_at": "2026-11-06T19:26:42.316670+00:00",
+          "snippet": "",
+          "pointer": ""
+        },
+        {
+          "provider": "calendar",
+          "resource_id": "event-004_1",
+          "title": "Weekly launch sync",
+          "url": "/api/sources/calendar/event-004_1",
+          "retrieved_at": "2026-11-06T19:26:42.316675+00:00",
+          "snippet": "",
+          "pointer": ""
+        }
+      ],
+      "operation_id": "d96b34c8896b4725999669eea4cd7c7f",
+      "data": {
+        "summary": "Retrieved authorized records"
+      }
+    },
+    {
+      "id": "267c5e3edce94902a59ac9479f71cc35",
+      "type": "tool.started",
+      "created_at": "2026-11-06T19:26:42.457329+00:00",
+      "tool": "drive.search_files",
+      "server": "drive",
+      "arguments": {
+        "summary": "Validated arguments",
+        "schema_digest": "9d960a9c2840c53226c6e41558cef4d0342290072e5d4c38629904de7fe2b1a3"
+      }
+    },
+    {
+      "id": "772c73496e6e4e098c6d7a4051aa2917",
+      "type": "tool.completed",
+      "created_at": "2026-11-06T19:26:42.486165+00:00",
+      "tool": "drive.search_files",
+      "server": "drive",
+      "status": "success",
+      "code": null,
+      "elapsed_ms": 1.25,
+      "sources": [
+        {
+          "provider": "drive",
+          "resource_id": "proposal",
+          "title": "Launch proposal",
+          "url": "/api/sources/drive/proposal",
+          "retrieved_at": "2026-11-06T19:26:42.484568+00:00",
+          "snippet": "",
+          "pointer": ""
+        },
+        {
+          "provider": "drive",
+          "resource_id": "budget",
+          "title": "Launch budget",
+          "url": "/api/sources/drive/budget",
+          "retrieved_at": "2026-11-06T19:26:42.484597+00:00",
+          "snippet": "",
+          "pointer": ""
+        },
+        {
+          "provider": "drive",
+          "resource_id": "slides",
+          "title": "Launch presentation",
+          "url": "/api/sources/drive/slides",
+          "retrieved_at": "2026-11-06T19:26:42.484602+00:00",
+          "snippet": "",
+          "pointer": ""
+        },
+        {
+          "provider": "drive",
+          "resource_id": "report-04",
+          "title": "Research note 4",
+          "url": "/api/sources/drive/report-04",
+          "retrieved_at": "2026-11-06T19:26:42.484605+00:00",
+          "snippet": "",
+          "pointer": ""
+        },
+        {
+          "provider": "drive",
+          "resource_id": "report-05",
+          "title": "Launch proposal",
+          "url": "/api/sources/drive/report-05",
+          "retrieved_at": "2026-11-06T19:26:42.484608+00:00",
+          "snippet": "",
+          "pointer": ""
+        },
+        {
+          "provider": "drive",
+          "resource_id": "report-06",
+          "title": "Research note 6",
+          "url": "/api/sources/drive/report-06",
+          "retrieved_at": "2026-11-06T19:26:42.484611+00:00",
+          "snippet": "",
+          "pointer": ""
+        },
+        {
+          "provider": "drive",
+          "resource_id": "report-10",
+          "title": "Research note 10",
+          "url": "/api/sources/drive/report-10",
+          "retrieved_at": "2026-11-06T19:26:42.484614+00:00",
+          "snippet": "",
+          "pointer": ""
+        },
+        {
+          "provider": "drive",
+          "resource_id": "report-11",
+          "title": "Research note 11",
+          "url": "/api/sources/drive/report-11",
+          "retrieved_at": "2026-11-06T19:26:42.484617+00:00",
+          "snippet": "",
+          "pointer": ""
+        },
+        {
+          "provider": "drive",
+          "resource_id": "report-12",
+          "title": "Research note 12",
+          "url": "/api/sources/drive/report-12",
+          "retrieved_at": "2026-11-06T19:26:42.484620+00:00",
+          "snippet": "",
+          "pointer": ""
+        },
+        {
+          "provider": "drive",
+          "resource_id": "report-13",
+          "title": "Research note 13",
+          "url": "/api/sources/drive/report-13",
+          "retrieved_at": "2026-11-06T19:26:42.484623+00:00",
+          "snippet": "",
+          "pointer": ""
+        }
+      ],
+      "operation_id": "4b54aa327c6b47afbb2fe18206cc65db",
+      "data": {
+        "summary": "Retrieved authorized records"
+      }
+    },
+    {
+      "id": "0560916684a34eccb3f5dfd35db7689d",
+      "type": "tool.started",
+      "created_at": "2026-11-06T19:26:42.544167+00:00",
+      "tool": "drive.read_file",
+      "server": "drive",
+      "arguments": {
+        "summary": "Validated arguments",
+        "schema_digest": "f6ab294312716bb8defd2c22f7bf265110a1d3acb6d31b36fa17c4bb770f3bc7"
+      }
+    },
+    {
+      "id": "17b2447a82f640e2ad31dea976b52d3c",
+      "type": "tool.completed",
+      "created_at": "2026-11-06T19:26:42.600889+00:00",
+      "tool": "drive.read_file",
+      "server": "drive",
+      "status": "success",
+      "code": null,
+      "elapsed_ms": 0.79,
+      "sources": [
+        {
+          "provider": "drive",
+          "resource_id": "proposal",
+          "title": "Launch proposal",
+          "url": "/api/sources/drive/proposal",
+          "retrieved_at": "2026-11-06T19:26:42.599191+00:00",
+          "snippet": "",
+          "pointer": ""
+        }
+      ],
+      "operation_id": "f97a973ecb3b4f39b0c3061bbb4c8afa",
+      "data": {
+        "summary": "Retrieved authorized records"
+      }
+    },
+    {
+      "id": "427584f7edbc475296456a1417be68dc",
+      "type": "tool.started",
+      "created_at": "2026-11-06T19:26:42.669097+00:00",
+      "tool": "artifact.create_docx",
+      "server": "artifact",
+      "arguments": {
+        "summary": "Validated arguments",
+        "schema_digest": "d75ca33a1fd6ffb1b013071452e5840cf2d5aaf900e008ab20845576fae6bc68"
+      }
+    },
+    {
+      "id": "143673178d204141ba1370393948fb57",
+      "type": "tool.completed",
+      "created_at": "2026-11-06T19:26:43.261962+00:00",
+      "tool": "artifact.create_docx",
+      "server": "artifact",
+      "status": "success",
+      "code": null,
+      "elapsed_ms": 549.96,
+      "sources": [],
+      "operation_id": "165b546fc2954e7c8c8c402183a966f5",
+      "data": {
+        "summary": "Retrieved authorized records"
+      }
+    },
+    {
+      "id": "25a264b5596d4780a86564771bed2ae1",
+      "type": "tool.started",
+      "created_at": "2026-11-06T19:26:43.322602+00:00",
+      "tool": "artifact.create_pdf",
+      "server": "artifact",
+      "arguments": {
+        "summary": "Validated arguments",
+        "schema_digest": "be09aa549cb39eac91dfc5cc7082464a1bb422652d914a626b409a90db3f5265"
+      }
+    },
+    {
+      "id": "edbd404a4ddf431bb86b614f9165f952",
+      "type": "tool.completed",
+      "created_at": "2026-11-06T19:26:43.523322+00:00",
+      "tool": "artifact.create_pdf",
+      "server": "artifact",
+      "status": "success",
+      "code": null,
+      "elapsed_ms": 100.06,
+      "sources": [],
+      "operation_id": "13072ebe9de749e9b6710d53081c89e0",
+      "data": {
+        "summary": "Retrieved authorized records"
+      }
+    },
+    {
+      "id": "3c2c98320bf543bc92c966e51021d46e",
+      "type": "tool.started",
+      "created_at": "2026-11-06T19:26:43.586432+00:00",
+      "tool": "artifact.create_xlsx",
+      "server": "artifact",
+      "arguments": {
+        "summary": "Validated arguments",
+        "schema_digest": "cdcd7528234073311b28d917b315fd0f27e3c349878e4ae543421b7910d4182d"
+      }
+    },
+    {
+      "id": "4e635a6a175b4fb38aace53407a25d1a",
+      "type": "tool.completed",
+      "created_at": "2026-11-06T19:26:43.743424+00:00",
+      "tool": "artifact.create_xlsx",
+      "server": "artifact",
+      "status": "success",
+      "code": null,
+      "elapsed_ms": 100.19,
+      "sources": [],
+      "operation_id": "666e93ea169745ef93d37ba743be607d",
+      "data": {
+        "summary": "Retrieved authorized records"
+      }
+    },
+    {
+      "id": "2ad694d2379d424aa149009b987c775a",
+      "type": "tool.started",
+      "created_at": "2026-11-06T19:26:43.811404+00:00",
+      "tool": "artifact.create_pptx",
+      "server": "artifact",
+      "arguments": {
+        "summary": "Validated arguments",
+        "schema_digest": "57eee02fafcf4f40d1cc13c02bf921c41927c312cfa9a7c648a5afbe5dd41143"
+      }
+    },
+    {
+      "id": "53304f17b5474250bb45e3aac39043f9",
+      "type": "tool.completed",
+      "created_at": "2026-11-06T19:26:44.019252+00:00",
+      "tool": "artifact.create_pptx",
+      "server": "artifact",
+      "status": "success",
+      "code": null,
+      "elapsed_ms": 166.51,
+      "sources": [],
+      "operation_id": "0be4ed7caa39405da51f5bbf24fd8ba1",
+      "data": {
+        "summary": "Retrieved authorized records"
+      }
+    }
+  ]
+}

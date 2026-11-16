@@ -12,11 +12,17 @@ def main() -> int:
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
     path = Path(__file__).resolve().parents[1] / "config/tool-policies.yaml"
+    definitions = {**tool_definitions("mock"), **tool_definitions("live")}
     projection = {
         "generated_from": "mcp_workspace_api.mcp.registry.tool_definitions",
         "tools": {
-            name: {"risk": str(tool.risk), "scopes": list(tool.scopes), "digest": tool.digest}
-            for name, tool in tool_definitions().items()
+            name: {
+                "risk": str(tool.risk),
+                "scopes": list(tool.scopes),
+                "scope_alternatives": [list(scopes) for scopes in tool.scope_alternatives],
+                "digest": tool.digest,
+            }
+            for name, tool in definitions.items()
         },
     }
     if args.check:
