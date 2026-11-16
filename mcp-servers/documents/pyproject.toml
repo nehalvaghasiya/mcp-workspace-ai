@@ -5,7 +5,7 @@ description = "Validated local document generation and artifact MCP tools"
 requires-python = ">=3.12"
 dependencies = [
   "mcp-workspace-common",
-  "mcp[cli]>=2,<3",
+  "mcp[cli]>=2.3.0,<3",
   "pydantic>=2",
   "python-docx>=1.1",
   "openpyxl>=3.1",
