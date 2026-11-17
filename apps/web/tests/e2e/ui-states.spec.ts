@@ -2,6 +2,8 @@ import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { fixtureApi, proposal } from './fixtures';
 
+const captures = process.env.E2E_ARTIFACT_DIR || 'test-results/captures';
+
 test('demo entry is explicit, synthetic labeling persists, connector controls use CSRF', async ({
   page,
 }) => {
@@ -111,6 +113,26 @@ test('live mode only offers Google sign-in', async ({ page }) => {
   await expect(page.getByRole('button', { name: 'Explore demo' })).toHaveCount(0);
 });
 
+test('continues a failed read workflow through the retry API and clears its error', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  const mutations = await fixtureApi(page, { partial: true, recoverable: true });
+  await page.goto('/');
+  await page.locator('.history-item').click();
+  await expect(page.getByRole('alert')).toContainText('Read 1 of 5 messages');
+  await expect(page.locator('.activity-run .chip')).toHaveClass(/negative/);
+  await page.screenshot({ path: `${captures}/workspace-failure-1440.png`, fullPage: true });
+  await page.getByRole('button', { name: 'Continue from saved progress' }).click();
+  await expect(page.getByText('Continued using the saved email reads.')).toBeVisible();
+  await expect(page.locator('.run-failure')).toHaveCount(0);
+  const retries = mutations.filter((item) => item.path === '/api/runs/run-001/retry');
+  expect(retries).toHaveLength(1);
+  expect(retries[0]?.csrf).toBe('synthetic-csrf-fixture');
+  expect(JSON.parse(retries[0]?.body || '{}').request_id).toBeTruthy();
+  expect(mutations.some((item) => item.path.endsWith('/messages'))).toBe(false);
+});
+
 for (const viewport of [
   { width: 390, height: 844 },
   { width: 1440, height: 900 },
@@ -122,6 +144,9 @@ for (const viewport of [
     await fixtureApi(page);
     await page.goto('/');
     await expect(page.getByRole('heading', { name: /What can we make/ })).toBeVisible();
+    await page.evaluate(() => document.fonts.ready);
+    expect(await page.evaluate(() => document.fonts.check('16px "Inter Variable"'))).toBe(true);
+    await expect(page.locator('.prompt-card').first()).not.toContainText('Northstar');
     const accessibility = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
       .analyze();
@@ -133,7 +158,10 @@ for (const viewport of [
     await expect(page.getByRole('link', { name: 'Skip to content' })).toBeFocused();
     await page.keyboard.press('Enter');
     await expect(page.locator('#main')).toBeFocused();
-    await page.screenshot({ path: `qa/workspace-empty-${viewport.width}.png`, fullPage: true });
+    await page.screenshot({
+      path: `${captures}/workspace-empty-${viewport.width}.png`,
+      fullPage: true,
+    });
     if (viewport.width < 760) {
       await page.getByRole('button', { name: 'Open navigation' }).click();
       await expect(
@@ -148,7 +176,10 @@ for (const viewport of [
     expect(
       await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
     ).toBe(true);
-    await page.screenshot({ path: `qa/workspace-response-${viewport.width}.png`, fullPage: true });
+    await page.screenshot({
+      path: `${captures}/workspace-response-${viewport.width}.png`,
+      fullPage: true,
+    });
     if (viewport.width < 760) await page.getByRole('button', { name: 'Open navigation' }).click();
     await page.getByRole('button', { name: 'Approvals', exact: true }).click();
     await expect(page.getByText('Nothing waiting on your approval')).toBeVisible();

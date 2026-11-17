@@ -22,6 +22,7 @@ export function useConversation({
   const textarea = useRef<HTMLTextAreaElement>(null);
   const bottom = useRef<HTMLDivElement>(null);
   const submission = useRef<{ content: string; id: string; conversationId?: string }>(undefined);
+  const retryRequest = useRef<{ runId: string; id: string }>(undefined);
   const conversation = useQuery({
     queryKey: ['conversation', conversationId],
     queryFn: ({ signal }) => api.conversation(conversationId!, signal),
@@ -43,6 +44,7 @@ export function useConversation({
     void client.invalidateQueries({ queryKey: ['conversations'] });
     void client.invalidateQueries({ queryKey: ['approvals'] });
     void client.invalidateQueries({ queryKey: ['artifacts'] });
+    void client.invalidateQueries({ queryKey: ['workspace-files'] });
     void client.invalidateQueries({ queryKey: ['trace', runId] });
   };
   const send = useMutation({
@@ -65,6 +67,15 @@ export function useConversation({
     onError: () => textarea.current?.focus(),
   });
   const cancel = useMutation({ mutationFn: () => api.cancel(runId!), onSuccess: refresh });
+  const retry = useMutation({
+    mutationFn: () => {
+      if (!runId) throw new Error('Select a failed run before continuing.');
+      if (retryRequest.current?.runId !== runId)
+        retryRequest.current = { runId, id: crypto.randomUUID() };
+      return api.retry(runId, retryRequest.current.id);
+    },
+    onSuccess: refresh,
+  });
   const deleteChat = useMutation({
     mutationFn: () => api.deleteConversation(conversationId!),
     onSuccess: () => {
@@ -88,16 +99,14 @@ export function useConversation({
             events: [...state.events, event],
             text: event.type === 'message.delta' ? state.text + event.data.text : state.text,
             finished: terminal || state.finished,
-            error:
-              event.type === 'run.failed'
-                ? `${event.data.message} (${event.data.code})`
-                : state.error,
+            error: event.type === 'run.failed' ? event.data.message : state.error,
           };
         });
         if (terminal || event.type === 'approval.required') {
           void client.invalidateQueries({ queryKey: ['conversation', conversationId] });
           void client.invalidateQueries({ queryKey: ['approvals'] });
           void client.invalidateQueries({ queryKey: ['artifacts'] });
+          void client.invalidateQueries({ queryKey: ['workspace-files'] });
           void client.invalidateQueries({ queryKey: ['trace', runId] });
           void client.invalidateQueries({ queryKey: ['conversations'] });
         }
@@ -163,6 +172,7 @@ export function useConversation({
     refresh,
     send,
     cancel,
+    retry,
     deleteChat,
     runApprovals,
     timeline,

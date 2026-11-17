@@ -8,6 +8,7 @@ import { PageHeading } from '../../components/layout/PageHeading';
 import { Chip } from '../../components/ui/Chip';
 import { ErrorNotice } from '../../components/ui/ErrorNotice';
 import { Spinner } from '../../components/ui/Spinner';
+import { connectorDetails, connectorStatus } from '../../features/authentication/connector-details';
 import { api } from '../../services/api';
 
 export function ConnectorsPage({ demo }: { demo: boolean }) {
@@ -55,8 +56,7 @@ export function ConnectorsPage({ demo }: { demo: boolean }) {
           <div>
             <strong>Demo data is active.</strong>
             <p>
-              These connectors use synthetic Northstar Labs records. No real Google account is
-              connected.
+              These connectors use synthetic sample records. No real Google account is connected.
             </p>
           </div>
         </div>
@@ -81,19 +81,19 @@ export function ConnectorsPage({ demo }: { demo: boolean }) {
                     <Plug size={26} />
                   )}
                 </span>
-                <Chip tone={connector.enabled ? 'positive' : ''}>
-                  {connector.status.replaceAll('_', ' ')}
+                <Chip
+                  tone={
+                    connector.enabled && ['connected', 'mock'].includes(connector.status)
+                      ? 'positive'
+                      : ''
+                  }
+                >
+                  {connectorStatus[connector.status] ?? connector.status.replaceAll('_', ' ')}
                 </Chip>
               </div>
               <h2>{connector.name}</h2>
               <p>
-                {connector.id === 'gmail'
-                  ? 'Find messages, understand threads, and prepare considered replies.'
-                  : connector.id === 'calendar'
-                    ? 'See your schedule, check availability, and plan your next meeting.'
-                    : connector.id === 'drive'
-                      ? 'Find the documents and decisions your work depends on.'
-                      : 'Create useful deliverables from your workspace context.'}
+                {connectorDetails[connector.id]?.description ?? 'Use authorized workspace content.'}
               </p>
               <div className="connector-mode">
                 <span className={`status-dot ${connector.enabled ? '' : 'disabled'}`} />
@@ -101,6 +101,17 @@ export function ConnectorsPage({ demo }: { demo: boolean }) {
                   ? 'Demo data · synthetic'
                   : 'Google connector · live'}
               </div>
+              {!!connector.available_capabilities?.length && (
+                <p className="muted">
+                  Available: {connector.available_capabilities.join(', ').replaceAll('_', ' ')}
+                </p>
+              )}
+              {!!connector.missing_scopes?.length && (
+                <p className="muted">
+                  Additional permission is needed for some actions. Review access below.
+                </p>
+              )}
+              {connector.last_error && <p role="status">{connector.last_error}</p>}
               <details>
                 <summary>
                   Granted scopes <span>{connector.scopes.length}</span>
@@ -124,7 +135,11 @@ export function ConnectorsPage({ demo }: { demo: boolean }) {
                     type="checkbox"
                     role="switch"
                     checked={connector.enabled}
-                    disabled={toggle.isPending}
+                    disabled={
+                      toggle.isPending ||
+                      (!demo &&
+                        ['disconnected', 'not_connected', 'expired'].includes(connector.status))
+                    }
                     onChange={(event) =>
                       toggle.mutate({ id: connector.id, enabled: event.target.checked })
                     }
@@ -133,22 +148,22 @@ export function ConnectorsPage({ demo }: { demo: boolean }) {
                   <span className="switch-track" />
                   <span>{connector.enabled ? 'Enabled' : 'Disabled'}</span>
                 </label>
-                {!demo && ['gmail', 'calendar', 'drive'].includes(connector.id) && (
+                {!demo && connectorDetails[connector.id] && (
                   <a
                     className="text-button"
-                    href={`/api/auth/google/start?connector=${encodeURIComponent(connector.id)}`}
+                    href={`/api/auth/google/start?connector=${encodeURIComponent(connector.id)}&access=read`}
                   >
                     {connector.status === 'connected' ? 'Review access' : 'Connect'}
                     <ExternalLink size={13} />
                   </a>
                 )}
               </div>
-              {!demo && ['gmail', 'calendar'].includes(connector.id) && (
+              {!demo && connectorDetails[connector.id] && (
                 <a
                   className="connector-write-access text-button"
                   href={`/api/auth/google/start?connector=${encodeURIComponent(connector.id)}&access=write`}
                 >
-                  {connector.id === 'gmail' ? 'Enable drafting & sending' : 'Enable event changes'}
+                  {connectorDetails[connector.id]?.writeLabel}
                   <ExternalLink size={12} />
                 </a>
               )}
@@ -161,7 +176,7 @@ export function ConnectorsPage({ demo }: { demo: boolean }) {
         <div className="settings-section">
           <h2>Disconnect Google</h2>
           <p>
-            Revoke the Google grant for all three connectors and remove stored credentials. This
+            Revoke the Google grant for all connected services and remove stored credentials. This
             does not delete your Google files or messages.
           </p>
           <button

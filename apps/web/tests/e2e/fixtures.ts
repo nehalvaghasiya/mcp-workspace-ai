@@ -86,7 +86,16 @@ export const session: Session = {
 export const conversation: Conversation = {
   id: 'conversation-001',
   title: 'A clearer view of the Northstar launch',
-  runs: [{ id: 'run-001', conversation_id: 'conversation-001', status: 'completed', error: null }],
+  runs: [
+    {
+      id: 'run-001',
+      conversation_id: 'conversation-001',
+      status: 'completed',
+      error: null,
+      read_count: 0,
+      retryable: false,
+    },
+  ],
   messages: [
     {
       id: 'message-001',
@@ -113,12 +122,14 @@ export async function fixtureApi(
     signedIn?: boolean;
     mode?: string;
     partial?: boolean;
+    recoverable?: boolean;
     approvals?: Approval[];
     delay?: number;
   } = {},
 ) {
   let signedIn = options.signedIn ?? true;
   let approvals = options.approvals ?? [];
+  let resumed = false;
   const connectors: Connector[] = ['gmail', 'calendar', 'drive'].map((id) => ({
     id,
     name: id === 'gmail' ? 'Gmail' : id === 'calendar' ? 'Calendar' : 'Drive',
@@ -172,12 +183,48 @@ export async function fixtureApi(
       return reply([
         { id: conversation.id, title: conversation.title, updated_at: '2026-11-05T12:00:00Z' },
       ]);
+    if (path === '/api/runs/run-001/retry' && method === 'POST') {
+      resumed = true;
+      return reply({
+        ...conversation.runs[0],
+        id: 'run-resumed',
+        status: 'completed',
+        retry_of: 'run-001',
+      });
+    }
+    if (path === '/api/runs/run-resumed/trace') return reply([]);
+    if (path === `/api/conversations/${conversation.id}` && resumed)
+      return reply({
+        ...conversation,
+        runs: [
+          ...conversation.runs,
+          { ...conversation.runs[0], id: 'run-resumed', status: 'completed' },
+        ],
+        messages: [
+          ...conversation.messages,
+          {
+            ...conversation.messages[1],
+            id: 'resumed-message',
+            content: 'Continued using the saved email reads.',
+            artifacts: [],
+          },
+        ],
+      });
     if (path === `/api/conversations/${conversation.id}`)
       return reply(
         options.partial
           ? {
               ...conversation,
-              runs: [{ ...conversation.runs[0], status: 'failed' }],
+              runs: [
+                {
+                  ...conversation.runs[0],
+                  status: 'failed',
+                  retryable: options.recoverable ?? false,
+                  error_code: 'MODEL_TIMED_OUT',
+                  read_count: 1,
+                  selected_count: 5,
+                },
+              ],
               messages: [
                 {
                   ...conversation.messages[1],
@@ -208,6 +255,7 @@ export async function fixtureApi(
         })),
       );
     if (path === '/api/artifacts') return reply(files);
+    if (path === '/api/workspace-files') return reply([]);
     if (path.startsWith('/api/artifacts/') && path.endsWith('/download'))
       return route.fulfill({
         status: 200,

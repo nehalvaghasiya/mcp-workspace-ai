@@ -1,5 +1,7 @@
 import { expect, test } from '@playwright/test';
 
+const captures = process.env.E2E_ARTIFACT_DIR || 'test-results/captures';
+
 test.describe('real mock backend workflows', () => {
   test.skip(!process.env.E2E_BACKEND, 'Set E2E_BACKEND=1 with the mock API running on port 8000.');
   test('creates a sourced cross-app report, downloads artifacts, and restores history', async ({
@@ -33,7 +35,7 @@ test.describe('real mock backend workflows', () => {
       element.scrollTop = 0;
     });
     await page.screenshot({
-      path: '../../demo/screenshots/reorganization/workspace-desktop.png',
+      path: `${captures}/workspace-desktop.png`,
       fullPage: true,
     });
     await page.setViewportSize({ width: 390, height: 844 });
@@ -45,14 +47,14 @@ test.describe('real mock backend workflows', () => {
       await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
     ).toBe(true);
     await page.screenshot({
-      path: '../../demo/screenshots/reorganization/workspace-mobile.png',
+      path: `${captures}/workspace-mobile.png`,
       fullPage: true,
     });
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.getByRole('button', { name: 'Artifacts', exact: true }).click();
     await expect(page.getByRole('link', { name: /^Download / })).toHaveCount(4);
     await page.screenshot({
-      path: '../../demo/screenshots/reorganization/artifact-library-desktop.png',
+      path: `${captures}/artifact-library-desktop.png`,
       fullPage: true,
     });
     await page.setViewportSize({ width: 390, height: 844 });
@@ -60,7 +62,7 @@ test.describe('real mock backend workflows', () => {
       await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
     ).toBe(true);
     await page.screenshot({
-      path: '../../demo/screenshots/reorganization/artifact-library-mobile.png',
+      path: `${captures}/artifact-library-mobile.png`,
       fullPage: true,
     });
     await page.setViewportSize({ width: 1440, height: 900 });
@@ -86,7 +88,7 @@ test.describe('real mock backend workflows', () => {
     await expect(page.locator('.action-fields')).toContainText('alex@example.invalid');
     await page.getByRole('button', { name: 'Approve exact action' }).scrollIntoViewIfNeeded();
     await page.screenshot({
-      path: '../../demo/screenshots/reorganization/exact-action-approval.png',
+      path: `${captures}/exact-action-approval.png`,
       fullPage: true,
     });
     await page.getByRole('button', { name: 'Reject', exact: true }).click();

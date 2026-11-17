@@ -22,7 +22,7 @@ export function ArtifactCard({
       <div className="artifact-info">
         <h3>{artifact.title}</h3>
         <p>
-          {formatBytes(artifact.size)} <span>·</span> {artifact.mime_type}
+          {formatBytes(artifact.size)} <span>·</span> {artifact.format.toUpperCase()}
         </p>
         <Chip tone={artifact.validated ? 'positive' : 'warning'}>
           {artifact.validated ? 'Readback validated' : 'Validation unavailable'}
@@ -30,6 +30,8 @@ export function ArtifactCard({
         <details>
           <summary>File details & sources</summary>
           <dl>
+            <dt>File type</dt>
+            <dd>{artifact.mime_type}</dd>
             <dt>Created</dt>
             <dd>{formatDate(artifact.created_at)}</dd>
             <dt>SHA-256</dt>
