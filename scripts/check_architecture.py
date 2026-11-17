@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import ast
+import re
 from pathlib import Path
+from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_ROOTS = [
@@ -11,7 +13,6 @@ SOURCE_ROOTS = [
     "mcp-servers",
     "packages/mcp-common",
     "evaluations/src",
-    "evaluations/runners",
     "tests",
     "scripts",
     "examples",
@@ -23,6 +24,21 @@ SERVER_MODULES = {
     "documents": "mcp_documents",
     "demo": "mcp_demo",
 }
+
+
+def documentation_errors(root: Path = ROOT) -> list[str]:
+    errors = []
+    for pattern in ("*.md", "docs/**/*.md", "demo/**/*.md"):
+        for path in root.glob(pattern):
+            for target in re.findall(r"\[[^\]]*\]\(([^)]+)\)", path.read_text()):
+                if target.startswith(("#", "/")) or re.match(r"[a-zA-Z][a-zA-Z0-9+.-]*:", target):
+                    continue
+                destination = urlsplit(target).path
+                if destination and not (path.parent / destination).exists():
+                    errors.append(
+                        f"{path.relative_to(root)}: broken documentation link {destination}"
+                    )
+    return errors
 
 
 def violations(path: Path, source: str) -> list[str]:
@@ -70,7 +86,7 @@ def violations(path: Path, source: str) -> list[str]:
 
 
 def main() -> int:
-    errors = []
+    errors = documentation_errors()
     files = [
         path
         for root in SOURCE_ROOTS

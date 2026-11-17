@@ -1,8 +1,10 @@
 """Architecture checks reject ownership violations, including lazy imports."""
 
+from pathlib import Path
+
 import pytest
 
-from scripts.check_architecture import ROOT, violations
+from scripts.check_architecture import ROOT, documentation_errors, violations
 
 
 def test_nested_classes_do_not_bypass_one_class_per_file() -> None:
@@ -23,3 +25,17 @@ def test_server_packages_cannot_import_upstream_or_siblings(owner: str, target: 
 
 def test_common_package_cannot_import_servers() -> None:
     assert violations(ROOT / "packages/mcp-common/src/example.py", "from mcp_demo import server\n")
+
+
+def test_documentation_check_catches_missing_files_and_allows_urls_and_anchors(
+    tmp_path: Path,
+) -> None:
+    (tmp_path / "README.md").write_text(
+        "[Missing](docs/missing.md) [Web](https://example.com) [Here](#here) "
+        "[Raw file](README.md?raw=true#here)"
+    )
+    issues = documentation_errors(tmp_path)
+    assert len(issues) == 1 and "docs/missing.md" in issues[0]
+    (tmp_path / "docs").mkdir()
+    (tmp_path / "docs/missing.md").write_text("# Present")
+    assert documentation_errors(tmp_path) == []

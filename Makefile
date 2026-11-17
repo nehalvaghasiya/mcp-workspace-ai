@@ -1,10 +1,10 @@
 export UV_CACHE_DIR ?= /tmp/workspace-ai-uv-cache
 export PATH := $(CURDIR)/.local/tools/pnpm/node_modules/.bin:$(PATH)
 API_URL ?= http://127.0.0.1:8000
-PY_DIRS := apps/api mcp-servers packages/mcp-common evaluations/src evaluations/runners tests scripts examples conftest.py
-PY_SOURCES := apps/api/src mcp-servers/gmail/src mcp-servers/calendar/src mcp-servers/drive/src mcp-servers/documents/src mcp-servers/demo/src packages/mcp-common/src evaluations/src
+PY_DIRS := apps/api mcp-servers packages/mcp-common evaluations/src tests scripts examples conftest.py
+PY_SOURCES := apps/api/src mcp-servers/gmail/src mcp-servers/calendar/src mcp-servers/drive/src mcp-servers/documents/src mcp-servers/google-docs/src mcp-servers/sheets/src mcp-servers/slides/src mcp-servers/demo/src packages/mcp-common/src evaluations/src
 COVERAGE := $(foreach source,$(PY_SOURCES),--cov=$(source))
-.PHONY: setup dev lint format-check typecheck schema-check architecture-check test test-unit test-integration test-e2e smoke security dependency-audit eval ci build seed-demo reset-demo
+.PHONY: setup dev lint format format-check typecheck schema-check architecture-check test test-unit test-integration test-e2e smoke security dependency-audit eval ci build seed-demo reset-demo
 setup:
 	uv sync --locked --all-packages
 	uv run --locked python scripts/bootstrap_pnpm.py
@@ -14,7 +14,11 @@ dev:
 lint:
 	uv run --locked ruff check $(PY_DIRS)
 	pnpm lint
+format:
+	uv run --locked ruff check --select I --fix $(PY_DIRS)
+	uv run --locked ruff format $(PY_DIRS)
 format-check:
+	uv run --locked ruff check --select I $(PY_DIRS)
 	uv run --locked ruff format --check $(PY_DIRS)
 	pnpm format-check
 	pnpm --filter @mcp-workspace/web exec prettier --check ../../packages/shared-types/src/index.ts ../../packages/shared-types/package.json ../../packages/shared-types/tsconfig.json
