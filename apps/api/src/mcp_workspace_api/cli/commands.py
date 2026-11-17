@@ -5,16 +5,13 @@ import asyncio
 import json
 import os
 import shutil
-import signal
-import subprocess  # nosec B404
-import sys
 from pathlib import Path
 from typing import Any
 from uuid import uuid4
 
 from sqlalchemy import select
 
-from mcp_workspace_api.core.config import Settings
+from mcp_workspace_api.core.runtime_settings import load_settings
 from mcp_workspace_api.core.security import RotationError, rotate_credentials
 from mcp_workspace_api.db import Database, GoogleAccount, User
 from mcp_workspace_api.db.migrate import migrate
@@ -26,7 +23,7 @@ from mcp_workspace_api.operations.smoke import smoke
 def local_runtime() -> Any:
     from mcp_workspace_api.core.execution_context import Runtime
 
-    settings = Settings()
+    settings = load_settings()
     settings.prepare()
     db = Database(f"sqlite:///{settings.storage / 'workspace.db'}")
     migrate(db)
@@ -60,18 +57,34 @@ def main() -> None:
     api = commands.add_parser("api")
     api.add_argument("--port", type=int, default=8000)
     commands.add_parser("dev")
+    commands.add_parser(
+        "doctor", help="Show redacted configuration and model connection diagnostics"
+    )
+    live_check = commands.add_parser(
+        "verify-live", help="Test real model chat/tool calling and read-only Google access"
+    )
+    live_check.add_argument("--user-id", default="")
     mcp = commands.add_parser("mcp")
-    mcp.add_argument("server", choices=["gmail", "calendar", "drive", "artifact", "demo"])
+    mcp.add_argument(
+        "server",
+        choices=["gmail", "calendar", "drive", "docs", "sheets", "slides", "artifact", "demo"],
+    )
     mcp.add_argument("--transport", choices=["stdio", "streamable-http"], default="stdio")
     token = commands.add_parser("token")
-    token.add_argument("server", choices=["gmail", "calendar", "drive", "artifact", "demo"])
+    token.add_argument(
+        "server",
+        choices=["gmail", "calendar", "drive", "docs", "sheets", "slides", "artifact", "demo"],
+    )
     commands.add_parser("seed-demo")
     commands.add_parser("reset-demo")
     check = commands.add_parser("smoke")
     check.add_argument("--url", default="http://127.0.0.1:8000")
     eval_parser = commands.add_parser("eval")
     eval_parser.add_argument("--url", default="http://127.0.0.1:8000")
-    eval_parser.add_argument("--output", default="evaluations/reports/latest.json")
+    eval_parser.add_argument("--output", default=".local/verification/evaluations/latest.json")
+    eval_parser.add_argument(
+        "--suite", choices=["all", "tools", "workflows", "artifacts", "security"], default="all"
+    )
     export = commands.add_parser("export-schema")
     export.add_argument("--output", default="packages/shared-types/openapi.json")
     backup = commands.add_parser("backup")
@@ -102,28 +115,20 @@ def main() -> None:
             access_log=False,
         )
     elif args.command == "dev":
-        npm = shutil.which("pnpm") or str(
-            Path(".local/tools/pnpm/node_modules/.bin/pnpm").resolve()
-        )
-        if not npm:
-            raise SystemExit("Install Node 24/pnpm before starting the frontend")
-        api_process = subprocess.Popen([sys.executable, "-m", "mcp_workspace_api.cli", "api"])  # nosec B603
-        web_process = subprocess.Popen(  # nosec B603
-            [npm, "run", "dev"], cwd="apps/web"
-        )
-        try:
-            api_process.wait()
-        except KeyboardInterrupt:
-            pass
-        finally:
-            for process in (api_process, web_process):
-                if process.poll() is None:
-                    process.send_signal(signal.SIGINT)
-            for process in (api_process, web_process):
-                try:
-                    process.wait(timeout=10)
-                except subprocess.TimeoutExpired:
-                    process.kill()
+        from mcp_workspace_api.operations.dev_server import run_dev
+
+        raise SystemExit(run_dev())
+    elif args.command == "doctor":
+        from mcp_workspace_api.operations.diagnostics import diagnose
+
+        print(json.dumps(asyncio.run(diagnose()), indent=2))
+    elif args.command == "verify-live":
+        from mcp_workspace_api.operations.live_verification import verify_live
+
+        report = asyncio.run(verify_live(local_runtime(), args.user_id))
+        print(json.dumps(report, indent=2))
+        if report["status"] != "PASS":
+            raise SystemExit(1)
     elif args.command in {"mcp", "token", "seed-demo", "reset-demo"}:
         from mcp_workspace_api.mcp.servers import build_servers
 
@@ -133,7 +138,10 @@ def main() -> None:
             runtime.signer.verify(
                 os.environ.get("WORKSPACE_MCP_TOKEN", "").removeprefix("Bearer "), args.server
             )
-            build_servers(runtime)[args.server].run(args.transport)
+            servers = build_servers(runtime)
+            if args.server not in servers:
+                raise SystemExit("This MCP service is not available in the selected runtime mode")
+            servers[args.server].run(args.transport)
         else:
             user = seed(runtime)
             if args.command == "token":
@@ -167,8 +175,9 @@ def main() -> None:
         print(json.dumps(asyncio.run(smoke(args.url)), indent=2))
     elif args.command == "eval":
         from mcp_workspace_evaluations.runner import evaluate
+        from mcp_workspace_evaluations.suites import SUITES
 
-        report = asyncio.run(evaluate(args.url, Path(args.output)))
+        report = asyncio.run(evaluate(args.url, Path(args.output), SUITES[args.suite]))
         print(json.dumps(report, indent=2))
         if report["passed"] != report["cases"]:
             raise SystemExit(1)
@@ -179,7 +188,7 @@ def main() -> None:
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(create_app().openapi(), indent=2))
     elif args.command == "backup":
-        settings = Settings()
+        settings = load_settings()
         settings.prepare()
         try:
             backup_workspace(settings, args.destination)
@@ -187,7 +196,7 @@ def main() -> None:
             raise SystemExit(str(exc)) from None
         print("Database and artifacts backed up. Keep the encryption key separately.")
     elif args.command == "restore":
-        settings = Settings()
+        settings = load_settings()
         settings.prepare()
         try:
             restore_workspace(settings, args.source)
@@ -202,7 +211,7 @@ def main() -> None:
             raise SystemExit(
                 "Set NEW_TOKEN_ENCRYPTION_KEY in the operator environment; keep the app stopped during rotation"
             )
-        settings = Settings()
+        settings = load_settings()
         settings.prepare()
         if not (settings.storage / "workspace.db").is_file():
             raise SystemExit("An existing workspace database is required for offline rotation")

@@ -26,12 +26,13 @@ from mcp_workspace_api.services.approval_service import ApprovalService
 from mcp_workspace_api.services.artifact_service import ArtifactService
 from mcp_workspace_api.services.audit_service import AuditService
 from mcp_workspace_api.services.source_resolver import resolve_sources
+from mcp_workspace_api.services.workspace_file_service import WorkspaceFileService
 
 
 class Runtime:
     def __init__(self, settings: Settings, db: Database) -> None:
         self.settings, self.db = settings, db
-        self.tools = tool_definitions()
+        self.tools = tool_definitions(settings.mode)
         self.signer = Signer(settings.session_secret)
         self.vault = Fernet(settings.token_encryption_key.encode())
         self.policy = Policy(settings, db)
@@ -58,6 +59,7 @@ class Runtime:
         self.propose = self.approval_service.propose
         self._write = self.approval_service._write
         self.artifact_service = ArtifactService(self)
+        self.workspace_file_service = WorkspaceFileService(self)
         self._artifact = self.artifact_service._artifact
         self.gateway = Gateway(self)
         self.execute = self.gateway.execute

@@ -1,0 +1,108 @@
+@font-face {
+  font-family: 'Inter Variable';
+  src: url('/fonts/InterVariable.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('/fonts/JetBrainsMono-Regular.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+:root {
+  --font-ui:
+    'Inter Variable', ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-code: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  --default-font-family: var(--font-ui);
+  --default-mono-font-family: var(--font-code);
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.75rem;
+  --text-4xl: 2rem;
+}
+
+html {
+  font-size: 100%;
+  font-family: var(--font-ui);
+}
+
+body {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+code,
+pre,
+kbd,
+samp {
+  font-family: var(--font-code);
+}
+
+.run-failure {
+  margin: 1.5rem 0;
+  padding: 1.25rem;
+  border: 1px solid #edc4c0;
+  border-radius: 0.625rem;
+  background: #fff6f5;
+  color: #8e302c;
+  font-size: var(--text-sm);
+  line-height: 1.6;
+}
+
+.run-failure-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  margin-bottom: 0.5rem;
+}
+
+.run-failure p,
+.run-failure .inline-actions,
+.run-failure details {
+  margin-top: 0.75rem;
+}
+
+.run-failure .inline-actions {
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.run-failure details {
+  font-size: var(--text-xs);
+}
+
+.run-failure summary {
+  cursor: pointer;
+}
+
+.chip.negative {
+  color: #8e302c;
+  background: #fce9e7;
+}
+
+.activity-model {
+  padding: 0 1.125rem 1.25rem;
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

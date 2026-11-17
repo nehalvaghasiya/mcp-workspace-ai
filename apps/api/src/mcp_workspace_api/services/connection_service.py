@@ -4,6 +4,7 @@ import json
 from typing import TYPE_CHECKING, Any
 
 from fastapi import HTTPException
+from mcp_workspace_common.scopes import GOOGLE_SERVICES
 from sqlalchemy import delete, select, update
 
 from mcp_workspace_api.db import (
@@ -51,7 +52,9 @@ class ConnectionService:
         return {
             "status": "disconnected",
             "revocation_confirmed": confirmed,
-            "affected_connectors": ["gmail", "calendar", "drive"],
+            "affected_connectors": list(GOOGLE_SERVICES)
+            if settings.mode == "live"
+            else ["gmail", "calendar", "drive"],
         }
 
     def oauth_client(self) -> Any:

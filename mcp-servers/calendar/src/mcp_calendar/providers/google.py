@@ -7,7 +7,7 @@ from mcp_workspace_common.providers.google_client import GoogleClient
 from mcp_workspace_common.providers.identifiers import _identifier
 from mcp_workspace_common.utils.results import _source
 
-from mcp_calendar.providers.time import _event_body, _range
+from mcp_calendar.providers.time import _event_body, _instant, _range
 
 
 class GoogleCalendar:
@@ -18,7 +18,13 @@ class GoogleCalendar:
         base = "https://www.googleapis.com/calendar/v3"
         if tool == "list_calendars":
             result = await self._request(
-                "GET", base + "/users/me/calendarList", read=True, params={"maxResults": 100}
+                "GET",
+                base + "/users/me/calendarList",
+                read=True,
+                params={
+                    "maxResults": min(int(args.get("max_results", 100)), 250),
+                    **({"pageToken": args["page_token"]} if args.get("page_token") else {}),
+                },
             )
             return {
                 "calendars": result.get("items", []),
@@ -50,6 +56,8 @@ class GoogleCalendar:
             }
             if args.get("page_token"):
                 params["pageToken"] = args["page_token"]
+            if args.get("query"):
+                params["q"] = args["query"]
             result = await self._request("GET", url, read=True, params=params)
             return {
                 "events": result.get("items", []),
@@ -64,12 +72,15 @@ class GoogleCalendar:
             return result | {"sources": [_source("calendar", result)]}
         if tool == "create_event":
             body = _event_body(args)
-            return await self._request(
+            created = await self._request(
                 "POST",
                 url,
                 json=body,
                 params={"sendUpdates": "all" if body.get("attendees") else "none"},
             )
+            if args.get("idempotency_key"):
+                created = await self._readback(url, created.get("id"), body)
+            return created
         if tool in {"update_event", "cancel_event"}:
             approved = args.get("_snapshot")
             if not approved or not approved.get("etag"):
@@ -101,8 +112,40 @@ class GoogleCalendar:
                 }
                 | changes
             )
-            return await self._request("PATCH", target, json=body, headers=headers, params=params)
+            updated = await self._request(
+                "PATCH", target, json=body, headers=headers, params=params
+            )
+            if args.get("idempotency_key"):
+                updated = await self._readback(url, args["event_id"], body)
+            return updated
         raise ConnectorError("unknown_tool", "Unknown Calendar tool")
+
+    async def _readback(
+        self, url: str, event_id: str | None, expected: dict[str, Any]
+    ) -> dict[str, Any]:
+        if not event_id:
+            raise ConnectorError(
+                "outcome_unknown",
+                "Calendar write returned no event ID; inspect the calendar before retrying",
+            )
+        current = await self._request("GET", url + "/" + _identifier(event_id), read=True)
+        for key, value in expected.items():
+            if key == "id":
+                continue
+            if key in {"start", "end"}:
+                same = key in current and _instant(current[key]) == _instant(value)
+            elif key == "attendees":
+                same = sorted(
+                    row.get("email", "").casefold() for row in current.get(key, [])
+                ) == sorted(row.get("email", "").casefold() for row in value)
+            else:
+                same = current.get(key, [] if isinstance(value, list) else "") == value
+            if not same:
+                raise ConnectorError(
+                    "outcome_unknown",
+                    "Calendar readback differs from the approved event; inspect it before retrying",
+                )
+        return current | {"readback_verified": True}
 
     async def snapshot(self, tool: str, args: dict[str, Any]) -> dict[str, Any]:
         if tool not in {"update_event", "cancel_event"}:

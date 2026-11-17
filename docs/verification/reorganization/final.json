@@ -1,0 +1,164 @@
+{
+  "status": "PASS_LOCAL_SCOPE",
+  "recorded_at": "2026-11-07T14:24:50.254755+00:00",
+  "environment": {
+    "python": "3.12.12",
+    "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+    "node": "v24.22.1",
+    "pnpm": "12.18.0",
+    "uv": "uv 0.12.1 (x86_64-unknown-linux-gnu)"
+  },
+  "checks": {
+    "setup": {
+      "command": "make setup",
+      "exit_code": 0
+    },
+    "combined_ci": {
+      "command": "make ci",
+      "exit_code": 0,
+      "backend_tests": 221,
+      "frontend_tests": 12,
+      "browser_tests": 10,
+      "security_tests": 40,
+      "note": "Followed by the final source-directory coverage correction and focused static/test reruns."
+    },
+    "final_static": {
+      "command": "make lint format-check typecheck schema-check architecture-check",
+      "exit_code": 0,
+      "python_modules_checked": 348,
+      "mypy_source_files": 307,
+      "log": ".local/reorganization/final-static.log"
+    },
+    "final_tests": {
+      "command": "make test",
+      "exit_code": 0,
+      "backend_tests": 221,
+      "frontend_tests": 12,
+      "backend_seconds": 107.22,
+      "log": ".local/reorganization/all-package-coverage.log"
+    },
+    "coverage": {
+      "covered_lines": 4772,
+      "num_statements": 5344,
+      "percent_covered": 89.29640718562874,
+      "percent_covered_display": "89",
+      "missing_lines": 572,
+      "excluded_lines": 82,
+      "percent_statements_covered": 89.29640718562874,
+      "percent_statements_covered_display": "89",
+      "scope": "All eight production source directories, including unimported code",
+      "minimum_percent": 86
+    },
+    "security": {
+      "command": "make security (within make ci)",
+      "exit_code": 0,
+      "tests": 40,
+      "dependency_audits": "No known vulnerabilities",
+      "bandit": "PASS",
+      "secret_scan": "PASS"
+    },
+    "protocol": {
+      "canonical_tools": 31,
+      "raw_mcp": "EXACT",
+      "schema_policy_digests": "EXACT",
+      "openapi": "EXACT",
+      "database_metadata": "EXACT",
+      "sdk": "2.3.0",
+      "protocol": "2026-07-28",
+      "independent_client_observations": 10,
+      "inspector_observations": 10
+    },
+    "wheels": {
+      "status": "PASS",
+      "count": 8,
+      "evidence": "wheels.json",
+      "foreign_working_directory": true,
+      "editable_imports": false,
+      "pythonpath": "UNSET",
+      "artifact_formats": 7,
+      "cases": 52
+    },
+    "storage_compatibility": {
+      "status": "PASS",
+      "fixture": "tests/fixtures/legacy-storage",
+      "preserved": [
+        "session",
+        "artifact",
+        "encrypted_credentials",
+        "pending_approval"
+      ],
+      "restart_states": [
+        "interrupted",
+        "outcome_unknown"
+      ],
+      "database_reset": false,
+      "revision": "0002"
+    },
+    "smoke": {
+      "command": "make smoke",
+      "exit_code": 0,
+      "tools": 31,
+      "files": 4,
+      "trace_events": 18
+    },
+    "evaluation": {
+      "command": "make eval",
+      "exit_code": 0,
+      "cases": 52,
+      "passed": 52,
+      "latency_ms": {
+        "p50": 410.96,
+        "p95": 734.11
+      },
+      "measured_at": "2026-11-07T06:04:06.440550+00:00",
+      "model": "FakeLLM",
+      "model_cost": 0,
+      "freeform_claim_accuracy": "NOT_RUN"
+    },
+    "containers": {
+      "image": "PASS",
+      "compose": "PASS",
+      "cleanup": "PASS",
+      "default_deployment": "One API process serving frontend and five MCP endpoints",
+      "evidence": [
+        "../../../demo/evidence/reorganization/container-proof.json",
+        "../../../demo/evidence/reorganization/compose-proof.json"
+      ]
+    },
+    "preservation": {
+      "status": "PASS",
+      "rollback_source_files": 149,
+      "preserved_hashes": 41,
+      "baseline_backend_identity_mappings": 213,
+      "exact_case_definitions": 52
+    },
+    "documentation": {
+      "status": "PASS",
+      "local_links": 171,
+      "preserved_hashes": 41,
+      "example_checksums": 4
+    },
+    "final_format": {
+      "command": "make format-check",
+      "exit_code": 0,
+      "log": ".local/reorganization/final-format.log"
+    }
+  },
+  "external_acceptance": {
+    "live_google": "NOT_RUN",
+    "approved_live_writes": "NOT_RUN",
+    "domain_drive_open_with": "NOT_RUN",
+    "real_model_quality": "NOT_RUN",
+    "native_office_layout": "NOT_RUN",
+    "remote_ci": "NOT_RUN",
+    "public_deployment": "NOT_RUN"
+  },
+  "limitations": [
+    "FakeLLM results measure the curated synthetic pipeline, not general model reasoning.",
+    "Native Office visual layout is separate from structural and semantic readback.",
+    "Container memory was measured under a limit, not on a physical 8 GB machine.",
+    "Authlib JOSE deprecation warning remains; dependency audits passed."
+  ],
+  "publication_or_live_external_writes": false,
+  "source_fingerprint": "final-source-fingerprint.json"
+}

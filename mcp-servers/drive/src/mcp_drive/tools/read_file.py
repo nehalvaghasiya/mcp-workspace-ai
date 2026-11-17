@@ -10,4 +10,9 @@ def definition() -> ToolDefinition:
         input_model=ReadFile,
         risk=Risk.READ,
         scopes=(DRIVE,),
+        scope_alternatives=(
+            (DRIVE,),
+            ("https://www.googleapis.com/auth/drive.readonly",),
+            ("https://www.googleapis.com/auth/drive",),
+        ),
     )

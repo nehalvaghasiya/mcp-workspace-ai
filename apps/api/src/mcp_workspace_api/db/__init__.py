@@ -11,6 +11,7 @@ from mcp_workspace_api.db.models.run import Run as Run
 from mcp_workspace_api.db.models.run_event import RunEvent as RunEvent
 from mcp_workspace_api.db.models.user import User as User
 from mcp_workspace_api.db.models.user_session import UserSession as UserSession
+from mcp_workspace_api.db.models.workspace_file import WorkspaceFile as WorkspaceFile
 from mcp_workspace_api.db.session import Database as Database
 from mcp_workspace_api.db.utils import now as now
 from mcp_workspace_api.db.utils import uid as uid

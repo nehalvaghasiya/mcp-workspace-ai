@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
 from typing import Any
 
 import httpx
@@ -22,3 +24,7 @@ class StubModel:
         return httpx.Response(
             200, json={"choices": [{"message": {"content": "Cited synthetic answer"}}]}
         )
+
+    @asynccontextmanager
+    async def stream(self, method: str, url: str, **kwargs: Any) -> AsyncIterator[httpx.Response]:
+        yield await self.post(url, **kwargs)

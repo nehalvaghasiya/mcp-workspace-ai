@@ -293,7 +293,7 @@ def test_rotation_cli_reads_key_from_environment_and_never_prints_secrets(
     settings = IsolatedSettings(data_dir=tmp_path, token_encryption_key=original)
     settings.prepare()
     # The isolated fixture DB is the only DB exposed to the command.
-    monkeypatch.setattr(cli, "Settings", lambda: settings)
+    monkeypatch.setattr(cli, "load_settings", lambda: settings)
     monkeypatch.setattr(cli, "Database", lambda url: database)
     monkeypatch.setenv("NEW_TOKEN_ENCRYPTION_KEY", replacement)
     (settings.storage / "workspace.db").touch()
@@ -326,11 +326,11 @@ def test_backup_restore_cli_lifecycle(
     settings, database, storage_key = source_workspace(tmp_path, key)
     try:
         backup = tmp_path / "cli-backup"
-        monkeypatch.setattr(cli, "Settings", lambda: settings)
+        monkeypatch.setattr(cli, "load_settings", lambda: settings)
         monkeypatch.setattr("sys.argv", ["workspace-ai", "backup", str(backup)])
         cli.main()
         restored = target_settings(tmp_path, key)
-        monkeypatch.setattr(cli, "Settings", lambda: restored)
+        monkeypatch.setattr(cli, "load_settings", lambda: restored)
         monkeypatch.setattr("sys.argv", ["workspace-ai", "restore", str(backup)])
         cli.main()
         assert (restored.storage / storage_key).is_file()

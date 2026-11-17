@@ -1,0 +1,66 @@
+{
+  "inspector_version": "2.5.0",
+  "mode": "mock",
+  "observations": [
+    {
+      "transport": "http",
+      "method": "initialize",
+      "exit_code": 0,
+      "status": "PASS"
+    },
+    {
+      "transport": "http",
+      "method": "tools/list",
+      "exit_code": 0,
+      "status": "PASS"
+    },
+    {
+      "transport": "http",
+      "method": "tools/call",
+      "exit_code": 0,
+      "status": "PASS"
+    },
+    {
+      "transport": "http",
+      "method": "resources/list",
+      "exit_code": 0,
+      "status": "PASS"
+    },
+    {
+      "transport": "http",
+      "method": "prompts/list",
+      "exit_code": 0,
+      "status": "PASS"
+    },
+    {
+      "transport": "stdio",
+      "method": "initialize",
+      "exit_code": 0,
+      "status": "PASS"
+    },
+    {
+      "transport": "stdio",
+      "method": "tools/list",
+      "exit_code": 0,
+      "status": "PASS"
+    },
+    {
+      "transport": "stdio",
+      "method": "tools/call",
+      "exit_code": 0,
+      "status": "PASS"
+    },
+    {
+      "transport": "stdio",
+      "method": "resources/list",
+      "exit_code": 0,
+      "status": "PASS"
+    },
+    {
+      "transport": "stdio",
+      "method": "prompts/list",
+      "exit_code": 0,
+      "status": "PASS"
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+[
+  {
+    "id": "R01",
+    "title": "Capture source, contracts, cases and database baseline",
+    "owner": "root",
+    "state": "done",
+    "depends_on": [],
+    "complexity": "M",
+    "acceptance": [
+      "Checkpoint excludes runtime data/secrets; raw schemas, digests, table metadata, fixture hashes and test/case identities are retained."
+    ],
+    "evidence": "149 source/config/resource files mapped; source-only rollback archive and original baseline hashes verified. All 213 backend identities and 52 case definitions preserved.",
+    "merge_gate": "focused checks, contract/identity preservation, full applicable migration verification",
+    "updated_at": "2026-11-07T14:25:36.566349+00:00"
+  },
+  {
+    "id": "R02",
+    "title": "Establish uv/pnpm workspace boundaries",
+    "owner": "root / web",
+    "state": "done",
+    "depends_on": [
+      "R01"
+    ],
+    "complexity": "M",
+    "acceptance": [
+      "Eight installable Python members, one uv lock, pinned pnpm 12.18.0 workspace and one frontend lock; generated types have one owner."
+    ],
+    "evidence": "Locked make setup passed; eight noneditable member wheels passed fresh foreign-directory installation; pnpm 12.18.0 frozen lock and security override verified.",
+    "merge_gate": "focused checks, contract/identity preservation, full applicable migration verification",
+    "updated_at": "2026-11-07T14:25:36.566362+00:00"
+  },
+  {
+    "id": "R03",
+    "title": "Split API, connector and document responsibilities",
+    "owner": "root / connectors / documents",
+    "state": "done",
+    "depends_on": [
+      "R02"
+    ],
+    "complexity": "L",
+    "acceptance": [
+      "One class per file, dependency DAG, one shared execution context and atomic approval/operation semantics; contracts and data remain compatible."
+    ],
+    "evidence": "221 backend cases passed; 89.30% coverage across every production member; class/import/size guards pass; all 31 raw MCP contracts/digests, OpenAPI and SQL metadata match; existing owned/encrypted state passes.",
+    "merge_gate": "focused checks, contract/identity preservation, full applicable migration verification",
+    "updated_at": "2026-11-07T14:25:36.566364+00:00"
+  },
+  {
+    "id": "R04",
+    "title": "Organize frontend features and components",
+    "owner": "web",
+    "state": "done",
+    "depends_on": [
+      "R02"
+    ],
+    "complexity": "M",
+    "acceptance": [
+      "One component per file; generated sharedtypes; unchanged routes, session/CSRF/SSE, idempotency and accessible browser behavior."
+    ],
+    "evidence": "12 frontend and 10 Chromium cases passed; 22 identities retained; actual backend download/history/approvals, mobile layouts and scoped accessibility checks pass.",
+    "merge_gate": "focused checks, contract/identity preservation, full applicable migration verification",
+    "updated_at": "2026-11-07T14:25:36.566366+00:00"
+  },
+  {
+    "id": "R05",
+    "title": "Relocate tests, guides, examples and support material",
+    "owner": "root / documentation",
+    "state": "done",
+    "depends_on": [
+      "R02"
+    ],
+    "complexity": "M",
+    "acceptance": [
+      "Identity-preserving test/case moves; originalguides/evidence retain bytes; currentlinks/resources/supportconfig validate."
+    ],
+    "evidence": "41 retained hashes verified; original guides/historical records preserved; tests/cases mapped; workflow/configuration checks passed; current documentation and evidence organized.",
+    "merge_gate": "focused checks, contract/identity preservation, full applicable migration verification",
+    "updated_at": "2026-11-07T14:25:36.566367+00:00"
+  },
+  {
+    "id": "R06",
+    "title": "Verify packaged installation and final cutover",
+    "owner": "root",
+    "state": "done",
+    "depends_on": [
+      "R03",
+      "R04",
+      "R05"
+    ],
+    "complexity": "L",
+    "acceptance": [
+      "Completewheelset outside checkout; existing DB; full CI, actual HTTP/stdio/Inspector,52 cases, no-networkimage andCompose; obsoleteauthorities removed."
+    ],
+    "evidence": "Complete CI passed; final static and all-package coverage reruns passed; 52/52 evaluation; HTTP/stdio clients 10/10; Inspector 10/10; no-network Docker and Compose smoke/cleanup passed. External acceptance remains NOT_RUN.",
+    "merge_gate": "focused checks, contract/identity preservation, full applicable migration verification",
+    "updated_at": "2026-11-07T14:25:36.566368+00:00"
+  }
+]

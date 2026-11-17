@@ -28,7 +28,14 @@ class GoogleClient:
         parsed = urlsplit(url)
         if (
             parsed.scheme != "https"
-            or parsed.hostname not in {"gmail.googleapis.com", "www.googleapis.com"}
+            or parsed.hostname
+            not in {
+                "gmail.googleapis.com",
+                "www.googleapis.com",
+                "docs.googleapis.com",
+                "sheets.googleapis.com",
+                "slides.googleapis.com",
+            }
             or parsed.port not in {None, 443}
         ):
             raise ConnectorError("unsafe_url", "Provider URL is not allowed")

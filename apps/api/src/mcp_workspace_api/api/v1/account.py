@@ -12,6 +12,7 @@ from mcp_workspace_api.db import (
     OAuthState,
     User,
     UserSession,
+    WorkspaceFile,
 )
 
 if TYPE_CHECKING:
@@ -51,6 +52,7 @@ def register(app: FastAPI, context: ApplicationContext) -> None:
             await remove_conversation(conversation_id, user)
         await google_disconnect(user)
         with db.session() as session:
+            session.execute(delete(WorkspaceFile).where(WorkspaceFile.user_id == user.id))
             for model in (UserSession, OAuthState):
                 session.execute(delete(model).where(model.user_id == user.id))
             for artifact in session.scalars(select(Artifact).where(Artifact.user_id == user.id)):

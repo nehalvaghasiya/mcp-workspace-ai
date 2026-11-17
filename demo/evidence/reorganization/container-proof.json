@@ -1,0 +1,24 @@
+{
+  "smoke": {
+    "status": "PASS",
+    "mode": "mock",
+    "tools": 31,
+    "files": 4,
+    "trace_events": 18
+  },
+  "image": "sha256:d1879708ec0a799cd20b528886b3609c0ec794e60018fe2505d8b67f54d8f62c",
+  "container_user": "10001:10001",
+  "network_mode": "none",
+  "memory_limit_bytes": 8589934592,
+  "read_only_rootfs": true,
+  "frontend_html": "PASS",
+  "packaged_evaluation_cases": 52,
+  "cgroup_memory_bytes": {
+    "memory.current": 176209920,
+    "memory.peak": 278634496
+  },
+  "note": "Synthetic no-network run under an 8 GiB limit; not a physical-machine benchmark.",
+  "cleanup": "PASS",
+  "status": "PASS",
+  "measured_at": "2026-11-07T05:57:43.768631+00:00"
+}

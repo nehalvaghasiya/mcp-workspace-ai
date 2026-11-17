@@ -12,7 +12,12 @@ async def smoke(url: str) -> dict[str, Any]:
             raise RuntimeError(message)
 
     async with httpx.AsyncClient(base_url=url, timeout=90) as client:
-        require((await client.get("/api/health")).status_code == 200, "API health failed")
+        health = await client.get("/api/health")
+        require(health.status_code == 200, "API health failed")
+        require(
+            health.json().get("mode") == "mock",
+            "Synthetic smoke requires MODE=mock; use workspace-ai verify-live for a connected account",
+        )
         session = (await client.post("/api/auth/demo")).json()
         client.headers["X-CSRF-Token"] = session["csrf_token"]
         catalog = (await client.get("/api/mcp/tools")).json()

@@ -34,6 +34,11 @@ def _draft_raw(args: dict[str, Any], reply: dict[str, Any] | None = None) -> str
         raise ConnectorError("invalid_input", "A draft recipient is required")
     try:
         message["Subject"] = args.get("subject", "")
+        operation = args.get("idempotency_key")
+        if operation:
+            if not re.fullmatch(r"[A-Za-z0-9_-]{1,128}", str(operation)):
+                raise ValueError("Invalid operation identifier")
+            message["Message-ID"] = f"<workspace-{operation}@workspace.invalid>"
         if reply:
             original_id = reply.get("message_id_header")
             if original_id:

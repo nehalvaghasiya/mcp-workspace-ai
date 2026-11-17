@@ -17,6 +17,8 @@ from email.parser import Parser
 from pathlib import Path
 from typing import Any
 
+from workspace_contracts import current_contracts
+
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGES = {
     "mcp-workspace-api": "mcp_workspace_api",
@@ -27,6 +29,9 @@ PACKAGES = {
     "mcp-workspace-drive": "mcp_drive",
     "mcp-workspace-evaluations": "mcp_workspace_evaluations",
     "mcp-workspace-gmail": "mcp_gmail",
+    "mcp-workspace-google-docs": "mcp_google_docs",
+    "mcp-workspace-sheets": "mcp_sheets",
+    "mcp-workspace-slides": "mcp_slides",
 }
 
 # The probe is copied into its foreign working directory, rather than importing
@@ -96,6 +101,9 @@ def probe(expected):
     from sqlalchemy import inspect, text
 
     registry = tool_definitions()
+    live_registry = tool_definitions("live")
+    require("demo.ping" not in live_registry, "Demo tool leaked into live catalog")
+    require({name: definition.digest for name, definition in live_registry.items()} == expected["live_policy_digests"], "Installed live tool definitions changed")
     require(len(registry) == 31, "Expected 31 installed tool definitions")
     require(
         {name: definition.digest for name, definition in registry.items()}
@@ -119,7 +127,8 @@ def probe(expected):
     require(migrations.joinpath("env.py").is_file(), "Missing Alembic environment")
     require(migrations.joinpath("script.py.mako").is_file(), "Missing Alembic template")
     revision_names = [
-        "0001_initial_owned_workspace_schema.py", "0002_credential_key_version.py"
+        "0001_initial_owned_workspace_schema.py", "0002_credential_key_version.py",
+        "0003_native_workspace_files.py", "0004_google_connection_status.py"
     ]
     for name in revision_names:
         require(migrations.joinpath("versions", name).is_file(), "Missing migration: " + name)
@@ -149,7 +158,7 @@ def probe(expected):
         )
         with app.state.db.engine.connect() as connection:
             require(connection.execute(text("SELECT version_num FROM alembic_version")).scalar()
-                    == "0002", "Installed migrations did not reach revision 0002")
+                    == "0004", "Installed migrations did not reach revision 0004")
         identity = client.post("/api/auth/demo").json()
         require(identity.get("mode") == "mock", "Installed fixture login failed")
         stdio = asyncio.run(stdio_probe(app.state.runtime, identity["user"]["id"]))
@@ -184,7 +193,8 @@ def probe(expected):
         "import_locations": locations, "editable_imports": False, "pythonpath": "UNSET",
         "foreign_working_directory": True, "tool_count": len(registry),
         "policy_schema_digests": "EXACT", "openapi": "EXACT", "database_schema": "EXACT",
-        "registered_model_tables": len(Base.metadata.tables), "alembic_revision": "0002",
+        "registered_model_tables": len(Base.metadata.tables), "alembic_revision": "0004",
+        "live_tool_count": len(live_registry),
         "migration_files": revision_names, "mock_fixture": "EXACT", "fixture_manifest": "EXACT",
         "evaluation_case_count": len(packaged_cases), "evaluation_cases_and_assertions": "EXACT",
         "artifact_formats": formats, "fonts_license_templates": "PASS", "stdio": stdio,
@@ -229,9 +239,7 @@ def wheel_set(directory: Path) -> dict[str, tuple[Path, str]]:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dist", type=Path, default=ROOT / "dist")
-    parser.add_argument(
-        "--output", type=Path, default=ROOT / "docs/verification/reorganization/wheels.json"
-    )
+    parser.add_argument("--output", type=Path, default=ROOT / ".local/verification/wheels.json")
     args = parser.parse_args()
     started = time.monotonic()
     proof: dict[str, Any] = {"status": "FAIL", "measured_at": datetime.now(UTC).isoformat()}
@@ -307,19 +315,12 @@ def main() -> int:
                 *[str(path) for path, _ in selected.values()],
             ]
         )
-        baseline = ROOT / "docs/verification/reorganization"
         expected = {
             "repository": str(ROOT),
             "packages": PACKAGES,
             "versions": {name: version for name, (_, version) in selected.items()},
         }
-        for name, baseline_file in {
-            "policy_digests": "baseline-policy-digests.json",
-            "openapi": "baseline-openapi.json",
-            "cases": "baseline-cases.json",
-            "db_schema": "baseline-db-schema.json",
-        }.items():
-            expected[name] = json.loads((baseline / baseline_file).read_text())
+        expected.update(current_contracts(ROOT))
         for name in ("fixture", "manifest"):
             fixture_path = (
                 ROOT
@@ -355,7 +356,7 @@ def main() -> int:
         proof["status"] = "PASS"
         proof["elapsed_seconds"] = round(time.monotonic() - started, 2)
         proof["installation"] = (
-            "Fresh venv; locked third-party hashes; eight local wheels --no-deps"
+            "Fresh venv; locked third-party hashes; eleven local wheels --no-deps"
         )
     except Exception as error:
         proof.update(

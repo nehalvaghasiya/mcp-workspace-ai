@@ -1,0 +1,45 @@
+{
+  "startup": "PASS",
+  "project": "workspace-check-47c16101ad",
+  "smoke": {
+    "status": "PASS",
+    "mode": "mock",
+    "tools": 31,
+    "files": 4,
+    "trace_events": 18
+  },
+  "services": {
+    "Command": "\"uvicorn mcp_workspa\u2026\"",
+    "CreatedAt": "2026-11-06 23:58:54 -0600 CST",
+    "ExitCode": 0,
+    "Health": "healthy",
+    "ID": "ba7979107b01",
+    "Image": "workspace-check-47c16101ad-workspace",
+    "Labels": "com.docker.compose.config-hash=2a1ef3cbc0e88ee26f5e3b0dcdd26b226c04ec5dd1888c0d1fa89e9d945e7649,com.docker.compose.depends_on=,com.docker.compose.image=sha256:7d8bb3baad79a3b130d2c5723f7e6309ec1df1945406a31f800d6fbaa6287854,com.docker.compose.container-number=1,com.docker.compose.oneoff=False,com.docker.compose.project=workspace-check-47c16101ad,com.docker.compose.project.config_files=/home/nehal/Personal/mcp-workspace-ai/docker-compose.yml,com.docker.compose.project.working_dir=/home/nehal/Personal/mcp-workspace-ai,com.docker.compose.service=workspace,com.docker.compose.version=2.40.0",
+    "LocalVolumes": "1",
+    "Mounts": "workspace-chec\u2026",
+    "Name": "workspace-check-47c16101ad-workspace-1",
+    "Names": "workspace-check-47c16101ad-workspace-1",
+    "Networks": "workspace-check-47c16101ad_default",
+    "Ports": "127.0.0.1:8000->8000/tcp",
+    "Project": "workspace-check-47c16101ad",
+    "Publishers": [
+      {
+        "URL": "127.0.0.1",
+        "TargetPort": 8000,
+        "PublishedPort": 8000,
+        "Protocol": "tcp"
+      }
+    ],
+    "RunningFor": "16 seconds ago",
+    "Service": "workspace",
+    "Size": "0B",
+    "State": "running",
+    "Status": "Up 15 seconds (healthy)"
+  },
+  "frontend_html": "PASS",
+  "packaged_evaluation_cases": 52,
+  "cleanup": "PASS",
+  "status": "PASS",
+  "measured_at": "2026-11-07T05:59:11.444853+00:00"
+}

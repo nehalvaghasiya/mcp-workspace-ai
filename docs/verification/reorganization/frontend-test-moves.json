@@ -1,0 +1,90 @@
+[
+  {
+    "old": "web/src/api.test.ts::sends CSRF on mutation and uses same-origin cookies without browser token storage",
+    "new": "apps/web/tests/unit/api.test.ts::sends CSRF on mutation and uses same-origin cookies without browser token storage"
+  },
+  {
+    "old": "web/src/api.test.ts::exposes actionable backend errors and does not retry a mutation",
+    "new": "apps/web/tests/unit/api.test.ts::exposes actionable backend errors and does not retry a mutation"
+  },
+  {
+    "old": "web/src/api.test.ts::rejects executable source links and untrusted artifact downloads",
+    "new": "apps/web/tests/unit/api.test.ts::rejects executable source links and untrusted artifact downloads"
+  },
+  {
+    "old": "web/src/api.test.ts::joins persisted start/completion records without presenting a failed tool as success",
+    "new": "apps/web/tests/unit/api.test.ts::joins persisted start/completion records without presenting a failed tool as success"
+  },
+  {
+    "old": "web/src/api.test.ts::deduplicates replayed IDs, rejects other runs, and closes on terminal events",
+    "new": "apps/web/tests/unit/api.test.ts::deduplicates replayed IDs, rejects other runs, and closes on terminal events"
+  },
+  {
+    "old": "web/src/ui.test.tsx::labels a synthetic source with no provider link truthfully",
+    "new": "apps/web/tests/unit/ui.test.tsx::labels a synthetic source with no provider link truthfully"
+  },
+  {
+    "old": "web/src/ui.test.tsx::renders model Markdown without external images or active HTML",
+    "new": "apps/web/tests/unit/ui.test.tsx::renders model Markdown without external images or active HTML"
+  },
+  {
+    "old": "web/src/ui.test.tsx::shows validation accurately and uses the authenticated artifact endpoint",
+    "new": "apps/web/tests/unit/ui.test.tsx::shows validation accurately and uses the authenticated artifact endpoint"
+  },
+  {
+    "old": "web/src/approval.test.tsx::shows exact recipients and content, submits one decision, then disables replay",
+    "new": "apps/web/tests/integration/approval.test.tsx::shows exact recipients and content, submits one decision, then disables replay"
+  },
+  {
+    "old": "web/src/approval.test.tsx::disables expired approvals without allowing a decision",
+    "new": "apps/web/tests/integration/approval.test.tsx::disables expired approvals without allowing a decision"
+  },
+  {
+    "old": "web/src/approval.test.tsx::shows the exact snapshot when a send action only carries a draft identifier",
+    "new": "apps/web/tests/integration/approval.test.tsx::shows the exact snapshot when a send action only carries a draft identifier"
+  },
+  {
+    "old": "web/src/approval.test.tsx::shows a server rejection and leaves the exact action available for refresh",
+    "new": "apps/web/tests/integration/approval.test.tsx::shows a server rejection and leaves the exact action available for refresh"
+  },
+  {
+    "old": "web/e2e/ui-states.spec.ts::demo entry is explicit, synthetic labeling persists, connector controls use CSRF",
+    "new": "apps/web/tests/e2e/ui-states.spec.ts::demo entry is explicit, synthetic labeling persists, connector controls use CSRF"
+  },
+  {
+    "old": "web/e2e/ui-states.spec.ts::approval exposes exact action, allows one decision, and prevents expired actions",
+    "new": "apps/web/tests/e2e/ui-states.spec.ts::approval exposes exact action, allows one decision, and prevents expired actions"
+  },
+  {
+    "old": "web/e2e/ui-states.spec.ts::MCP schemas and source metadata expand, artifacts link to authenticated downloads",
+    "new": "apps/web/tests/e2e/ui-states.spec.ts::MCP schemas and source metadata expand, artifacts link to authenticated downloads"
+  },
+  {
+    "old": "web/e2e/ui-states.spec.ts::loading, offline, failed requests, and partial responses disclose actual state",
+    "new": "apps/web/tests/e2e/ui-states.spec.ts::loading, offline, failed requests, and partial responses disclose actual state"
+  },
+  {
+    "old": "web/e2e/ui-states.spec.ts::live mode only offers Google sign-in",
+    "new": "apps/web/tests/e2e/ui-states.spec.ts::live mode only offers Google sign-in"
+  },
+  {
+    "old": "web/e2e/ui-states.spec.ts::renders and supports keyboard navigation at 390x844",
+    "new": "apps/web/tests/e2e/ui-states.spec.ts::renders and supports keyboard navigation at 390x844"
+  },
+  {
+    "old": "web/e2e/ui-states.spec.ts::renders and supports keyboard navigation at 1440x900",
+    "new": "apps/web/tests/e2e/ui-states.spec.ts::renders and supports keyboard navigation at 1440x900"
+  },
+  {
+    "old": "web/e2e/workspace.spec.ts::creates a sourced cross-app report, downloads artifacts, and restores history",
+    "new": "apps/web/tests/e2e/workspace.spec.ts::creates a sourced cross-app report, downloads artifacts, and restores history"
+  },
+  {
+    "old": "web/e2e/workspace.spec.ts::rejects a proposed external action without approving it",
+    "new": "apps/web/tests/e2e/workspace.spec.ts::rejects a proposed external action without approving it"
+  },
+  {
+    "old": "web/e2e/workspace.spec.ts::approves a synthetic draft and its separate send action once each",
+    "new": "apps/web/tests/e2e/workspace.spec.ts::approves a synthetic draft and its separate send action once each"
+  }
+]

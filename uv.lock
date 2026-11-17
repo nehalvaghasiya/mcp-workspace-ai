@@ -18,6 +18,9 @@ members = [
     "mcp-workspace-drive",
     "mcp-workspace-evaluations",
     "mcp-workspace-gmail",
+    "mcp-workspace-google-docs",
+    "mcp-workspace-sheets",
+    "mcp-workspace-slides",
 ]
 
 [[package]]
@@ -1261,7 +1264,11 @@ dependencies = [
     { name = "mcp-workspace-drive" },
     { name = "mcp-workspace-evaluations" },
     { name = "mcp-workspace-gmail" },
+    { name = "mcp-workspace-google-docs" },
+    { name = "mcp-workspace-sheets" },
+    { name = "mcp-workspace-slides" },
     { name = "pydantic-settings" },
+    { name = "python-dotenv" },
     { name = "python-multipart" },
     { name = "sqlalchemy" },
     { name = "uvicorn" },
@@ -1282,7 +1289,11 @@ requires-dist = [
     { name = "mcp-workspace-drive", editable = "mcp-servers/drive" },
     { name = "mcp-workspace-evaluations", editable = "evaluations" },
     { name = "mcp-workspace-gmail", editable = "mcp-servers/gmail" },
+    { name = "mcp-workspace-google-docs", editable = "mcp-servers/google-docs" },
+    { name = "mcp-workspace-sheets", editable = "mcp-servers/sheets" },
+    { name = "mcp-workspace-slides", editable = "mcp-servers/slides" },
     { name = "pydantic-settings", specifier = ">=2.7" },
+    { name = "python-dotenv", specifier = ">=1" },
     { name = "python-multipart", specifier = ">=0.0.20" },
     { name = "sqlalchemy", specifier = ">=2.0" },
     { name = "uvicorn", specifier = ">=0.34" },
@@ -1406,6 +1417,51 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [{ name = "mcp-workspace-common", editable = "packages/mcp-common" }]
+
+[[package]]
+name = "mcp-workspace-google-docs"
+version = "0.1.0"
+source = { editable = "mcp-servers/google-docs" }
+dependencies = [
+    { name = "mcp-workspace-common" },
+    { name = "mcp-workspace-documents" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "mcp-workspace-common", editable = "packages/mcp-common" },
+    { name = "mcp-workspace-documents", editable = "mcp-servers/documents" },
+]
+
+[[package]]
+name = "mcp-workspace-sheets"
+version = "0.1.0"
+source = { editable = "mcp-servers/sheets" }
+dependencies = [
+    { name = "mcp-workspace-common" },
+    { name = "mcp-workspace-documents" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "mcp-workspace-common", editable = "packages/mcp-common" },
+    { name = "mcp-workspace-documents", editable = "mcp-servers/documents" },
+]
+
+[[package]]
+name = "mcp-workspace-slides"
+version = "0.1.0"
+source = { editable = "mcp-servers/slides" }
+dependencies = [
+    { name = "mcp-workspace-common" },
+    { name = "mcp-workspace-documents" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "mcp-workspace-common", editable = "packages/mcp-common" },
+    { name = "mcp-workspace-documents", editable = "mcp-servers/documents" },
+]
 
 [[package]]
 name = "mdurl"

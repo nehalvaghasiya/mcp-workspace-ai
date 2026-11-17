@@ -20,5 +20,8 @@ mcp-workspace-gmail = { workspace = true }
 mcp-workspace-calendar = { workspace = true }
 mcp-workspace-drive = { workspace = true }
 mcp-workspace-documents = { workspace = true }
+mcp-workspace-google-docs = { workspace = true }
+mcp-workspace-sheets = { workspace = true }
+mcp-workspace-slides = { workspace = true }
 mcp-workspace-demo = { workspace = true }
 mcp-workspace-evaluations = { workspace = true }

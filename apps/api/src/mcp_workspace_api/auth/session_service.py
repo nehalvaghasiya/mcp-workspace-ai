@@ -68,7 +68,11 @@ class SessionService:
             "llm": {
                 "provider": settings.llm_provider,
                 "model": settings.llm_model or "FakeLLM",
-                "consented": bool(user and user.llm_consent),
+                "consented": bool(
+                    user
+                    and user.llm_consent
+                    and user.consent_provider == settings.llm_base_url + ":" + settings.llm_model
+                ),
             },
         }
 

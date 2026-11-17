@@ -4,6 +4,7 @@ import asyncio
 import json
 from typing import TYPE_CHECKING
 
+from cryptography.fernet import InvalidToken
 from sqlalchemy import select
 
 from mcp_workspace_api.core.security import Denied
@@ -39,9 +40,19 @@ class TokenVault:
         from mcp_workspace_api.auth.oauth import GoogleOAuth
 
         account = context.account(user_id)
-        credentials = json.loads(context.vault.decrypt(account.credentials.encode()))
+        try:
+            credentials = json.loads(context.vault.decrypt(account.credentials.encode()))
+            if not isinstance(credentials, dict):
+                raise ValueError
+        except (InvalidToken, ValueError, UnicodeError):
+            self.record_connection_result(user_id, "auth_required")
+            raise Denied(
+                "CONNECTOR_NOT_AUTHORIZED",
+                "Stored Google authorization is unavailable; reconnect Google",
+            ) from None
         if credentials.get("expires_at", 0) < now() + 60:
             if not credentials.get("refresh_token"):
+                self.record_connection_result(user_id, "auth_required")
                 raise Denied("CONNECTOR_NOT_AUTHORIZED", "Google access expired; reconnect")
             oauth = GoogleOAuth(
                 context.settings.google_client_id,
@@ -50,11 +61,14 @@ class TokenVault:
             )
             try:
                 refreshed = await oauth.refresh(credentials["refresh_token"])
-            except Exception:
-                with context.db.session() as session:
-                    row = session.get(GoogleAccount, account.id)
-                    if row:
-                        row.enabled = []
+            except Exception as error:
+                if getattr(error, "code", "") == "oauth_unavailable":
+                    self.record_connection_result(user_id, "provider_unavailable")
+                    raise Denied(
+                        "PROVIDER_UNAVAILABLE",
+                        "Google is temporarily unavailable; retry the connection",
+                    ) from None
+                self.record_connection_result(user_id, "auth_required")
                 raise Denied(
                     "CONNECTOR_NOT_AUTHORIZED", "Google access expired or was revoked; reconnect"
                 ) from None
@@ -73,4 +87,42 @@ class TokenVault:
                 row.key_version = context.settings.token_key_version
                 if "scope" in refreshed:
                     row.scopes = refreshed["scope"].split()
-        return str(credentials["access_token"])
+                row.connection_error = ""
+                row.connection_checked_at = now()
+        token = credentials.get("access_token")
+        if not isinstance(token, str) or not token:
+            self.record_connection_result(user_id, "auth_required")
+            raise Denied(
+                "CONNECTOR_NOT_AUTHORIZED", "Google authorization is incomplete; reconnect Google"
+            )
+        return token
+
+    def record_connection_result(
+        self, user_id: str, error_code: str | None, connector: str = ""
+    ) -> None:
+        if error_code not in {
+            None,
+            "auth_required",
+            "permission_denied",
+            "provider_unavailable",
+            "rate_limited",
+        }:
+            return
+        with self.context.db.session() as session:
+            account = session.scalar(select(GoogleAccount).where(GoogleAccount.user_id == user_id))
+            if not account:
+                return
+            account.connection_checked_at = now()
+            if error_code == "auth_required":
+                account.connection_error = error_code
+            elif error_code is None:
+                account.connection_error = ""
+            elif not connector:
+                account.connection_error = error_code
+            if connector:
+                errors = dict(account.connector_errors or {})
+                if error_code:
+                    errors[connector] = error_code
+                else:
+                    errors.pop(connector, None)
+                account.connector_errors = errors

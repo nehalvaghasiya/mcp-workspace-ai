@@ -16,3 +16,6 @@ class Message(Owned, Base):
     content: Mapped[str]
     sources: Mapped[list[dict[str, Any]]] = mapped_column(JSON, default=list)
     artifacts: Mapped[list[dict[str, Any]]] = mapped_column(JSON, default=list)
+    workspace_files: Mapped[list[dict[str, Any]]] = mapped_column(
+        JSON, default=list, server_default="[]"
+    )

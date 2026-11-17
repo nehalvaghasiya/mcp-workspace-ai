@@ -15,6 +15,7 @@ class ToolDefinition(BaseModel):
     input_model: Any
     risk: Risk = Risk.READ
     scopes: tuple[str, ...] = ()
+    scope_alternatives: tuple[tuple[str, ...], ...] = ()
 
     @property
     def server(self) -> str:
@@ -22,12 +23,13 @@ class ToolDefinition(BaseModel):
 
     @property
     def digest(self) -> str:
-        return digest(
-            {
-                "name": self.name,
-                "input": self.input_model.model_json_schema(),
-                "output": ToolResult.model_json_schema(),
-                "risk": self.risk,
-                "scopes": self.scopes,
-            }
-        )
+        policy = {
+            "name": self.name,
+            "input": self.input_model.model_json_schema(),
+            "output": ToolResult.model_json_schema(),
+            "risk": self.risk,
+            "scopes": self.scopes,
+        }
+        if self.scope_alternatives:
+            policy["scope_alternatives"] = self.scope_alternatives
+        return digest(policy)

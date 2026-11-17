@@ -43,6 +43,10 @@ class ApprovalService:
                 if not artifact or artifact.user_id != user_id:
                     raise Denied("PERMISSION_DENIED", "Artifact is unavailable")
                 snapshot["artifact_sha256"] = artifact.sha256
+        if name in {"gmail.create_draft", "gmail.update_draft"} and clean.get("attachment_ids"):
+            snapshot["attachment_sha256s"] = self.attachments(
+                user_id, clean["attachment_ids"], hashes=True
+            )
         action = digest(
             {
                 "user": user_id,
@@ -107,15 +111,48 @@ class ApprovalService:
         current = await context.adapter(claims["user_id"]).snapshot(
             definition.server, definition.name.split(".")[1], args
         )
-        comparable = {k: v for k, v in snapshot.items() if k != "artifact_sha256"}
+        comparable = {
+            k: v for k, v in snapshot.items() if k not in {"artifact_sha256", "attachment_sha256s"}
+        }
         if digest(current) != digest(comparable):
             raise Denied(
                 "PERMISSION_DENIED", "The target changed after approval; review a fresh proposal"
             )
+        preflight: dict[str, Any] = {}
+        if definition.name in {"gmail.create_draft", "gmail.update_draft"} and args.get(
+            "attachment_ids"
+        ):
+            attachments = self.attachments(claims["user_id"], args["attachment_ids"])
+            if {item["id"]: item["sha256"] for item in attachments} != snapshot.get(
+                "attachment_sha256s"
+            ):
+                raise Denied("PERMISSION_DENIED", "An approved attachment changed")
+            preflight["_attachments"] = attachments
+        if definition.name == "drive.upload_artifact":
+            with context.db.session() as session:
+                artifact = session.get(Artifact, args["artifact_id"])
+                if (
+                    not artifact
+                    or artifact.user_id != claims["user_id"]
+                    or artifact.sha256 != snapshot["artifact_sha256"]
+                ):
+                    raise Denied("PERMISSION_DENIED", "Artifact changed")
+                preflight["_artifact"] = {
+                    "path": str(context.settings.storage / artifact.storage_key),
+                    "title": artifact.title,
+                    "mime_type": artifact.mime_type,
+                    "sha256": artifact.sha256,
+                }
+        if approval.expires_at < now():
+            raise Denied("APPROVAL_EXPIRED", "Review this action again")
         with context.db.session() as session:
             claimed = session.execute(
                 update(Approval)
-                .where(Approval.id == approval.id, Approval.status == "approved")
+                .where(
+                    Approval.id == approval.id,
+                    Approval.status == "approved",
+                    Approval.expires_at >= now(),
+                )
                 .values(status="consumed")
                 .returning(Approval.id)
             )
@@ -128,22 +165,7 @@ class ApprovalService:
             session.add(operation)
             session.flush()
             operation_id = operation.id
-        internal = {**args, "_snapshot": comparable, "idempotency_key": operation_id}
-        if definition.name == "drive.upload_artifact":
-            with context.db.session() as session:
-                artifact = session.get(Artifact, args["artifact_id"])
-                if (
-                    not artifact
-                    or artifact.user_id != claims["user_id"]
-                    or artifact.sha256 != snapshot["artifact_sha256"]
-                ):
-                    raise Denied("PERMISSION_DENIED", "Artifact changed")
-                internal["_artifact"] = {
-                    "path": str(context.settings.storage / artifact.storage_key),
-                    "title": artifact.title,
-                    "mime_type": artifact.mime_type,
-                    "sha256": artifact.sha256,
-                }
+        internal = {**args, **preflight, "_snapshot": comparable, "idempotency_key": operation_id}
         try:
             data = await asyncio.wait_for(
                 context.adapter(claims["user_id"]).call(
@@ -163,5 +185,26 @@ class ApprovalService:
         with context.db.session() as session:
             row = session.get(Operation, operation_id)
             if row:
-                row.status, row.result = "completed", data
+                row.status, row.result = "partial" if data.get("partial") else "completed", data
         return {**data, "operation_id": operation_id}
+
+    def attachments(self, user_id: str, ids: list[str], *, hashes: bool = False) -> Any:
+        attachments = []
+        with self.context.db.session() as session:
+            for artifact_id in ids:
+                artifact = session.get(Artifact, artifact_id)
+                if not artifact or artifact.user_id != user_id or not artifact.validated:
+                    raise Denied(
+                        "PERMISSION_DENIED",
+                        "An attachment is unavailable or is not owned by this account",
+                    )
+                attachments.append(
+                    {
+                        "id": artifact.id,
+                        "path": str(self.context.settings.storage / artifact.storage_key),
+                        "title": artifact.title,
+                        "mime_type": artifact.mime_type,
+                        "sha256": artifact.sha256,
+                    }
+                )
+        return {item["id"]: item["sha256"] for item in attachments} if hashes else attachments

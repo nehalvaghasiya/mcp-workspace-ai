@@ -1,0 +1,44 @@
+{
+  "measured_at": "2026-11-06T19:44:11.699607+00:00",
+  "project": "workspace-ai-handoff-1793994251",
+  "host_note": "Temporary Docker config selects installed /usr/libexec CLI plugins instead of stale Docker Desktop symlinks; repository Compose unchanged.",
+  "startup": "PASS",
+  "smoke": {
+    "status": "PASS",
+    "mode": "mock",
+    "tools": 31,
+    "files": 4,
+    "trace_events": 18
+  },
+  "frontend": "PASS",
+  "services": {
+    "Command": "\"uvicorn workspace_a\u2026\"",
+    "CreatedAt": "2026-11-06 13:44:13 -0600 CST",
+    "ExitCode": 0,
+    "Health": "healthy",
+    "ID": "39d8fa962f26",
+    "Image": "workspace-ai-handoff-1793994251-workspace",
+    "Labels": "com.docker.compose.version=2.40.0,com.docker.compose.config-hash=d5c93900b0022314c7281485b53a1937c345b53c4c4f7a5b362e4aee89cf29c8,com.docker.compose.container-number=1,com.docker.compose.depends_on=,com.docker.compose.image=sha256:5ffac97fc2d0bc44e8cf8f677c05285165277dd0ad1944a91d77c0541a838074,com.docker.compose.project=workspace-ai-handoff-1793994251,com.docker.compose.project.config_files=/home/nehal/Personal/mcp-workspace-ai/compose.yaml,com.docker.compose.project.working_dir=/home/nehal/Personal/mcp-workspace-ai,com.docker.compose.oneoff=False,com.docker.compose.service=workspace",
+    "LocalVolumes": "1",
+    "Mounts": "workspace-ai-h\u2026",
+    "Name": "workspace-ai-handoff-1793994251-workspace-1",
+    "Names": "workspace-ai-handoff-1793994251-workspace-1",
+    "Networks": "workspace-ai-handoff-1793994251_default",
+    "Ports": "127.0.0.1:8000->8000/tcp",
+    "Project": "workspace-ai-handoff-1793994251",
+    "Publishers": [
+      {
+        "URL": "127.0.0.1",
+        "TargetPort": 8000,
+        "PublishedPort": 8000,
+        "Protocol": "tcp"
+      }
+    ],
+    "RunningFor": "11 seconds ago",
+    "Service": "workspace",
+    "Size": "0B",
+    "State": "running",
+    "Status": "Up 10 seconds (healthy)"
+  },
+  "cleanup_exit_code": 0
+}

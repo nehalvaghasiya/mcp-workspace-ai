@@ -6,9 +6,10 @@ from typing import TYPE_CHECKING, Any
 
 from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse, RedirectResponse
+from mcp_workspace_common.scopes import READ_SCOPES, WRITE_SCOPES
 from sqlalchemy import delete, select
 
-from mcp_workspace_api.contracts import CAL, DRIVE, GMAIL
+from mcp_workspace_api.contracts import DRIVE
 from mcp_workspace_api.core.security import Denied, secret_hash
 from mcp_workspace_api.db import (
     GoogleAccount,
@@ -49,7 +50,7 @@ def register(app: FastAPI, context: ApplicationContext) -> None:
             return JSONResponse(session_payload(existing))
         with db.session() as session:
             user = User(
-                subject="demo:" + uid(), display_name="Northstar explorer", llm_consent=False
+                subject="demo:" + uid(), display_name="Workspace explorer", llm_consent=False
             )
             session.add(user)
             session.flush()
@@ -92,18 +93,14 @@ def register(app: FastAPI, context: ApplicationContext) -> None:
             raise HTTPException(401, "Sign in before connecting a provider")
         scopes: dict[str, list[str]] = {
             "": [],
-            "gmail": [GMAIL + "readonly"],
-            "calendar": [CAL + "events.readonly", CAL + "calendarlist.readonly", CAL + "freebusy"],
-            "drive": [DRIVE],
+            **{name: list(required) for name, required in READ_SCOPES.items()},
             "drive_open": [DRIVE, "https://www.googleapis.com/auth/drive.install"],
         }
         if connector not in scopes or access not in {"read", "write"}:
             raise HTTPException(400, "Unknown connector or permission")
         requested = scopes[connector]
-        if access == "write" and connector == "gmail":
-            requested = [GMAIL + "readonly", GMAIL + "compose", GMAIL + "modify"]
-        elif access == "write" and connector == "calendar":
-            requested = scopes[connector] + [CAL + "events"]
+        if access == "write" and connector in WRITE_SCOPES:
+            requested = scopes[connector] + list(WRITE_SCOPES[connector])
         browser, state, nonce, verifier = (secrets.token_urlsafe(48) for _ in range(4))
         with db.session() as session:
             session.add(
@@ -198,6 +195,8 @@ def register(app: FastAPI, context: ApplicationContext) -> None:
             if account:
                 account.credentials, account.scopes, account.enabled = encrypted, scopes, enabled
                 account.key_version = settings.token_key_version
+                account.connection_error, account.connector_errors = "", {}
+                account.connection_checked_at = now()
             else:
                 session.add(
                     GoogleAccount(

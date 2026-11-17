@@ -18,5 +18,8 @@ class StreamEvent(StrictModel):
         "run.failed",
         "run.cancelled",
         "model.usage",
+        "model.started",
+        "model.completed",
+        "model.failed",
     ]
     data: dict[str, JsonValue]

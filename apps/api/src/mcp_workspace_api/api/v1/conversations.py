@@ -82,8 +82,9 @@ def register(app: FastAPI, context: ApplicationContext) -> None:
                         "content": msg.content,
                         "sources": msg.sources,
                         "artifacts": msg.artifacts,
+                        "workspace_files": msg.workspace_files,
                     }
                     for msg in messages
                 ],
-                "runs": [run_json(run) for run in runs],
+                "runs": [run_json(run, context.runtime) for run in runs],
             }

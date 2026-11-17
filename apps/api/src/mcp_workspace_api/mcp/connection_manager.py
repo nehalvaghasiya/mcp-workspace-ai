@@ -26,7 +26,12 @@ class ConnectionManager:
                     context.settings.storage / "fixtures", user_id
                 )
             else:
-                context.adapters[user_id] = GoogleWorkspace(lambda: context.token(user_id))
+                context.adapters[user_id] = GoogleWorkspace(
+                    lambda: context.token(user_id),
+                    on_result=lambda error, server: context.token_vault.record_connection_result(
+                        user_id, error, server
+                    ),
+                )
         return context.adapters[user_id]
 
     @asynccontextmanager

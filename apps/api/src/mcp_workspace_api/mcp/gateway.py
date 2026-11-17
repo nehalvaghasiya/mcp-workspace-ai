@@ -54,6 +54,18 @@ class Gateway:
                     context.adapter(user_id).call(definition.server, name.split(".")[1], args),
                     context.settings.tool_timeout,
                 )
+            if definition.name == "drive.export_file":
+                artifact = context.workspace_file_service.import_export(user_id, run_id, data)
+                data = {**data, "artifact": artifact}
+            if definition.server in {"docs", "sheets", "slides"}:
+                context.workspace_file_service.record(
+                    user_id, run_id, definition.server, data, args
+                )
+                if data.get("partial"):
+                    raise Denied(
+                        "PARTIAL_CREATION",
+                        "Google created the file but could not finish populating or verifying it. Inspect the partial file in the Google file library before retrying.",
+                    )
             sources = context._sources(definition.server, data)
             result = ToolResult(
                 data=data,

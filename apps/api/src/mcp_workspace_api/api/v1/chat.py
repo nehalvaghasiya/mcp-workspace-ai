@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import copy
 import json
 from collections.abc import AsyncIterator
 from typing import TYPE_CHECKING, Any
@@ -23,10 +24,12 @@ from mcp_workspace_api.db import (
 from mcp_workspace_api.db.repositories.ownership import owned
 from mcp_workspace_api.schemas.presenters import run_json
 from mcp_workspace_api.schemas.requests.new_message import NewMessage
+from mcp_workspace_api.schemas.requests.retry_run import RetryRun
 from mcp_workspace_api.schemas.responses import (
     RunView,
     StreamEvent,
 )
+from mcp_workspace_api.services.run_recovery import recovery_details
 
 if TYPE_CHECKING:
     from mcp_workspace_api.core.application_context import ApplicationContext
@@ -71,10 +74,83 @@ def register(app: FastAPI, context: ApplicationContext) -> None:
                 Message(user_id=user.id, conversation_id=conv.id, role="user", content=body.content)
             )
             if conv.title == "New conversation":
-                conv.title = body.content[:60]
+                conv.title = (
+                    body.content
+                    if len(body.content) <= 80
+                    else body.content[:77].rsplit(" ", 1)[0] + "…"
+                )
             session.flush()
             result = run_json(run)
         start_task(run.id)
+        return result
+
+    @app.post("/api/runs/{run_id}/retry", response_model=RunView)
+    async def retry_run(
+        run_id: str, body: RetryRun, user: User = Depends(require_user)
+    ) -> dict[str, Any]:
+        with db.session() as session:
+            source = owned(session, Run, run_id, user)
+            request_id = user.id + ":retry:" + body.request_id
+            existing = session.scalar(select(Run).where(Run.request_id == request_id))
+            if existing:
+                if existing.state.get("retry_of") != source.id:
+                    raise HTTPException(409, "Request ID was already used for another retry")
+                return run_json(existing, runtime)
+            latest = session.scalar(
+                select(Run)
+                .where(Run.conversation_id == source.conversation_id, Run.user_id == user.id)
+                .order_by(Run.created_at.desc())
+                .limit(1)
+            )
+            if (
+                not latest
+                or latest.id != source.id
+                or not recovery_details(runtime, source)["retryable"]
+            ):
+                raise HTTPException(
+                    409, "This run cannot be continued. Review activity and start a new request."
+                )
+            active_count = list(
+                session.scalars(
+                    select(Run).where(
+                        Run.user_id == user.id,
+                        Run.status.in_(["running", "queued", "needs_approval"]),
+                    )
+                )
+            )
+            if len(active_count) >= 2:
+                raise HTTPException(429, "Finish or cancel existing workflows before continuing")
+            if runtime.settings.llm_provider == "openai_compatible" and (
+                not user.llm_consent
+                or user.consent_provider
+                != runtime.settings.llm_base_url + ":" + runtime.settings.llm_model
+            ):
+                raise HTTPException(403, "Review model processing consent in Settings first")
+            for result in source.state.get("results", []):
+                runtime.policy.authorize(user.id, runtime.tools[result["tool"]])
+            state = copy.deepcopy(source.state)
+            for key in ("error_code", "retry_child", "pending_step"):
+                state.pop(key, None)
+            state["retry_of"] = source.id
+            child = Run(
+                user_id=user.id,
+                conversation_id=source.conversation_id,
+                prompt=source.prompt,
+                request_id=request_id,
+                state=state,
+            )
+            session.add(child)
+            session.flush()
+            claimed = session.execute(
+                update(Run)
+                .where(Run.id == source.id, Run.state == source.state)
+                .values(state={**source.state, "retry_child": child.id})
+                .returning(Run.id)
+            )
+            if claimed.scalar_one_or_none() is None:
+                raise HTTPException(409, "A continuation already exists; refresh this conversation")
+            result = run_json(child, runtime)
+        start_task(child.id)
         return result
 
     @app.get("/api/runs/{run_id}/events")

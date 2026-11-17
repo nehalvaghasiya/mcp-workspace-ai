@@ -1,0 +1,144 @@
+{
+  "package_manager": "pnpm@12.18.0",
+  "dependencies": [
+    {
+      "name": "@axe-core/playwright",
+      "before": "4.14.0",
+      "after": "4.14.0"
+    },
+    {
+      "name": "@eslint/js",
+      "before": "9.39.5",
+      "after": "9.39.5"
+    },
+    {
+      "name": "@playwright/test",
+      "before": "1.65.0",
+      "after": "1.65.0"
+    },
+    {
+      "name": "@tailwindcss/vite",
+      "before": "4.3.4",
+      "after": "4.3.4"
+    },
+    {
+      "name": "@tanstack/react-query",
+      "before": "5.106.1",
+      "after": "5.106.1"
+    },
+    {
+      "name": "@testing-library/jest-dom",
+      "before": "6.9.1",
+      "after": "6.9.1"
+    },
+    {
+      "name": "@testing-library/react",
+      "before": "16.3.3",
+      "after": "16.3.3"
+    },
+    {
+      "name": "@testing-library/user-event",
+      "before": "14.6.8",
+      "after": "14.6.8"
+    },
+    {
+      "name": "@types/node",
+      "before": "24.19.2",
+      "after": "24.19.2"
+    },
+    {
+      "name": "@types/react",
+      "before": "19.3.0",
+      "after": "19.3.0"
+    },
+    {
+      "name": "@types/react-dom",
+      "before": "19.3.0",
+      "after": "19.3.0"
+    },
+    {
+      "name": "@vitejs/plugin-react",
+      "before": "5.2.0",
+      "after": "5.2.0"
+    },
+    {
+      "name": "eslint",
+      "before": "9.39.5",
+      "after": "9.39.5"
+    },
+    {
+      "name": "eslint-plugin-react-hooks",
+      "before": "7.1.1",
+      "after": "7.1.1"
+    },
+    {
+      "name": "eslint-plugin-react-refresh",
+      "before": "0.4.26",
+      "after": "0.4.26"
+    },
+    {
+      "name": "globals",
+      "before": "16.5.0",
+      "after": "16.5.0"
+    },
+    {
+      "name": "jsdom",
+      "before": "28.1.0",
+      "after": "28.1.0"
+    },
+    {
+      "name": "lucide-react",
+      "before": "0.577.0",
+      "after": "0.577.0"
+    },
+    {
+      "name": "prettier",
+      "before": "3.9.10",
+      "after": "3.9.10"
+    },
+    {
+      "name": "react",
+      "before": "19.3.1",
+      "after": "19.3.1"
+    },
+    {
+      "name": "react-dom",
+      "before": "19.3.1",
+      "after": "19.3.1"
+    },
+    {
+      "name": "react-markdown",
+      "before": "10.1.0",
+      "after": "10.1.0"
+    },
+    {
+      "name": "tailwindcss",
+      "before": "4.3.4",
+      "after": "4.3.4"
+    },
+    {
+      "name": "typescript",
+      "before": "5.9.3",
+      "after": "5.9.3"
+    },
+    {
+      "name": "typescript-eslint",
+      "before": "8.72.1",
+      "after": "8.72.1"
+    },
+    {
+      "name": "vite",
+      "before": "7.3.7",
+      "after": "7.3.7"
+    },
+    {
+      "name": "vitest",
+      "before": "4.1.12",
+      "after": "4.1.12"
+    }
+  ],
+  "changed": [],
+  "minimatch_override": "@typescript-eslint/typescript-estree>minimatch = 11.0.5",
+  "python_third_party_versions_unchanged": true,
+  "python_third_party_packages": 97
+}
