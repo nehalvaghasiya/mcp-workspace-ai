@@ -20,6 +20,12 @@ dev = ["pytest>=8", "pytest-asyncio>=0.25", "pytest-cov>=6", "respx>=0.22", "ruf
 target-version = "py312"
 line-length = 100
 
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "lf"
+
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "ASYNC"]
 ignore = ["E501"]

@@ -1,0 +1,24 @@
+name: Feature request
+description: Propose a concrete user-facing capability or improvement.
+title: "[Feature]: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: User problem
+      description: Who needs this, and what task cannot be completed today?
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: Desired behavior and acceptance
+      description: Include a concrete example and observable success criteria.
+    validations:
+      required: true
+  - type: textarea
+    id: tradeoffs
+    attributes:
+      label: Alternatives and boundaries
+      description: Note authorization, privacy, provider scopes and deferred behavior.

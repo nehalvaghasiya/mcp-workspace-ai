@@ -2,7 +2,7 @@
 name = "mcp-workspace-api"
 version = "0.1.0"
 requires-python = ">=3.12"
-dependencies = ["mcp-workspace-common", "mcp-workspace-gmail", "mcp-workspace-calendar", "mcp-workspace-drive", "mcp-workspace-documents", "mcp-workspace-demo", "mcp-workspace-evaluations", "fastapi>=0.162.4", "uvicorn>=0.34", "pydantic-settings>=2.7", "sqlalchemy>=2.0", "alembic>=1.14", "httpx>=0.28", "httpx2>=2.16", "authlib>=1.6,<2", "cryptography>=44", "python-multipart>=0.0.20"]
+dependencies = ["mcp-workspace-common", "mcp-workspace-gmail", "mcp-workspace-calendar", "mcp-workspace-drive", "mcp-workspace-documents", "mcp-workspace-google-docs", "mcp-workspace-sheets", "mcp-workspace-slides", "mcp-workspace-demo", "mcp-workspace-evaluations", "fastapi>=0.162.4", "uvicorn>=0.34", "pydantic-settings>=2.7", "python-dotenv>=1", "sqlalchemy>=2.0", "alembic>=1.14", "httpx>=0.28", "httpx2>=2.16", "authlib>=1.6,<2", "cryptography>=44", "python-multipart>=0.0.20"]
 
 [project.scripts]
 workspace-ai = "mcp_workspace_api.cli.commands:main"
