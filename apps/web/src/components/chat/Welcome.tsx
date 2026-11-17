@@ -15,11 +15,7 @@ export function Welcome({
         <Sparkles size={25} />
       </span>
       <p className="eyebrow">YOUR WORK, WITH A CLEARER VIEW</p>
-      <h1>
-        What can we make
-        <br />
-        room for today?
-      </h1>
+      <h1>What can we make room for today?</h1>
       <p className="welcome-description">
         Find the context. Connect the dots.
         <br />
@@ -34,20 +30,24 @@ export function Welcome({
         ))}
       </div>
       <div className="prompt-grid">
-        {examples.map(({ icon: Icon, title, text }) => (
-          <button
-            key={title}
-            className="prompt-card"
-            onClick={() => {
-              onPrompt(text);
-            }}
-          >
-            <Icon size={18} />
-            <strong>{title}</strong>
-            <span>{text}</span>
-            <ArrowUp size={15} />
-          </button>
-        ))}
+        {examples
+          .filter((example) =>
+            example.requires.every((id) => connectors.some((c) => c.id === id && c.enabled)),
+          )
+          .map(({ icon: Icon, title, text }) => (
+            <button
+              key={title}
+              className="prompt-card"
+              onClick={() => {
+                onPrompt(text);
+              }}
+            >
+              <Icon size={18} />
+              <strong>{title}</strong>
+              <span>{text}</span>
+              <ArrowUp size={15} />
+            </button>
+          ))}
       </div>
       <div className="welcome-footnote">
         <ShieldCheck size={14} />

@@ -10,6 +10,7 @@ import {
   type Session,
   type Settings,
   type ToolTrace,
+  type WorkspaceFile,
 } from '@mcp-workspace/shared-types';
 import { normalizeTrace } from '../features/tool-execution/normalize-trace';
 import { request, setCsrfToken } from './request';
@@ -52,6 +53,11 @@ export const api = {
     normalizeTrace(await request<ToolTrace[]>(`/runs/${encodeURIComponent(id)}/trace`, { signal })),
   cancel: (id: string) =>
     request<void>(`/runs/${encodeURIComponent(id)}/cancel`, { method: 'POST' }),
+  retry: (id: string, requestId: string) =>
+    request<Run>(`/runs/${encodeURIComponent(id)}/retry`, {
+      method: 'POST',
+      body: body({ request_id: requestId }),
+    }),
   approvals: (signal?: AbortSignal) => request<Approval[]>('/approvals', { signal }),
   decide: (id: string, decision: 'approve' | 'reject') =>
     request<{ status: string }>(`/approvals/${encodeURIComponent(id)}/decide`, {
@@ -59,12 +65,14 @@ export const api = {
       body: body({ decision }),
     }),
   artifacts: (signal?: AbortSignal) => request<Artifact[]>('/artifacts', { signal }),
+  workspaceFiles: (signal?: AbortSignal) =>
+    request<WorkspaceFile[]>('/workspace-files', { signal }),
   deleteArtifact: (id: string) =>
     request<void>(`/artifacts/${encodeURIComponent(id)}`, { method: 'DELETE' }),
   servers: (signal?: AbortSignal) => request<McpServer[]>('/mcp/servers', { signal }),
   tools: (signal?: AbortSignal) => request<McpTool[]>('/mcp/tools', { signal }),
   settings: (signal?: AbortSignal) => request<Settings>('/settings', { signal }),
   updateSettings: (settings: { llm_consent: boolean; timezone: string }) =>
-    request<Settings>('/settings', { method: 'PATCH', body: body(settings) }),
+    request<{ status: string }>('/settings', { method: 'PATCH', body: body(settings) }),
   deleteAccount: () => request<void>('/account', { method: 'DELETE' }),
 };

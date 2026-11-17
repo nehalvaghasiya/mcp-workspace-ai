@@ -3,6 +3,7 @@ import { expect, it } from 'vitest';
 import { ArtifactCard } from '../../src/components/artifacts/ArtifactCard';
 import { SafeMarkdown } from '../../src/components/ui/SafeMarkdown';
 import { Sources } from '../../src/components/chat/Sources';
+import { WorkspaceFileCard } from '../../src/components/artifacts/WorkspaceFileCard';
 
 it('labels a synthetic source with no provider link truthfully', () => {
   render(
@@ -59,4 +60,30 @@ it('shows validation accurately and uses the authenticated artifact endpoint', (
     'href',
     '/api/artifacts/owned/download',
   );
+});
+it('links native files to Google and discloses partial creation', () => {
+  render(
+    <WorkspaceFileCard
+      file={{
+        id: 'owned-native',
+        google_file_id: 'doc-123',
+        kind: 'docs',
+        title: 'Live report',
+        mime_type: 'application/vnd.google-apps.document',
+        web_url: 'https://docs.google.com/document/d/doc-123/edit',
+        revision: '',
+        status: 'partial',
+        artifact_id: null,
+        run_id: null,
+        created_at: '2026-11-05T12:00:00Z',
+        updated_at: '2026-11-05T12:00:00Z',
+      }}
+    />,
+  );
+  expect(screen.getByRole('link', { name: 'Open Live report in Google' })).toHaveAttribute(
+    'href',
+    'https://docs.google.com/document/d/doc-123/edit',
+  );
+  expect(screen.getByText('Partially created · review in Google')).toBeInTheDocument();
+  expect(screen.queryByText('Google readback verified')).not.toBeInTheDocument();
 });

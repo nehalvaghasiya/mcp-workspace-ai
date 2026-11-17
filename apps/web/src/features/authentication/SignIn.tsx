@@ -31,7 +31,7 @@ export function SignIn({ session }: { session: Session }) {
           <br />A lot less busywork.
         </h1>
         <p>
-          Bring your messages, meetings, and documents into one workspace—with sources you can
+          Bring your messages, meetings, and documents into one workspace-with sources you can
           inspect and actions you control.
         </p>
         <div className="signin-integrations">
@@ -67,16 +67,17 @@ export function SignIn({ session }: { session: Session }) {
                 </>
               )}
             </button>
-            <p className="signin-note">
-              Synthetic Northstar Labs data. No Google account required.
-            </p>
+            <p className="signin-note">Synthetic sample data. No Google account required.</p>
           </>
         ) : (
           <>
             <a className="button primary signin-action" href="/api/auth/google/start">
               Sign in with Google <ArrowRight size={18} />
             </a>
-            <p className="signin-note">Choose connector access after signing in.</p>
+            <p className="signin-note">
+              Connect your Google account, choose service access, and review model processing in
+              Settings.
+            </p>
           </>
         )}
         {demo.isError && <ErrorNotice error={demo.error} retry={() => demo.mutate()} />}

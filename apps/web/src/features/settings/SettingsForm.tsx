@@ -15,8 +15,8 @@ export function SettingsForm({ settings, session }: { settings: Settings; sessio
   const [validation, setValidation] = useState('');
   const save = useMutation({
     mutationFn: () => api.updateSettings({ timezone, llm_consent: consent }),
-    onSuccess: (value) => {
-      client.setQueryData(['settings'], value);
+    onSuccess: () => {
+      void client.invalidateQueries({ queryKey: ['settings'] });
       void client.invalidateQueries({ queryKey: ['session'] });
     },
   });
@@ -73,12 +73,17 @@ export function SettingsForm({ settings, session }: { settings: Settings; sessio
             <span>
               <strong>Allow workspace context to be sent to the configured LLM provider</strong>
               <small>
-                Live messages and documents may leave this server for model processing. Review your
-                provider’s data terms before enabling. Mock mode uses synthetic data and a local
-                deterministic provider.
+                Your messages and retrieved workspace content will be sent to the provider shown
+                above for model processing. This permission applies to that provider and model;
+                changing either requires consent again.
               </small>
             </span>
           </label>
+          <p className="muted" role="status">
+            {settings.llm_consent
+              ? 'Model processing is allowed for the current provider and model.'
+              : 'Model processing is paused until you allow it and save your preferences.'}
+          </p>
         </section>
         <section className="settings-section">
           <div className="section-title">

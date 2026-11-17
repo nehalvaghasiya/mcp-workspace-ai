@@ -39,12 +39,29 @@ export function ActivityPanel({
           <div className="activity-run">
             <span className="eyebrow">CURRENT RUN</span>
             <code title={runId}>{runId.slice(0, 16)}</code>
-            <Chip tone={active ? 'warning' : 'positive'}>
+            <Chip
+              tone={
+                active
+                  ? 'warning'
+                  : ['failed', 'interrupted'].includes(lastRun?.status ?? '')
+                    ? 'negative'
+                    : lastRun?.status === 'completed'
+                      ? 'positive'
+                      : ''
+              }
+            >
               {currentLive?.finished
                 ? currentLive.events.at(-1)?.type.replace('run.', '').replaceAll('_', ' ')
                 : lastRun?.status.replaceAll('_', ' ')}
             </Chip>
           </div>
+          {active && (
+            <p className="activity-model" role="status">
+              {currentLive?.events.at(-1)?.type === 'model.started'
+                ? 'Model is responding…'
+                : 'Working through your request…'}
+            </p>
+          )}
           <ToolTimeline traces={timeline} />
           {trace.isError && <ErrorNotice error={trace.error} retry={() => void trace.refetch()} />}
           {!timeline.length && (

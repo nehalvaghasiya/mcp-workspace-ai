@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { FileText } from 'lucide-react';
 import { useState } from 'react';
 import { ArtifactCard } from '../../components/artifacts/ArtifactCard';
+import { WorkspaceFileCard } from '../../components/artifacts/WorkspaceFileCard';
 import { PageHeading } from '../../components/layout/PageHeading';
 import { Empty } from '../../components/ui/Empty';
 import { ErrorNotice } from '../../components/ui/ErrorNotice';
@@ -13,6 +14,10 @@ export function ArtifactsPage() {
   const artifacts = useQuery({
     queryKey: ['artifacts'],
     queryFn: ({ signal }) => api.artifacts(signal),
+  });
+  const workspaceFiles = useQuery({
+    queryKey: ['workspace-files'],
+    queryFn: ({ signal }) => api.workspaceFiles(signal),
   });
   const [filter, setFilter] = useState('all');
   const remove = useMutation({
@@ -27,8 +32,25 @@ export function ArtifactsPage() {
       <PageHeading
         eyebrow="MADE IN YOUR WORKSPACE"
         title="Your work, ready to take with you."
-        description="Generated files, their sources, and the details that make them verifiable."
+        description="Native Google files and downloadable reports, with their sources and verification details."
       />
+      <h2>Google workspace files</h2>
+      {workspaceFiles.isPending ? (
+        <Spinner label="Loading Google files" />
+      ) : workspaceFiles.isError ? (
+        <ErrorNotice error={workspaceFiles.error} retry={() => void workspaceFiles.refetch()} />
+      ) : workspaceFiles.data.length ? (
+        <div className="artifact-library">
+          {workspaceFiles.data.map((file) => (
+            <WorkspaceFileCard key={file.id} file={file} />
+          ))}
+        </div>
+      ) : (
+        <p className="muted">
+          Google Docs, Sheets, and Slides created or edited in this workspace will appear here.
+        </p>
+      )}
+      <h2 className="settings-section">Downloadable files</h2>
       <div className="page-toolbar">
         <div className="filter-tabs" aria-label="Filter artifacts">
           {['all', 'pdf', 'docx', 'xlsx', 'pptx'].map((format) => (

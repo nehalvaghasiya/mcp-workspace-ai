@@ -11,12 +11,14 @@ import { useConversation } from '../../features/conversations/useConversation';
 import { type ChatProps } from '../../types/chat-props';
 import { ApprovalCard } from '../approvals/ApprovalCard';
 import { ArtifactCard } from '../artifacts/ArtifactCard';
+import { WorkspaceFileCard } from '../artifacts/WorkspaceFileCard';
 import { ErrorNotice } from '../ui/ErrorNotice';
 import { SafeMarkdown } from '../ui/SafeMarkdown';
 import { Spinner } from '../ui/Spinner';
 import { ActivityPanel } from './ActivityPanel';
 import { Sources } from './Sources';
 import { Welcome } from './Welcome';
+import { RunFailure } from './RunFailure';
 
 export function Chat({
   conversationId,
@@ -26,6 +28,7 @@ export function Chat({
   session,
   online,
 }: ChatProps) {
+  const needsModelConsent = session.llm.provider !== 'fake' && !session.llm.consented;
   const {
     content,
     setContent,
@@ -42,6 +45,7 @@ export function Chat({
     refresh,
     send,
     cancel,
+    retry,
     deleteChat,
     runApprovals,
     timeline,
@@ -56,7 +60,9 @@ export function Chat({
           <div className="conversation-header">
             <div>
               <span className="eyebrow">CONVERSATION</span>
-              <h1>{conversation.data?.title}</h1>
+              <h1 title={messages.find((message) => message.role === 'user')?.content}>
+                {conversation.data?.title}
+              </h1>
             </div>
             <div className="inline-actions">
               <button
@@ -109,7 +115,6 @@ export function Chat({
                   <div className="message-content">
                     <div className="message-label">
                       {message.role === 'user' ? 'You' : 'Workspace AI'}
-                      <span>{message.id.slice(0, 8)}</span>
                     </div>
                     <div className="prose">
                       <SafeMarkdown>{message.content}</SafeMarkdown>
@@ -119,6 +124,13 @@ export function Chat({
                       <div className="message-artifacts">
                         {message.artifacts.map((artifact) => (
                           <ArtifactCard key={artifact.id} artifact={artifact} />
+                        ))}
+                      </div>
+                    )}
+                    {!!message.workspace_files?.length && (
+                      <div className="message-artifacts">
+                        {message.workspace_files.map((file) => (
+                          <WorkspaceFileCard key={file.id} file={file} />
                         ))}
                       </div>
                     )}
@@ -148,24 +160,21 @@ export function Chat({
                   </div>
                 </article>
               )}
-              {currentLive?.error && (
-                <ErrorNotice error={new Error(currentLive.error)} retry={refresh} />
-              )}
               {lastRun?.status === 'cancelled' && (
                 <p className="run-notice">
                   Run cancelled. Completed tool actions remain recorded in activity.
                 </p>
               )}
-              {['failed', 'interrupted'].includes(lastRun?.status ?? '') && !currentLive?.error && (
-                <ErrorNotice
-                  error={
-                    new Error(
-                      'This run stopped before completing. Inspect the activity for completed actions before trying a new request.',
-                    )
-                  }
-                  retry={refresh}
+              {lastRun && ['failed', 'interrupted'].includes(lastRun.status) && (
+                <RunFailure
+                  run={lastRun}
+                  pending={retry.isPending}
+                  online={online}
+                  onRetry={() => retry.mutate()}
+                  onActivity={() => setTimelineOpen(true)}
                 />
               )}
+              {retry.isError && <ErrorNotice error={retry.error} />}
               {runApprovals.map((approval) => (
                 <ApprovalCard key={approval.id} approval={approval} onDecision={refresh} />
               ))}
@@ -174,6 +183,14 @@ export function Chat({
           )}
         </div>
         <div className="composer-region">
+          {needsModelConsent && (
+            <div className="info-banner" role="status">
+              <p>
+                Allow model processing in <a href="#settings">Settings</a> before chatting. Review
+                the configured provider and save your preferences.
+              </p>
+            </div>
+          )}
           {send.isError && (
             <>
               <ErrorNotice error={send.error} />
@@ -190,7 +207,13 @@ export function Chat({
               Activity connection interrupted. Reconnecting to saved events…
             </div>
           )}
-          <form className="composer" onSubmit={submit}>
+          <form
+            className="composer"
+            onSubmit={(event) => {
+              if (needsModelConsent) event.preventDefault();
+              else submit(event);
+            }}
+          >
             <label className="sr-only" htmlFor="message-input">
               Message Workspace AI
             </label>
@@ -235,7 +258,7 @@ export function Chat({
                   type="submit"
                   className="send-button"
                   aria-label="Send message"
-                  disabled={!content.trim() || send.isPending || !online}
+                  disabled={!content.trim() || send.isPending || !online || needsModelConsent}
                 >
                   {send.isPending ? <Spinner label="" /> : <ArrowUp size={19} />}
                 </button>

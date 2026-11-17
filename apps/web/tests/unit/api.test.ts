@@ -1,14 +1,17 @@
 import { FakeSource } from '../support/fake-event-source';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { ApiError } from '../../src/services/api-error';
-import { request } from '../../src/services/request';
+import { request, REQUEST_TIMEOUT_MS } from '../../src/services/request';
 import { normalizeTrace } from '../../src/features/tool-execution/normalize-trace';
 import { safeDownloadUrl } from '../../src/lib/urls';
-import { safeSourceUrl } from '../../src/lib/urls';
+import { safeSourceUrl, safeGoogleFileUrl } from '../../src/lib/urls';
 import { setCsrfToken } from '../../src/services/request';
 import { subscribeRun } from '../../src/services/run-events';
 
-afterEach(() => vi.unstubAllGlobals());
+afterEach(() => {
+  vi.unstubAllGlobals();
+  vi.useRealTimers();
+});
 describe('authenticated request boundary', () => {
   it('sends CSRF on mutation and uses same-origin cookies without browser token storage', async () => {
     const fetcher = vi.fn().mockResolvedValue(new Response(JSON.stringify({ ok: true })));
@@ -33,6 +36,44 @@ describe('authenticated request boundary', () => {
     );
     expect(fetcher).toHaveBeenCalledTimes(1);
   });
+  it('ends an unavailable API request with an actionable timeout without retrying', async () => {
+    vi.useFakeTimers();
+    const fetcher = vi.fn(
+      (_url: string, init: RequestInit) =>
+        new Promise((_resolve, reject) => {
+          init.signal?.addEventListener('abort', () =>
+            reject(new DOMException('Aborted', 'AbortError')),
+          );
+        }),
+    );
+    vi.stubGlobal('fetch', fetcher);
+    const pending = expect(request('/session')).rejects.toMatchObject({
+      code: 'REQUEST_TIMEOUT',
+      status: 0,
+    });
+    await vi.advanceTimersByTimeAsync(REQUEST_TIMEOUT_MS + 1);
+    await pending;
+    expect(fetcher).toHaveBeenCalledTimes(1);
+  });
+  it('preserves caller cancellation instead of presenting it as a server failure', async () => {
+    const controller = new AbortController();
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(
+        (_url: string, init: RequestInit) =>
+          new Promise((_resolve, reject) => {
+            init.signal?.addEventListener('abort', () =>
+              reject(new DOMException('Aborted', 'AbortError')),
+            );
+          }),
+      ),
+    );
+    const pending = expect(
+      request('/conversations', { signal: controller.signal }),
+    ).rejects.toMatchObject({ name: 'AbortError' });
+    controller.abort();
+    await pending;
+  });
 });
 describe('untrusted URLs', () => {
   it('rejects executable source links and untrusted artifact downloads', () => {
@@ -47,6 +88,16 @@ describe('untrusted URLs', () => {
     expect(safeDownloadUrl('/api/artifacts/owned-id/download')).toBe(
       '/api/artifacts/owned-id/download',
     );
+    expect(safeGoogleFileUrl('https://docs.google.com/document/d/owned-id/edit')).toBe(
+      'https://docs.google.com/document/d/owned-id/edit',
+    );
+    expect(
+      safeGoogleFileUrl('https://docs.google.com.evil.invalid/document/d/owned-id/edit'),
+    ).toBeUndefined();
+    expect(safeGoogleFileUrl('https://evil.invalid/document/d/owned-id/edit')).toBeUndefined();
+    expect(
+      safeGoogleFileUrl('https://secret@docs.google.com/document/d/owned-id/edit'),
+    ).toBeUndefined();
   });
 });
 describe('run events', () => {
