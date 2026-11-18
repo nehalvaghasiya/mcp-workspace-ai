@@ -4,10 +4,13 @@ A workspace assistant for your Gmail, Calendar, Drive, Docs, Sheets, and Slides.
 
 ## Live demo
 
-<video controls preload="metadata" poster="demo/preview.gif" width="960" aria-label="MCP Workspace AI live demo">
-  <source src="demo/workspace-live.mp4" type="video/mp4">
-  <a href="demo/workspace-live.mp4?raw=true#t=0.1">Watch the live demo video</a>
-</video>
+
+
+
+
+https://github.com/user-attachments/assets/4b305471-56e2-4116-854e-ccad50dd0cc1
+
+
 
 [Open or download the full demo (3 minutes)](demo/workspace-live.mp4?raw=true#t=0.1) - use the player controls to pause, seek, change volume, or enter fullscreen. The demo summarizes emails, prioritizes next steps, and downloads a PDF with sources.
 
